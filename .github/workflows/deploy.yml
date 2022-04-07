@@ -147,7 +147,7 @@ jobs:
         with:
           registry: registry.fly.io
           username: x
-          password: ${{ secrets.FLY_API_TOKEN_HFC_ }}
+          password: ${{ secrets.FLY_API_TOKEN_HFC }}
 
       - name: 🐳 Docker build
         uses: docker/build-push-action@v2
