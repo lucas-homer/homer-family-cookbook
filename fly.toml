@@ -1,4 +1,4 @@
-app = "homer-family-cookbook-f751"
+app = "homer-family-cookbook"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = [ ]

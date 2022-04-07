@@ -90,8 +90,8 @@ Prior to your first deployment, you'll need to do a few things:
 - Create two apps on Fly, one for staging and one for production:
 
   ```sh
-  fly create homer-family-cookbook-f751
-  fly create homer-family-cookbook-f751-staging
+  fly create homer-family-cookbook
+  fly create homer-family-cookbook-staging
   ```
 
 - Initialize Git.
@@ -106,19 +106,19 @@ Prior to your first deployment, you'll need to do a few things:
   git remote add origin <ORIGIN_URL>
   ```
 
-- Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`.
+- Add a `FLY_API_TOKEN_HFC` to your GitHub repo. To do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN_HFC`.
 
 - Add a `SESSION_SECRET` to your fly app secrets, to do this you can run the following commands:
 
   ```sh
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app homer-family-cookbook-f751
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app homer-family-cookbook-f751-staging
+  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app homer-family-cookbook
+  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app homer-family-cookbook-staging
   ```
 
   > **Note:** When creating the staging secret, you may get a warning from the Fly CLI that looks like this:
   >
   > ```
-  > WARN app flag 'homer-family-cookbook-f751-staging' does not match app name in config file 'homer-family-cookbook-f751'
+  > WARN app flag 'homer-family-cookbook-staging' does not match app name in config file 'homer-family-cookbook'
   > ```
   >
   > This simply means that the current directory contains a config that references the production app we created in the first step. Ignore this warning and proceed to create the secret.
@@ -128,11 +128,11 @@ Prior to your first deployment, you'll need to do a few things:
 - Create a database for both your staging and production environments. Run the following:
 
   ```sh
-  fly postgres create --name homer-family-cookbook-f751-db
-  fly postgres attach --postgres-app homer-family-cookbook-f751-db --app homer-family-cookbook-f751
+  fly postgres create --name homer-family-cookbook-db
+  fly postgres attach --postgres-app homer-family-cookbook-db --app homer-family-cookbook
 
-  fly postgres create --name homer-family-cookbook-f751-staging-db
-  fly postgres attach --postgres-app homer-family-cookbook-f751-staging-db --app homer-family-cookbook-f751-staging
+  fly postgres create --name homer-family-cookbook-staging-db
+  fly postgres attach --postgres-app homer-family-cookbook-staging-db --app homer-family-cookbook-staging
   ```
 
   > **Note:** You'll get the same warning for the same reason when attaching the staging database that you did in the `fly set secret` step above. No worries. Proceed!
