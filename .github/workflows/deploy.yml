@@ -147,7 +147,7 @@ jobs:
         with:
           registry: registry.fly.io
           username: x
-          password: ${{ secrets.FLY_API_TOKEN_HFC }}
+          password: ${{ secrets.FLY_API_TOKEN }}
 
       - name: 🐳 Docker build
         uses: docker/build-push-action@v2
@@ -197,7 +197,7 @@ jobs:
         with:
           args: "deploy --app ${{ steps.app_name.outputs.value }}-staging --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}"
         env:
-          FLY_API_TOKEN_HFC: ${{ secrets.FLY_API_TOKEN_HFC }}
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
       - name: 🚀 Deploy Production
         if: ${{ github.ref == 'refs/heads/main' }}
@@ -205,4 +205,4 @@ jobs:
         with:
           args: "deploy --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}"
         env:
-          FLY_API_TOKEN_HFC: ${{ secrets.FLY_API_TOKEN_HFC }}
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
