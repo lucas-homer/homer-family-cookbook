@@ -64,14 +64,20 @@ export default function App() {
           {data.user ? (
             <div className="flex gap-4">
               <Form action="/logout" method="post">
-                <button className="rounded-lg border border-2 border-black p-2">
+                <button
+                  className="rounded-lg border border-2 border-black p-2"
+                  type="submit"
+                >
                   Logout
                 </button>
               </Form>
             </div>
           ) : (
             <Form action="/login" method="post">
-              <button className="rounded-lg border border-2 border-black p-2">
+              <button
+                className="rounded-lg border border-2 border-black p-2"
+                type="submit"
+              >
                 Login
               </button>
             </Form>

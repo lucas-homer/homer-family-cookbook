@@ -11,8 +11,7 @@ describe("smoke tests", () => {
       password: faker.internet.password(),
     };
     cy.then(() => ({ email: loginForm.email })).as("user");
-
-    cy.visit("/");
+    cy.findByLabelText(/login/i).click();
     cy.findByRole("link", { name: /sign up/i }).click();
 
     cy.findByRole("textbox", { name: /email/i }).type(loginForm.email);
@@ -20,8 +19,8 @@ describe("smoke tests", () => {
     cy.findByRole("button", { name: /create account/i }).click();
 
     cy.findByRole("link", { name: /categories/i }).click();
-    cy.findByRole("button", { name: /logout/i }).click();
-    cy.findByRole("link", { name: /log in/i });
+    cy.findByLabelText(/logout/i).click();
+    cy.findByLabelText(/login/i).click();
   });
 
   // it("should allow you to make a note", () => {
