@@ -1,9 +1,8 @@
 import faker from "@faker-js/faker";
 
 describe("smoke tests", () => {
-  afterEach(() => {
-    cy.cleanupUser();
-  });
+  // afterEach(() => {
+  // });
 
   it("should allow you to register and login", () => {
     const loginForm = {
@@ -11,7 +10,7 @@ describe("smoke tests", () => {
       password: faker.internet.password(),
     };
     cy.then(() => ({ email: loginForm.email })).as("user");
-    cy.findByLabelText(/login/i).click();
+    cy.findByText(/login/i).click();
     cy.findByRole("link", { name: /sign up/i }).click();
 
     cy.findByRole("textbox", { name: /email/i }).type(loginForm.email);
@@ -21,6 +20,7 @@ describe("smoke tests", () => {
     cy.findByRole("link", { name: /categories/i }).click();
     cy.findByLabelText(/logout/i).click();
     cy.findByLabelText(/login/i).click();
+    cy.cleanupUser({ email: loginForm.email });
   });
 
   // it("should allow you to make a note", () => {
