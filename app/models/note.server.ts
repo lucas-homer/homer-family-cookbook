@@ -1,53 +1,60 @@
-import type { User, Note } from "@prisma/client";
-
+import { Note, Recipe } from "@prisma/client";
 import { prisma } from "~/db.server";
 
-export type { Note } from "@prisma/client";
-
-export function getNote({
-  id,
-  userId,
-}: Pick<Note, "id"> & {
-  userId: User["id"];
-}) {
-  return prisma.note.findFirst({
-    where: { id, userId },
-  });
-}
-
-export function getNoteListItems({ userId }: { userId: User["id"] }) {
+export async function getRecipeNotes(recipeId: Recipe["id"]) {
   return prisma.note.findMany({
-    where: { userId },
-    select: { id: true, title: true },
-    orderBy: { updatedAt: "desc" },
-  });
-}
-
-export function createNote({
-  body,
-  title,
-  userId,
-}: Pick<Note, "body" | "title"> & {
-  userId: User["id"];
-}) {
-  return prisma.note.create({
-    data: {
-      title,
-      body,
-      user: {
-        connect: {
-          id: userId,
-        },
-      },
+    where: {
+      recipeId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    include: {
+      author: true,
     },
   });
 }
 
-export function deleteNote({
-  id,
+export async function createNote({
+  content,
+  recipeId,
   userId,
-}: Pick<Note, "id"> & { userId: User["id"] }) {
-  return prisma.note.deleteMany({
-    where: { id, userId },
+}: {
+  content: Note["content"];
+  recipeId: Note["recipeId"];
+  userId: Note["userId"];
+}) {
+  return prisma.note.create({
+    data: {
+      content,
+      userId,
+      recipeId,
+    },
+  });
+}
+
+export async function updateNote({
+  content,
+  noteId,
+}: {
+  content: Note["content"];
+  noteId: Note["id"];
+}) {
+  return prisma.note.update({
+    where: {
+      id: noteId,
+    },
+    data: {
+      content,
+    },
+    include: {
+      author: true,
+    },
+  });
+}
+
+export async function deleteNote(noteId: Note["id"]) {
+  return prisma.note.delete({
+    where: { id: noteId },
   });
 }

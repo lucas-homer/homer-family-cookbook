@@ -13,6 +13,41 @@ export async function getUserByEmail(email: User["email"]) {
   return prisma.user.findUnique({ where: { email } });
 }
 
+export async function getUserProfile(userId: User["id"]) {
+  return prisma.user.findUnique({
+    where: { id: userId },
+    include: {
+      recipes: true,
+      favoriteRecipes: {
+        include: {
+          recipe: true,
+        },
+      },
+      recipeReads: {
+        include: {
+          recipe: true,
+        },
+      },
+    },
+  });
+}
+
+export async function getRecentlyViewed(userId: User["id"]) {
+  return prisma.recipeRead.findMany({
+    where: {
+      userId,
+    },
+    orderBy: [
+      {
+        updatedAt: "desc",
+      },
+    ],
+    include: {
+      recipe: true,
+    },
+  });
+}
+
 export async function createUser(email: User["email"], password: string) {
   const hashedPassword = await bcrypt.hash(password, 10);
 
