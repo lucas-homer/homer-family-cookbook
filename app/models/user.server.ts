@@ -13,6 +13,19 @@ export async function getUserByEmail(email: User["email"]) {
   return prisma.user.findUnique({ where: { email } });
 }
 
+export async function getFavoriteRecipes(userId: User["id"]) {
+  return prisma.usersFavoriteRecipes.findMany({
+    where: { userId },
+    include: {
+      recipe: {
+        include: {
+          categories: true,
+        },
+      },
+    },
+  });
+}
+
 export async function getUserProfile(userId: User["id"]) {
   return prisma.user.findUnique({
     where: { id: userId },
