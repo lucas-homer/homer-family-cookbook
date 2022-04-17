@@ -42,6 +42,41 @@ export async function getRecipesByCategory(categoryId: Category["id"]) {
   });
 }
 
+export type CreateRecipeParams = {
+  title: Recipe["title"];
+  instructions: Recipe["instructions"];
+  servings?: Recipe["servings"];
+  categories: Array<Category["id"]>;
+  ingredients: Array<{
+    id?: Ingredient["id"];
+    name: Ingredient["name"];
+    quantity: Ingredient["quantity"];
+  }>;
+};
+export async function createRecipe(
+  userId: User["id"],
+  params: CreateRecipeParams
+) {
+  return prisma.recipe.create({
+    data: {
+      author: {
+        connect: { id: userId },
+      },
+      title: params.title,
+      instructions: params.instructions,
+      ...(params.servings && { servings: params.servings }),
+      categories: {
+        connect: params.categories.map((category) => ({ id: category })),
+      },
+      ingredients: {
+        createMany: {
+          data: params.ingredients,
+        },
+      },
+    },
+  });
+}
+
 export type UpdateRecipeParams = Partial<Recipe> & {
   categories: Array<Category["id"]>;
   ingredients: Array<{
