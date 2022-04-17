@@ -126,9 +126,9 @@ export default function App() {
                             isActive ? "bg-white" : ""
                           }`
                         }
-                        to="saved"
+                        to="favorites"
                       >
-                        ❤️ Saved
+                        ❤️ Favorites
                       </NavLink>
                     </li>
                     <li>
