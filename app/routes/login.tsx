@@ -92,7 +92,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-full flex-col justify-center">
-      <div className="mx-auto w-full max-w-md px-8">
+      <div className="mx-auto w-full max-w-md px-4 md:px-8">
         <Form method="post" className="space-y-6" noValidate>
           <div>
             <label
@@ -155,8 +155,8 @@ export default function LoginPage() {
           >
             Log in
           </button>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
+          <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between">
+            <div className="flex flex-nowrap items-center">
               <input
                 id="remember"
                 name="remember"
