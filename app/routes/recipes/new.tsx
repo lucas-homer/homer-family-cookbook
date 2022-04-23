@@ -209,7 +209,7 @@ export default function CreateRecipe() {
 
   return (
     <section>
-      <h3 className="mb-6 text-3xl">Create Recipe</h3>
+      <h3 className="mb-6 text-3xl font-bold">Create Recipe</h3>
       <Form method="post">
         <div className="flex flex-col flex-nowrap gap-4">
           <div className="flex flex-col flex-nowrap">

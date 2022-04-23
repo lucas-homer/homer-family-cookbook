@@ -24,7 +24,9 @@ export default function Categories() {
             <NavLink
               to={category.id}
               className={({ isActive }) =>
-                `block ${isActive ? "border-b border-black" : ""}`
+                `block ${
+                  isActive ? "border-b-2 border-black" : "text-zinc-500"
+                }`
               }
             >
               {category.name}

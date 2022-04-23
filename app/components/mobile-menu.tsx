@@ -33,7 +33,7 @@ export default function MobileMenu({
   }, []);
 
   return (
-    <header>
+    <>
       <button
         className="burger visible md:hidden"
         aria-label="Toggle menu"
@@ -139,7 +139,7 @@ export default function MobileMenu({
           </ul>
         </nav>
       )}
-    </header>
+    </>
   );
 }
 
