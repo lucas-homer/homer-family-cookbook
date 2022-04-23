@@ -12,10 +12,10 @@ export default function DesktopMenu({
   };
   return (
     <div className="hidden h-full w-80 bg-gray-50 md:block">
-      <h3 className="mb-12 py-4 pl-8 font-extrabold text-sky-700">
+      <h3 className="mb-12 p-8 font-extrabold text-teal-700">
         Homer Family Cookbook
       </h3>
-      <nav>
+      <nav className="mb-12">
         <ul>
           <li>
             <NavLink

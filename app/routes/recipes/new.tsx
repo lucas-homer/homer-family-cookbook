@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Ingredient, Category, User } from "@prisma/client";
+import { Ingredient, Category } from "@prisma/client";
 import queryString from "query-string";
 import styles from "@reach/dialog/styles.css";
 import {
@@ -14,6 +14,7 @@ import {
   useLoaderData,
   useNavigate,
 } from "@remix-run/react";
+import { CheckIcon, Cross2Icon } from '@radix-ui/react-icons'
 
 import { getCategories } from "~/models/category.server";
 import { createRecipe } from "~/models/recipe.server";
@@ -209,15 +210,15 @@ export default function CreateRecipe() {
 
   return (
     <section>
-      <h3 className="mb-6 text-3xl font-bold">Create Recipe</h3>
+      <h3 className="text-3xl font-bold mb-12 md:mb-24">Create Recipe</h3>
       <Form method="post">
-        <div className="flex flex-col flex-nowrap gap-4">
-          <div className="flex flex-col flex-nowrap">
-            <label htmlFor="title" className="text-xl">
+        <div className="flex flex-col flex-nowrap gap-8">
+          <div className="flex flex-col flex-nowrap w-full md:max-w-sm">
+            <label htmlFor="title" className="text-xl mb-2">
               Title
             </label>
             <input
-              className="border border-solid border-black p-2"
+              className="bg-zinc-50 rounded-lg p-2"
               type="text"
               name="title"
               defaultValue={actionData?.fields?.title ?? ""}
@@ -235,16 +236,18 @@ export default function CreateRecipe() {
             ) : null}
           </div>
           <fieldset>
-            <legend className="text-xl">Categories</legend>
-            <ul className="grid grid-flow-row grid-cols-2">
+            <legend className="text-xl mb-2">Categories</legend>
+            <ul className="grid grid-flow-row grid-cols-2 max-w-sm bg-zinc-50 rounded-lg px-4 py-2">
               {categories.map((category) => (
-                <li key={category.id}>
-                  <label>
-                    <input
+                <li key={category.id} className="py-2">
+                  <input
+                    id={`category-${category.name}`}
                       type="checkbox"
                       name="categories"
                       value={category.id}
+                      className="mr-2 accent-teal-700 bg-zinc-0"
                     />
+                  <label htmlFor={`category-${category.name}`}>
                     {category.name}
                   </label>
                 </li>
@@ -264,13 +267,14 @@ export default function CreateRecipe() {
               </p>
             ) : null}
             <legend className="mb-2 text-xl">Ingredients</legend>
-            <ul className="grid grid-cols-1">
-              <li className="flex flex-nowrap gap-2 border-b-2 border-black py-4">
-                <div className="flex flex-col flex-nowrap">
-                  <label htmlFor={`new-ingredient-quantity`}>quantity</label>
+            <ul className="grid grid-cols-1 max-w-lg">
+              <li className="grid grid-cols-12 gap-px md:gap-2">
+                <div className="col-start-1 col-span-4 flex flex-col flex-nowrap gap-1">
+                  <label className="text-sm" htmlFor={`new-ingredient-quantity`}>Quantity</label>
                   <input
                     ref={newIngredientQuantityRef}
                     type="text"
+                    placeholder="2 cups"
                     id={`new-ingredient-quantity`}
                     value={newIngredient.quantity ?? ""}
                     onChange={(e) =>
@@ -279,15 +283,16 @@ export default function CreateRecipe() {
                         quantity: e.target.value,
                       }))
                     }
-                    className="mr-2 border border-solid border-black p-2"
+                    className="mr-2 bg-zinc-50 rounded-lg p-2 max-w-"
                   />
                 </div>
-                <div className="flex flex-col flex-nowrap">
-                  <label htmlFor={`new-ingredient-name`}>name</label>
+                <div className="col-span-7 flex flex-col flex-nowrap gap-1">
+                  <label className="text-sm" htmlFor={`new-ingredient-name`}>Name</label>
                   <input
                     type="text"
+                    placeholder="all purpose flour"
                     id={`new-ingredient-name`}
-                    className="border border-solid border-black p-2"
+                    className="bg-zinc-50 rounded-lg p-2"
                     value={newIngredient.name}
                     onChange={(e) =>
                       setNewIngredient((prevState) => ({
@@ -308,34 +313,40 @@ export default function CreateRecipe() {
                       newIngredientQuantityRef.current?.focus();
                   }}
                   type="button"
+                  disabled={!newIngredient.name}
                   title="add ingredient"
+                  className="col-end-13 p-2 flex justify-center self-end hover:bg-zinc-50 disabled:bg-inherit disabled:text-zinc-500 text-emerald-500 rounded-lg"
                 >
-                  ➕
+                  <div className="flex justify-center" style={{height: '24px', width: '24px'}}>
+
+                  <CheckIcon width={24} height={24} />
+                  </div>
                 </button>
               </li>
               {ingredientsData.map((ingredient, index) => (
                 <li
                   key={ingredient.name}
-                  className="flex flex-nowrap gap-2 border-b-2 border-black py-4"
+                  className="grid grid-cols-12 gap-2"
                 >
-                  <div className="flex flex-col flex-nowrap">
-                    <label htmlFor={`ingredient[${index}][quantity]`}>
-                      quantity
+                  <div className="col-start-1 col-span-4 flex flex-col flex-nowrap gap-1">
+                    <label htmlFor={`ingredient[${index}][quantity]`} className="text-white text-xs">
+                      Quantity
                     </label>
                     <input
                       type="text"
                       name={`ingredient[${index}][quantity]`}
                       defaultValue={ingredient.quantity ?? ""}
-                      className="mr-2 border border-solid border-black p-2"
+                      className="mr-2 bg-zinc-50 rounded-lg p-2"
+
                     />
                   </div>
-                  <div className="flex flex-col flex-nowrap">
-                    <label htmlFor={`ingredient[${index}][name]`}>name</label>
+                  <div className="col-span-7 flex flex-col flex-nowrap gap-1">
+                    <label htmlFor={`ingredient[${index}][name]`} className="text-white text-xs">Name</label>
                     <input
                       type="text"
                       name={`ingredient[${index}][name]`}
                       defaultValue={ingredient.name}
-                      className="border border-solid border-black p-2"
+                      className="  bg-zinc-50 rounded-lg p-2"
                     />
                   </div>
                   <button
@@ -348,19 +359,24 @@ export default function CreateRecipe() {
                     }
                     type="button"
                     title="remove ingredient"
+                                      className="col-end-13 p-2 flex justify-center self-end hover:bg-zinc-50 disabled:bg-inherit  text-red-500 rounded-lg"
+
                   >
-                    ❌
+                                      <div className="flex justify-center" style={{height: '24px', width: '24px'}}>
+
+                      <Cross2Icon width={24} height={24} />
+                      </div>
                   </button>
                 </li>
               ))}
             </ul>
           </fieldset>
           <div className="flex flex-col">
-            <label htmlFor="instructions" className="text-xl">
-              Instructions:
+            <label htmlFor="instructions" className="text-xl mb-2">
+              Instructions
             </label>
             <textarea
-              className="mb-4 h-96 w-full border border-solid border-black "
+              className="mb-4 h-96 w-full md:max-w-lg bg-zinc-50 rounded-lg p-4"
               id="instructions"
               name="instructions"
               defaultValue={actionData?.fields?.instructions ?? ""}
@@ -384,15 +400,15 @@ export default function CreateRecipe() {
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="border border-solid border-gray-300 p-1"
+            className=" text-zinc-700 font-semibold p-2 capitalize tracking-wider"
           >
             cancel
           </button>
           <button
-            className="border border-solid border-gray-600 p-1 font-semibold"
+            className="text-zinc-50 bg-teal-700 rounded-lg px-4 py-2 font-semibold capitalize tracking-widest"
             type="submit"
           >
-            Save
+            save
           </button>
         </div>
       </Form>
