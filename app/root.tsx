@@ -15,6 +15,7 @@ import {
 } from "@remix-run/react";
 
 import tailwindStylesheetUrl from "./styles/tailwind.css";
+import globalStylesheetUrl from "./styles/globals.css";
 import mobileMenuStylesheetUrl from "./styles/mobile-menu.css";
 import { getUser } from "./session.server";
 import MobileMenu from "./components/mobile-menu";
@@ -22,6 +23,35 @@ import DesktopMenu from "./components/desktop-menu";
 
 export const links: LinksFunction = () => {
   return [
+    {
+      rel: "preload",
+      as: "font",
+      href: "/fonts/lato-v22-latin-700.woff2",
+      type: "font/woff2",
+      crossOrigin: "anonymous",
+    },
+    {
+      rel: "preload",
+      as: "font",
+      href: "/fonts/lato-v22-latin-700italic.woff2",
+      type: "font/woff2",
+      crossOrigin: "anonymous",
+    },
+    {
+      rel: "preload",
+      as: "font",
+      href: "/fonts/lato-v22-latin-italic.woff2",
+      type: "font/woff2",
+      crossOrigin: "anonymous",
+    },
+    {
+      rel: "preload",
+      as: "font",
+      href: "/fonts/lato-v22-latin-regular.woff2",
+      type: "font/woff2",
+      crossOrigin: "anonymous",
+    },
+    { rel: "stylesheet", href: globalStylesheetUrl },
     { rel: "stylesheet", href: tailwindStylesheetUrl },
     { rel: "stylesheet", href: mobileMenuStylesheetUrl },
   ];
