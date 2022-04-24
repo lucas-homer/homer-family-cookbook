@@ -83,12 +83,12 @@ export default function App() {
         <Links />
       </head>
       <body className="flex h-full min-h-screen flex-col flex-nowrap md:flex-row">
-        <header>
+        <header className="md:h-full md:min-h-screen md:overflow-y-auto">
           <MobileMenu userLoggedIn={Boolean(data.user)} />
           <DesktopMenu userLoggedIn={Boolean(data.user)} />
         </header>
 
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-6 md:px-8 overflow-y-auto">
           <Outlet />
         </main>
 
