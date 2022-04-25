@@ -1,6 +1,7 @@
 import { json, LoaderFunction } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import {  useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
+import RecipeSummary from "~/components/recipe-summary";
 import { getRecipesByCategory } from "~/models/recipe.server";
 
 type LoaderData = {
@@ -22,7 +23,7 @@ export default function CategoryID() {
     <ul>
       {data.recipes.map((recipe) => (
         <li key={recipe.id}>
-          <Link to={`/recipes/${recipe.id}`}>{recipe.title}</Link>
+          <RecipeSummary recipe={recipe} />
         </li>
       ))}
     </ul>

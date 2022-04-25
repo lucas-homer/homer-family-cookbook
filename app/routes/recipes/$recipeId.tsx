@@ -210,7 +210,7 @@ export default function Recipe() {
   const readerIsAuthor = recipeData?.userId === user?.id;
 
   return (
-    <div className="p-8">
+    <div className="md:py-32">
       {/* ****RECIPE*** */}
       <section className="">
         <div className="mb-8">
