@@ -25,6 +25,7 @@ import {
 } from "~/models/recipe.server";
 import { requireUserId } from "~/session.server";
 import { badRequest } from "~/errors.server";
+import { CheckIcon, Cross2Icon } from "@radix-ui/react-icons";
 
 export const links: LinksFunction = () => {
   return [
@@ -226,16 +227,21 @@ export default function EditRecipe() {
   const resetNewIngredient = () => setNewIngredient(initialNewIngredient);
 
   return (
-    <Dialog isOpen={true} aria-label="Edit recipe" onDismiss={onDismiss}>
-      <h3 className="mb-6 text-3xl">Edit Recipe</h3>
+    <Dialog
+      isOpen={true}
+      aria-label="Edit recipe"
+      onDismiss={onDismiss}
+      id="editRecipeModal"
+    >
+      <h3 className="mb-6 text-3xl font-bold md:mb-24">Edit Recipe</h3>
       <Form method="post">
-        <div className="flex flex-col flex-nowrap gap-4">
-          <div className="flex flex-col flex-nowrap">
-            <label htmlFor="title" className="text-xl">
+        <div className="flex flex-col flex-nowrap gap-8">
+          <div className="flex max-w-sm flex-col flex-nowrap">
+            <label htmlFor="title" className="mb-2 text-xl">
               Title
             </label>
             <input
-              className="border border-solid border-black p-2"
+              className="rounded-lg bg-zinc-50 p-2"
               type="text"
               name="title"
               defaultValue={recipeData.title}
@@ -253,20 +259,20 @@ export default function EditRecipe() {
             ) : null}
           </div>
           <fieldset>
-            <legend className="text-xl">Categories</legend>
-            <ul className="grid grid-flow-row grid-cols-2">
-              {categories.map((mealType) => (
-                <li key={mealType.id}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      name="categories"
-                      value={mealType.id}
-                      defaultChecked={recipeData.categories.some(
-                        (recipeCategory) => recipeCategory.id === mealType.id
-                      )}
-                    />
-                    {mealType.name}
+            <legend className="mb-2 text-xl">Categories</legend>
+            <ul className="grid max-w-sm grid-flow-row grid-cols-2 rounded-lg bg-zinc-50 px-4 py-2">
+              {categories.map((category) => (
+                <li key={category.id} className="py-2">
+                  <input
+                    id={`category-${category.name}`}
+                    type="checkbox"
+                    name="categories"
+                    defaultChecked={recipeData.categories.some(
+                      (recipeCategory) => recipeCategory.id === category.id
+                    )}
+                  />
+                  <label htmlFor={`category-${category.name}`}>
+                    {category.name}
                   </label>
                 </li>
               ))}
@@ -284,11 +290,16 @@ export default function EditRecipe() {
                 {actionData?.fieldErrors.ingredients}
               </p>
             ) : null}
-            <legend className="mb-2 text-xl">Ingredients</legend>
-            <ul className="grid grid-cols-1">
-              <li className="flex flex-nowrap gap-2 border-b-2 border-black py-4">
-                <div className="flex flex-col flex-nowrap">
-                  <label htmlFor={`new-ingredient-quantity`}>quantity</label>
+            <legend className="text-xl">Ingredients</legend>
+            <ul className="grid max-w-lg grid-cols-1">
+              <li className="grid grid-cols-12 gap-px md:gap-2">
+                <div className="col-span-4 col-start-1 flex flex-col flex-nowrap gap-1">
+                  <label
+                    className="text-sm"
+                    htmlFor={`new-ingredient-quantity`}
+                  >
+                    Quantity
+                  </label>
                   <input
                     ref={newIngredientQuantityRef}
                     type="text"
@@ -300,15 +311,17 @@ export default function EditRecipe() {
                         quantity: e.target.value,
                       }))
                     }
-                    className="mr-2 border border-solid border-black p-2"
+                    className="mr-2 rounded-lg bg-zinc-50 p-2"
                   />
                 </div>
-                <div className="flex flex-col flex-nowrap">
-                  <label htmlFor={`new-ingredient-name`}>name</label>
+                <div className="col-span-7 flex flex-col flex-nowrap gap-1">
+                  <label className="text-sm" htmlFor={`new-ingredient-name`}>
+                    Name
+                  </label>{" "}
                   <input
                     type="text"
                     id={`new-ingredient-name`}
-                    className="border border-solid border-black p-2"
+                    className="rounded-lg bg-zinc-50 p-2"
                     value={newIngredient.name}
                     onChange={(e) =>
                       setNewIngredient((prevState) => ({
@@ -330,38 +343,52 @@ export default function EditRecipe() {
                   }}
                   type="button"
                   title="add ingredient"
+                  className="col-end-13 flex justify-center self-end rounded-lg p-2 text-emerald-500 hover:bg-zinc-50 disabled:bg-inherit disabled:text-zinc-500"
                 >
-                  ➕
+                  <div
+                    className="flex justify-center"
+                    style={{ height: "24px", width: "24px" }}
+                  >
+                    <CheckIcon width={24} height={24} />
+                  </div>
                 </button>
               </li>
               {ingredientsData.map((ingredient, index) => (
                 <li
                   key={ingredient.id ?? new Date()}
-                  className="flex flex-nowrap gap-2 border-b-2 border-black py-4"
+                  className="grid grid-cols-12 gap-px md:gap-2"
                 >
                   <input
                     hidden
                     name={`ingredient[${index}][id]`}
                     value={ingredient.id ?? undefined}
                   />
-                  <div className="flex flex-col flex-nowrap">
-                    <label htmlFor={`ingredient[${index}][quantity]`}>
-                      quantity
+                  <div className="col-span-4 col-start-1 flex flex-col flex-nowrap gap-1">
+                    <label
+                      htmlFor={`ingredient[${index}][quantity]`}
+                      className="text-xs text-white"
+                    >
+                      Quantity
                     </label>
                     <input
                       type="text"
                       name={`ingredient[${index}][quantity]`}
                       defaultValue={ingredient.quantity ?? ""}
-                      className="mr-2 border border-solid border-black p-2"
+                      className="mr-2 rounded-lg bg-zinc-50 p-2"
                     />
                   </div>
-                  <div className="flex flex-col flex-nowrap">
-                    <label htmlFor={`ingredient[${index}][name]`}>name</label>
+                  <div className="col-span-7 flex flex-col flex-nowrap gap-1">
+                    <label
+                      htmlFor={`ingredient[${index}][name]`}
+                      className="text-xs text-white"
+                    >
+                      Name
+                    </label>
                     <input
                       type="text"
                       name={`ingredient[${index}][name]`}
                       defaultValue={ingredient.name}
-                      className="border border-solid border-black p-2"
+                      className="  rounded-lg bg-zinc-50 p-2"
                     />
                   </div>
                   <button
@@ -372,19 +399,25 @@ export default function EditRecipe() {
                     }
                     type="button"
                     title="remove ingredient"
+                    className="col-end-13 flex justify-center self-end rounded-lg p-2 text-red-500  hover:bg-zinc-50 disabled:bg-inherit"
                   >
-                    ❌
+                    <div
+                      className="flex justify-center"
+                      style={{ height: "24px", width: "24px" }}
+                    >
+                      <Cross2Icon width={24} height={24} />
+                    </div>
                   </button>
                 </li>
               ))}
             </ul>
           </fieldset>
           <div className="flex flex-col">
-            <label htmlFor="instructions" className="text-xl">
-              Instructions:
+            <label htmlFor="instructions" className="mb-2 text-xl">
+              Instructions
             </label>
             <textarea
-              className="mb-4 h-96 w-full border border-solid border-black "
+              className="mb-4 h-96 w-full rounded-lg bg-zinc-50 p-4 md:max-w-lg"
               id="instructions"
               name="instructions"
               defaultValue={recipeData.instructions}
@@ -404,16 +437,16 @@ export default function EditRecipe() {
             ) : null}
           </div>
         </div>
-        <div className="flex justify-end gap-4">
+        <div className="flex max-w-lg justify-end gap-4">
           <button
             type="button"
             onClick={onDismiss}
-            className="border border-solid border-gray-300 p-1"
+            className=" p-2 font-semibold capitalize tracking-wider text-zinc-700"
           >
             cancel
           </button>
           <button
-            className="border border-solid border-gray-600 p-1 font-semibold"
+            className="rounded-lg bg-teal-700 px-4 py-2 font-semibold capitalize tracking-widest text-zinc-50 hover:bg-teal-800"
             type="submit"
           >
             Save
