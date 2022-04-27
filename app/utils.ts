@@ -47,9 +47,9 @@ export function validateEmail(email: unknown): email is string {
   return typeof email === "string" && email.length > 3 && email.includes("@");
 }
 
-export function formatCreationDate(date: Date) {
+export function formatRecipeDate(date: Date) {
   if (!date) {
-    throw Error("formatCreationDate failed with provided date");
+    throw Error("formatRecipeDate failed with provided date");
   }
 
   return format(parseISO(date.toString()), "MMMM d, yyyy");
