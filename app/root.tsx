@@ -54,6 +54,11 @@ export const links: LinksFunction = () => {
     { rel: "stylesheet", href: globalStylesheetUrl },
     { rel: "stylesheet", href: tailwindStylesheetUrl },
     { rel: "stylesheet", href: mobileMenuStylesheetUrl },
+    {
+      rel: "icon",
+      type: "image/x-icon",
+      href: "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍪</text></svg>",
+    },
   ];
 };
 
@@ -88,7 +93,7 @@ export default function App() {
           <DesktopMenu userLoggedIn={Boolean(data.user)} />
         </header>
 
-        <main className="flex-1 p-6 md:px-8 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto p-6 md:px-8">
           <Outlet />
         </main>
 
