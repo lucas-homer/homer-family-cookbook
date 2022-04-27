@@ -396,7 +396,7 @@ export default function CreateRecipe() {
             ) : null}
           </div>
         </div>
-        <div className="flex justify-end gap-4">
+        <div className="flex justify-end gap-4 max-w-lg">
           <button
             type="button"
             onClick={() => navigate(-1)}
@@ -405,7 +405,7 @@ export default function CreateRecipe() {
             cancel
           </button>
           <button
-            className="text-zinc-50 bg-teal-700 rounded-lg px-4 py-2 font-semibold capitalize tracking-widest"
+            className="text-zinc-50 bg-teal-700 hover:bg-teal-800 rounded-lg px-4 py-2 font-semibold capitalize tracking-widest"
             type="submit"
           >
             save

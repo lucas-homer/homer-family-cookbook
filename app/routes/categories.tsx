@@ -17,8 +17,8 @@ export default function Categories() {
 
   return (
     <div className="relative min-h-screen bg-white ">
-      <h2 className="mb-8 text-2xl">Categories</h2>
-      <ul className="mb-4 flex flex-wrap gap-4">
+      <h2 className="mb-4 md:mb-8 text-2xl">Categories</h2>
+      <ul className="mb-4 flex flex-wrap gap-x-4 gap-y-1">
         {data.categories.map((category) => (
           <li key={category.id} className="mb-2 text-xl">
             <NavLink

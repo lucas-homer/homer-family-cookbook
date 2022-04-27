@@ -1,5 +1,6 @@
 import { useMatches } from "@remix-run/react";
 import { useMemo } from "react";
+import { format, parseISO } from "date-fns";
 
 import type { User } from "~/models/user.server";
 
@@ -44,4 +45,12 @@ export function useUser(): User {
 
 export function validateEmail(email: unknown): email is string {
   return typeof email === "string" && email.length > 3 && email.includes("@");
+}
+
+export function formatRecipeDate(date: Date) {
+  if (!date) {
+    throw Error("formatRecipeDate failed with provided date");
+  }
+
+  return format(parseISO(date.toString()), "MMMM d, yyyy");
 }

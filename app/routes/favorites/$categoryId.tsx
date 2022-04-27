@@ -3,23 +3,29 @@ import { json, LoaderFunction } from "@remix-run/node";
 import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import RecipeSummary from "~/components/recipe-summary";
-import { getRecipesByCategory } from "~/models/recipe.server";
+import { getFavoriteRecipesByCategory } from "~/models/recipe.server";
+import { requireUserId } from "~/session.server";
 
 type LoaderData = {
-  recipes: Awaited<ReturnType<typeof getRecipesByCategory>>;
+  recipes: Awaited<ReturnType<typeof getFavoriteRecipesByCategory>>;
 };
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.categoryId, "categoryId not found");
+  const userId = await requireUserId(request);
   const url = new URL(request.url);
   const sort = url.searchParams.get("sort") as "asc" | "desc" | undefined;
 
   return json<LoaderData>({
-    recipes: await getRecipesByCategory(params.categoryId, sort),
+    recipes: await getFavoriteRecipesByCategory(
+      userId,
+      params.categoryId,
+      sort
+    ),
   });
 };
 
-export default function CategoryID() {
+export default function FavoriteCategoryID() {
   const data = useLoaderData() as LoaderData;
   const [searchParams] = useSearchParams();
   const sortDirection = searchParams?.get("sort") ?? "asc";
