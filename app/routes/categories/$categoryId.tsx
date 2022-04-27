@@ -1,5 +1,6 @@
+import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import { json, LoaderFunction } from "@remix-run/node";
-import {  useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import RecipeSummary from "~/components/recipe-summary";
 import { getRecipesByCategory } from "~/models/recipe.server";
@@ -10,23 +11,47 @@ type LoaderData = {
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.categoryId, "categoryId not found");
+  const url = new URL(request.url);
+  const sort = url.searchParams.get("sort") as "asc" | "desc" | undefined;
 
   return json<LoaderData>({
-    recipes: await getRecipesByCategory(params.categoryId),
+    recipes: await getRecipesByCategory(params.categoryId, sort),
   });
 };
 
 export default function CategoryID() {
   const data = useLoaderData() as LoaderData;
+  const [searchParams] = useSearchParams();
+  const sortDirection = searchParams?.get("sort") ?? "asc";
+  const newSort = sortDirection === "desc" ? "asc" : "desc";
 
   return data.recipes.length ? (
-    <ul>
-      {data.recipes.map((recipe) => (
-        <li key={recipe.id}>
-          <RecipeSummary recipe={recipe} />
-        </li>
-      ))}
-    </ul>
+    <>
+      <Link
+        to={`?sort=${newSort}`}
+        className="mb-2 flex max-w-xs items-center gap-1"
+      >
+        {sortDirection === "desc" ? (
+          <>
+            <ChevronDownIcon className="" />
+            <span>Sort: Z - A</span>
+          </>
+        ) : (
+          <>
+            <ChevronUpIcon className="" />
+            <span>Sort: A - Z</span>
+          </>
+        )}
+      </Link>
+
+      <ul>
+        {data.recipes.map((recipe) => (
+          <li key={recipe.id}>
+            <RecipeSummary recipe={recipe} />
+          </li>
+        ))}
+      </ul>
+    </>
   ) : (
     <div>No recipes in this category</div>
   );
