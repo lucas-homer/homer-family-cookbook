@@ -1,41 +1,58 @@
 import { json, LoaderFunction } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
-import { getFavoriteRecipes } from "~/models/user.server";
+import { NavLink, Outlet, useLoaderData, useLocation } from "@remix-run/react";
+import { getFavoriteCategories } from "~/models/category.server";
 import { requireUserId } from "~/session.server";
 
 type LoaderData = {
-  favoriteRecipesData: Awaited<ReturnType<typeof getFavoriteRecipes>>;
+  favoriteCategories: Awaited<ReturnType<typeof getFavoriteCategories>>;
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await requireUserId(request);
-  const favoriteRecipesData = await getFavoriteRecipes(userId);
+  const favoriteCategories = await getFavoriteCategories(userId);
+  console.log("favoriteCategories", favoriteCategories);
   return json<LoaderData>({
-    favoriteRecipesData,
+    favoriteCategories,
   });
 };
 
-export default function Categories() {
-  const { favoriteRecipesData } = useLoaderData() as LoaderData;
-  // TODO -- might be nice to sort these by category, like in routes/categories.tsx
+export default function Favorites() {
+  const { favoriteCategories } = useLoaderData() as LoaderData;
+  const { pathname } = useLocation();
+  const isIndexRoute = pathname === "/favorites";
+
   return (
     <div className="relative min-h-screen bg-white ">
-      <h2 className="mb-8 text-2xl">Favorite Recipes</h2>
-      <ul className="mb-4 flex flex-wrap gap-4">
-        {favoriteRecipesData.length ? (
-          favoriteRecipesData.map((item) => (
-            <li key={item.recipe.id} className="mb-2 text-xl">
-              <h2 className="text-xl">
-                <Link to={`/recipes/${item.recipeId}`}>
-                  {item.recipe.title}
-                </Link>
-              </h2>
-            </li>
-          ))
-        ) : (
-          <p>You don't have any favorite recipes yet!</p>
-        )}
+      <h2 className="mb-4 text-2xl md:mb-8">Favorites</h2>
+      <ul className="mb-4 flex flex-wrap gap-x-4 gap-y-1">
+        <li className="mb-2 text-xl">
+          <NavLink
+            to="/favorites"
+            className={`block ${
+              isIndexRoute ? "border-b-2 border-black" : "text-zinc-500"
+            }`}
+          >
+            All
+          </NavLink>
+        </li>
+        {favoriteCategories.map((category) => (
+          <li key={category.id} className="mb-2 text-xl">
+            <NavLink
+              to={category.id}
+              className={({ isActive }) =>
+                `block ${
+                  isActive ? "border-b-2 border-black" : "text-zinc-500"
+                }`
+              }
+            >
+              {category.name}
+            </NavLink>
+          </li>
+        ))}
       </ul>
+      <div>
+        <Outlet />
+      </div>
     </div>
   );
 }
