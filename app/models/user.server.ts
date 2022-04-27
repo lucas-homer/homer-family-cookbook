@@ -45,18 +45,25 @@ export async function getUserProfile(userId: User["id"]) {
   });
 }
 
-export async function getRecentlyViewed(userId: User["id"]) {
+export async function getRecentlyViewed(
+  userId: User["id"],
+  sort: "newest" | "oldest" = "newest"
+) {
   return prisma.recipeRead.findMany({
     where: {
       userId,
     },
     orderBy: [
       {
-        updatedAt: "desc",
+        updatedAt: sort === "newest" ? "desc" : "asc",
       },
     ],
     include: {
-      recipe: true,
+      recipe: {
+        include: {
+          author: true,
+        },
+      },
     },
   });
 }

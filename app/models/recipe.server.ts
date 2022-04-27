@@ -30,7 +30,10 @@ export async function getRecipe(recipeId: Recipe["id"], userId?: User["id"]) {
   });
 }
 
-export async function getRecipesByCategory(categoryId: Category["id"]) {
+export async function getRecipesByCategory(
+  categoryId: Category["id"],
+  sort?: "asc" | "desc"
+) {
   return prisma.recipe.findMany({
     where: {
       categories: {
@@ -38,6 +41,35 @@ export async function getRecipesByCategory(categoryId: Category["id"]) {
           id: categoryId,
         },
       },
+    },
+    orderBy: [{ title: sort ?? "asc" }],
+    include: {
+      author: true,
+    },
+  });
+}
+
+export async function getFavoriteRecipesByCategory(
+  userId: User["id"],
+  categoryId: Category["id"] | null,
+  sort?: "asc" | "desc"
+) {
+  return prisma.recipe.findMany({
+    where: {
+      categories: {
+        some: {
+          ...(categoryId && { id: categoryId }),
+        },
+      },
+      favoritedUsers: {
+        some: {
+          userId,
+        },
+      },
+    },
+    orderBy: [{ title: sort ?? "asc" }],
+    include: {
+      author: true,
     },
   });
 }
