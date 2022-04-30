@@ -53,6 +53,6 @@ export default function FavoriteCategoryID() {
       </ul>
     </>
   ) : (
-    <div>No recipes in this category</div>
+    <p className="text-md my-6 text-zinc-500">No recipes in this category</p>
   );
 }

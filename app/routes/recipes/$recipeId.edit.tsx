@@ -232,6 +232,7 @@ export default function EditRecipe() {
       aria-label="Edit recipe"
       onDismiss={onDismiss}
       id="editRecipeModal"
+      className="rounded-lg"
     >
       <h3 className="mb-6 text-3xl font-bold md:mb-24">Edit Recipe</h3>
       <Form method="post">

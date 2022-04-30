@@ -55,16 +55,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   return json<LoaderData>({ recipeData, notes });
 };
 
-type ActionData = {
-  formError?: string;
-  fieldErrors?: {
-    content: string | undefined;
-  };
-  fields?: {
-    content: string;
-  };
-};
-
 export const actionIds = {
   favorite: "favorite",
   unfavorite: "unfavorite",
@@ -213,7 +203,7 @@ export default function Recipe() {
     <div className="md:py-32">
       {/* ****RECIPE*** */}
       <section className="">
-        <div className="mb-8">
+        <div className="mb-4">
           <div className="flex justify-between">
             <h1 className="mb-2 text-4xl">{recipeData?.title}</h1>
             {readerIsAuthor ? (
@@ -240,8 +230,9 @@ export default function Recipe() {
             </fetcher.Form>
           ) : null}
         </div>
+
+        <h3 className="mb-2 text-2xl">Ingredients</h3>
         <ul>
-          <h3 className="mb-2 text-2xl">Ingredients</h3>
           {recipeData?.ingredients?.map((ingredient) => (
             <li key={ingredient.id} className="mb-3 text-lg">
               <p>{`-- ${ingredient.quantity} ${ingredient.name}`}</p>
@@ -250,7 +241,20 @@ export default function Recipe() {
         </ul>
         <br />
         <h3 className="mb-2 text-2xl">Instructions</h3>
-        <p>{recipeData?.instructions}</p>
+        <p className="prose-lg mb-8 max-w-lg">{recipeData?.instructions}</p>
+        <h4 className="text-md text-zinc-900">Categories</h4>
+        <ul className="mb-8 flex gap-8 text-zinc-500">
+          {recipeData?.categories.map((category) => (
+            <li key={category.id}>
+              <Link
+                to={`/categories/${category.id}`}
+                className="text-lg text-zinc-900 underline underline-offset-4"
+              >
+                {category.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <hr className="my-12" />
