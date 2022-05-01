@@ -421,7 +421,7 @@ export default function EditRecipe() {
               Instructions
             </label>
             <textarea
-              className="mb-4 h-96 w-full rounded-lg bg-zinc-50 p-4 md:max-w-lg"
+              className="mb-4 h-96 w-full whitespace-pre-wrap rounded-lg bg-zinc-50 p-4 md:max-w-lg"
               id="instructions"
               name="instructions"
               defaultValue={recipeData.instructions}
