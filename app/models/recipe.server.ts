@@ -124,7 +124,6 @@ export async function updateRecipe(
 ) {
   const { categories, ingredients, ...recipe } = updateParams;
 
-  // TODO -- this feels hacky...
   return prisma.$transaction([
     // reset ingredients
     prisma.ingredient.deleteMany({
@@ -153,7 +152,10 @@ export async function updateRecipe(
         },
         ingredients: {
           createMany: {
-            data: ingredients,
+            data: ingredients.map((item) => ({
+              name: item.name,
+              ...(item.quantity && { quantity: item.quantity }),
+            })),
           },
         },
       },
