@@ -181,6 +181,9 @@ export const action: ActionFunction = async ({ request, params }) => {
     ? [categoriesData]
     : [];
 
+  console.log("categoriesData", categoriesData);
+  console.log("categories", categories);
+
   const fieldErrors = {
     title: validateRecipeTitle(title),
     instructions: validateInstructions(instructions),
@@ -188,7 +191,6 @@ export const action: ActionFunction = async ({ request, params }) => {
     categories: validateCategories(categories),
   };
   const fields = { title, instructions, categories, ingredients };
-
   if (Object.values(fieldErrors).some(Boolean)) {
     return badRequest({ fieldErrors, fields });
   }
@@ -266,6 +268,7 @@ export default function EditRecipe() {
                 <li key={category.id} className="py-2">
                   <input
                     id={`category-${category.name}`}
+                    value={category.id}
                     type="checkbox"
                     name="categories"
                     defaultChecked={recipeData.categories.some(
