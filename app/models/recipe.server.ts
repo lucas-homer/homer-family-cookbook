@@ -139,6 +139,9 @@ export async function updateRecipe(
           set: [],
         },
       },
+      include: {
+        categories: true,
+      },
     }),
 
     // update recipe details and add new categories connections and ingredients

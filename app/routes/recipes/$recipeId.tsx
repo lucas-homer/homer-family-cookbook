@@ -241,7 +241,9 @@ export default function Recipe() {
         </ul>
         <br />
         <h3 className="mb-2 text-2xl">Instructions</h3>
-        <p className="prose-lg mb-8 max-w-lg">{recipeData?.instructions}</p>
+        <p className="prose-lg mb-8 max-w-lg whitespace-pre-line">
+          {recipeData?.instructions}
+        </p>
         <h4 className="text-md text-zinc-900">Categories</h4>
         <ul className="mb-8 flex gap-8 text-zinc-500">
           {recipeData?.categories.map((category) => (
