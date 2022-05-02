@@ -181,8 +181,6 @@ export const action: ActionFunction = async ({ request, params }) => {
     return badRequest({ fieldErrors, fields });
   }
 
-  console.log("PASSED VALIDATION");
-
   const newRecipe = await createRecipe(userId, {
     title,
     servings,
