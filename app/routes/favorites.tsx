@@ -10,7 +10,6 @@ type LoaderData = {
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await requireUserId(request);
   const favoriteCategories = await getFavoriteCategories(userId);
-  console.log("favoriteCategories", favoriteCategories);
   return json<LoaderData>({
     favoriteCategories,
   });

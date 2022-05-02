@@ -149,6 +149,8 @@ export const action: ActionFunction = async ({ request, params }) => {
   // parse it into an object
   let form = queryString.parse(formQueryString);
   let title = form.title as string;
+  let servings = form.servings as string;
+  let background = form.background as string;
   let instructions = form.instructions as string;
 
   let ingredientsData = Object.entries(form).filter(([key]) =>
@@ -179,10 +181,10 @@ export const action: ActionFunction = async ({ request, params }) => {
     return badRequest({ fieldErrors, fields });
   }
 
-  console.log("PASSED VALIDATION");
-
   const newRecipe = await createRecipe(userId, {
     title,
+    servings,
+    background,
     instructions,
     ingredients,
     categories,
@@ -214,7 +216,7 @@ export default function CreateRecipe() {
       <Form method="post">
         <div className="flex flex-col flex-nowrap gap-8">
           <div className="flex w-full flex-col flex-nowrap md:max-w-sm">
-            <label htmlFor="title" className="mb-2 text-xl">
+            <label htmlFor="title" className="text-md mb-2 font-bold uppercase">
               Title
             </label>
             <input
@@ -235,8 +237,21 @@ export default function CreateRecipe() {
               </p>
             ) : null}
           </div>
+          <div className="flex w-full flex-col flex-nowrap md:max-w-sm">
+            <label htmlFor="title" className="text-md mb-2 font-bold uppercase">
+              servings
+            </label>
+            <input
+              className="rounded-lg bg-zinc-50 p-2"
+              type="text"
+              name="servings"
+              id="servings"
+            />
+          </div>
           <fieldset>
-            <legend className="mb-2 text-xl">Categories</legend>
+            <legend className="text-md mb-2 font-bold uppercase">
+              Categories
+            </legend>
             <ul className="grid max-w-sm grid-flow-row grid-cols-2 rounded-lg bg-zinc-50 px-4 py-2">
               {categories.map((category) => (
                 <li key={category.id} className="py-2">
@@ -266,7 +281,9 @@ export default function CreateRecipe() {
                 {actionData?.fieldErrors.ingredients}
               </p>
             ) : null}
-            <legend className="mb-2 text-xl">Ingredients</legend>
+            <legend className="text-md mb-2 font-bold uppercase">
+              Ingredients
+            </legend>
             <ul className="grid max-w-lg grid-cols-1">
               <li className="grid grid-cols-12 gap-px md:gap-2">
                 <div className="col-span-4 col-start-1 flex flex-col flex-nowrap gap-1">
@@ -386,7 +403,24 @@ export default function CreateRecipe() {
             </ul>
           </fieldset>
           <div className="flex flex-col">
-            <label htmlFor="instructions" className="mb-2 text-xl">
+            <label
+              htmlFor="background"
+              className="text-md mb-2 font-bold uppercase"
+            >
+              Background
+            </label>
+            <textarea
+              className="mb-4 h-44 w-full rounded-lg bg-zinc-50 p-4 md:max-w-lg"
+              id="background"
+              name="background"
+              placeholder="Sometimes a recipe has a good story :)"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label
+              htmlFor="instructions"
+              className="text-md mb-2 font-bold uppercase"
+            >
               Instructions
             </label>
             <textarea

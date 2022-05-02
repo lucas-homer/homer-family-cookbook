@@ -166,7 +166,6 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 export default function Recipe() {
   const params = useParams();
-  console.log("params", params);
   const { notes, recipeData } = useLoaderData() as LoaderData;
   const user = useOptionalUser();
 
@@ -230,8 +229,19 @@ export default function Recipe() {
             </fetcher.Form>
           ) : null}
         </div>
+        {recipeData?.background ? (
+          <p className="prose-lg mb-8 max-w-lg whitespace-pre-line italic">
+            {recipeData?.background}
+          </p>
+        ) : null}
+        {recipeData?.servings ? (
+          <div className="flex items-baseline gap-1">
+            <span className="text-md font-bold uppercase">servings:</span>{" "}
+            <p className="mb-8 text-lg ">{recipeData?.servings}</p>
+          </div>
+        ) : null}
 
-        <h3 className="mb-2 text-2xl">Ingredients</h3>
+        <h3 className="text-md mb-2 font-bold uppercase">Ingredients</h3>
         <ul>
           {recipeData?.ingredients?.map((ingredient) => (
             <li key={ingredient.id} className="mb-3 text-lg">
@@ -240,11 +250,12 @@ export default function Recipe() {
           ))}
         </ul>
         <br />
-        <h3 className="mb-2 text-2xl">Instructions</h3>
+
+        <h3 className="text-md mb-2 font-bold uppercase">Instructions</h3>
         <p className="prose-lg mb-8 max-w-lg whitespace-pre-line">
           {recipeData?.instructions}
         </p>
-        <h4 className="text-md text-zinc-900">Categories</h4>
+        <h4 className="text-md mb-2 font-bold uppercase">Categories</h4>
         <ul className="mb-8 flex gap-8 text-zinc-500">
           {recipeData?.categories.map((category) => (
             <li key={category.id}>

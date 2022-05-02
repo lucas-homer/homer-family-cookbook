@@ -78,6 +78,7 @@ export type CreateRecipeParams = {
   title: Recipe["title"];
   instructions: Recipe["instructions"];
   servings?: Recipe["servings"];
+  background?: Recipe["background"];
   categories: Array<Category["id"]>;
   ingredients: Array<{
     id?: Ingredient["id"];
@@ -96,6 +97,7 @@ export async function createRecipe(
       },
       title: params.title,
       instructions: params.instructions,
+      ...(params.background && { background: params.background }),
       ...(params.servings && { servings: params.servings }),
       categories: {
         connect: params.categories.map((category) => ({ id: category })),
@@ -150,6 +152,8 @@ export async function updateRecipe(
       data: {
         title: recipe.title,
         instructions: recipe.instructions,
+        ...(recipe.background && { background: recipe.background }),
+        ...(recipe.servings && { servings: recipe.servings }),
         categories: {
           connect: categories?.map((id) => ({ id })),
         },
