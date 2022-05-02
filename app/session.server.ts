@@ -52,6 +52,16 @@ export async function requireUserId(
   return userId;
 }
 
+export async function requireAdminUser(request: Request) {
+  const userId = await requireUserId(request);
+  const user = await getUserById(userId);
+  if (user && user.role === "ADMIN") {
+    return user;
+  }
+
+  throw await logout(request);
+}
+
 export async function requireUser(request: Request) {
   const userId = await requireUserId(request);
 

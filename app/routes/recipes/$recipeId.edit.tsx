@@ -238,7 +238,7 @@ export default function EditRecipe() {
       <h3 className="mb-6 text-3xl font-bold md:mb-24">Edit Recipe</h3>
       <Form method="post">
         <div className="flex flex-col flex-nowrap gap-8">
-          <div className="flex max-w-sm flex-col flex-nowrap">
+          <div className="flex  flex-col flex-nowrap">
             <label htmlFor="title" className="text-md mb-2 font-bold uppercase">
               Title
             </label>
@@ -260,7 +260,7 @@ export default function EditRecipe() {
               </p>
             ) : null}
           </div>
-          <div className="flex w-full flex-col flex-nowrap md:max-w-sm">
+          <div className="flex w-full flex-col flex-nowrap ">
             <label
               htmlFor="servings"
               className="text-md mb-2 font-bold uppercase"
@@ -280,7 +280,7 @@ export default function EditRecipe() {
             <legend className="text-md mb-2 font-bold uppercase">
               Categories
             </legend>
-            <ul className="grid max-w-sm grid-flow-row grid-cols-2 rounded-lg bg-zinc-50 px-4 py-2">
+            <ul className="grid  grid-flow-row grid-cols-2 rounded-lg bg-zinc-50 px-4 py-2">
               {categories.map((category) => (
                 <li
                   key={category.id}
@@ -320,7 +320,7 @@ export default function EditRecipe() {
             <legend className="text-md mb-2 font-bold uppercase">
               Ingredients
             </legend>
-            <ul className="grid max-w-lg grid-cols-1">
+            <ul className="grid grid-cols-1">
               <li className="mb-4 grid grid-cols-12 gap-px md:gap-2">
                 <div className="col-span-4 col-start-1 flex flex-col flex-nowrap gap-1">
                   <label
@@ -450,7 +450,7 @@ export default function EditRecipe() {
               Background
             </label>
             <textarea
-              className="mb-4 h-44 w-full rounded-lg bg-zinc-50 p-4 md:max-w-lg"
+              className="mb-4 h-44 w-full rounded-lg bg-zinc-50 p-4 "
               id="background"
               name="background"
               placeholder="Sometimes a recipe has a good story :)"
@@ -465,7 +465,7 @@ export default function EditRecipe() {
               Instructions
             </label>
             <textarea
-              className="mb-4 h-96 w-full whitespace-pre-line rounded-lg bg-zinc-50 p-4 md:max-w-lg"
+              className="mb-4 h-96 w-full whitespace-pre-line rounded-lg bg-zinc-50 p-4"
               id="instructions"
               name="instructions"
               defaultValue={recipeData.instructions}
@@ -485,7 +485,7 @@ export default function EditRecipe() {
             ) : null}
           </div>
         </div>
-        <div className="flex max-w-lg justify-end gap-4">
+        <div className="flex  justify-end gap-4">
           <button
             type="button"
             onClick={onDismiss}
