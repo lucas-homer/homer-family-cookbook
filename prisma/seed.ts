@@ -68,7 +68,9 @@ async function seed() {
     data: {
       title: "Omelette du fromage",
       userId: lucas.id,
-      servings: "One",
+      servings: "One omelette",
+      background:
+        "My cousin Dexter perfected this in his laboratory before he shared it with me",
       instructions:
         "Whisk eggs, add a smidge of water, pinch salt, and heat skillet on medium-high. Melt knob of butter in skillet, then cook egg mixture in pan, teasing the sides and stuff you know? Youtube it. As the bottom layer of egg sets, sprinkle cheese on top and let melt a moment. Tease and fold the left third of the omelette over onto the middle third, then fold that over onto the right third of the omelette. Serve with fresh cracked black pepper.",
       categories: {
@@ -105,7 +107,8 @@ async function seed() {
           id: side?.id,
         },
       },
-      servings: "4 to 6",
+      servings: "4 to 6 servings",
+      background: "This recipe originally comes from my dog, Bambi.",
       ingredients: {
         createMany: {
           data: [

@@ -64,6 +64,7 @@ model Recipe {
   title        String
   instructions String  @db.Text
   servings     String?
+  background   String? @db.Text
 
   userId    String
   author    User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -102,8 +103,8 @@ model Category {
 
 model Ingredient {
   id       String  @id @default(cuid())
-  name     String //  TODO -- I don't like this :(
-  quantity String? // TODO -- or this!
+  name     String
+  quantity String?
 
   recipeId  String
   recipe    Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
