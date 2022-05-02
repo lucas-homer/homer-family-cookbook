@@ -46,6 +46,7 @@ async function seed() {
     "sauce",
     "side",
     "salad",
+    "miscellaneous",
   ];
   const categories = await prisma.category.createMany({
     data: categoryNames.map((name) => {

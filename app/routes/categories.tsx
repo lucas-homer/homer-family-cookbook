@@ -17,14 +17,14 @@ export default function Categories() {
 
   return (
     <div className="relative min-h-screen bg-white ">
-      <h2 className="mb-4 md:mb-8 text-2xl">Categories</h2>
+      <h2 className="mb-4 text-2xl md:mb-8">Categories</h2>
       <ul className="mb-4 flex flex-wrap gap-x-4 gap-y-1">
         {data.categories.map((category) => (
           <li key={category.id} className="mb-2 text-xl">
             <NavLink
               to={category.id}
               className={({ isActive }) =>
-                `block ${
+                `block capitalize ${
                   isActive ? "border-b-2 border-black" : "text-zinc-500"
                 }`
               }

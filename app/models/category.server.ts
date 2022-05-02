@@ -1,5 +1,5 @@
 import { prisma } from "~/db.server";
-import { User } from "@prisma/client";
+import { Category, User } from "@prisma/client";
 
 export async function getCategories() {
   return prisma.category.findMany({});
@@ -26,4 +26,12 @@ export async function getFavoriteCategories(userId: User["id"]) {
   });
 
   return filtered;
+}
+
+export async function createCategory(name: Category["name"]) {
+  return prisma.category.create({
+    data: {
+      name,
+    },
+  });
 }
