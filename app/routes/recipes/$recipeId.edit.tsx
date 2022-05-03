@@ -19,7 +19,7 @@ import {
   GetRecipeResponse,
   updateRecipe,
 } from "~/models/recipe.server";
-import { requireUserId } from "~/session.server";
+import { requireAuthorOrAdmin } from "~/session.server";
 import { badRequest } from "~/errors.server";
 import { CheckIcon, Cross2Icon } from "@radix-ui/react-icons";
 
@@ -39,9 +39,9 @@ type LoaderData = {
 };
 export const loader: LoaderFunction = async ({ params, request }) => {
   invariant(params.recipeId, "recipeId not found");
-  await requireUserId(request);
-
   const recipeId = params.recipeId;
+  await requireAuthorOrAdmin(request, recipeId);
+
   const recipeData = await getRecipe(recipeId);
   const categories = await getCategories();
 
@@ -133,8 +133,8 @@ function prepIngredients(rawData: [string, string][]) {
 
 export const action: ActionFunction = async ({ request, params }) => {
   invariant(params.recipeId, "recipeId not found");
-  await requireUserId(request);
   const recipeId = params.recipeId;
+  await requireAuthorOrAdmin(request, recipeId);
 
   /**
    * use `request.text()` for forms with structured data
