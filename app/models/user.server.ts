@@ -86,7 +86,6 @@ export async function createUser(
           hash: hashedPassword,
         },
       },
-      ...(email === "lucas.homer@gmail.com" && { role: "ADMIN" }),
     },
   });
 }
