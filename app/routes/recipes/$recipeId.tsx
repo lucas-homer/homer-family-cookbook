@@ -196,7 +196,8 @@ export default function Recipe() {
     ? "REMOVE FROM FAVORITES"
     : "FAVORITE THIS RECIPE";
 
-  const readerIsAuthor = recipeData?.userId === user?.id;
+  const isUserAuthor = recipeData?.userId === user?.id;
+  const isUserAdmin = user?.role === "ADMIN";
 
   return (
     <div className="md:py-32">
@@ -205,7 +206,7 @@ export default function Recipe() {
         <div className="mb-4">
           <div className="flex justify-between">
             <h1 className="mb-2 text-4xl">{recipeData?.title}</h1>
-            {readerIsAuthor ? (
+            {isUserAuthor || isUserAdmin ? (
               <Link
                 to={`/recipes/${recipeData?.id}/edit`}
                 className="underline underline-offset-4"

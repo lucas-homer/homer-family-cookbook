@@ -10,20 +10,16 @@ import {
   redirect,
 } from "@remix-run/node";
 import invariant from "tiny-invariant";
-import {
-  Form,
-  useActionData,
-  useLoaderData,
-  useNavigate,
-} from "@remix-run/react";
+import { useFetcher, useLoaderData, useNavigate } from "@remix-run/react";
 
 import { getCategories } from "~/models/category.server";
 import {
+  deleteRecipe,
   getRecipe,
   GetRecipeResponse,
   updateRecipe,
 } from "~/models/recipe.server";
-import { requireUserId } from "~/session.server";
+import { requireAuthorOrAdmin } from "~/session.server";
 import { badRequest } from "~/errors.server";
 import { CheckIcon, Cross2Icon } from "@radix-ui/react-icons";
 
@@ -43,31 +39,15 @@ type LoaderData = {
 };
 export const loader: LoaderFunction = async ({ params, request }) => {
   invariant(params.recipeId, "recipeId not found");
-  await requireUserId(request);
-
   const recipeId = params.recipeId;
+  await requireAuthorOrAdmin(request, recipeId);
+
   const recipeData = await getRecipe(recipeId);
   const categories = await getCategories();
 
   return {
     recipeData,
     categories,
-  };
-};
-
-type ActionData = {
-  formError?: string;
-  fieldErrors?: {
-    title: string | undefined;
-    instructions: string | undefined;
-    ingredients: string | undefined;
-    categories: string | undefined;
-  };
-  fields?: {
-    title: string;
-    instructions: string;
-    ingredients: string;
-    categories: string;
   };
 };
 
@@ -153,21 +133,30 @@ function prepIngredients(rawData: [string, string][]) {
 
 export const action: ActionFunction = async ({ request, params }) => {
   invariant(params.recipeId, "recipeId not found");
-  await requireUserId(request);
   const recipeId = params.recipeId;
+  await requireAuthorOrAdmin(request, recipeId);
 
-  // use `request.text()`, not `request.formData` to get the form data as a url
-  // encoded form query string
+  /**
+   * use `request.text()` for forms with structured data
+   * https://remix.run/docs/en/v1/pages/faq#how-can-i-have-structured-data-in-a-form
+   *  */
   let formQueryString = await request.text();
+  let parsedForm = queryString.parse(formQueryString);
+  const actionId = parsedForm.actionId as string;
 
-  // parse it into an object
-  let form = queryString.parse(formQueryString);
-  let title = form.title as string | undefined;
-  let servings = form.servings as string | undefined;
-  let background = form.background as string | undefined;
-  let instructions = form.instructions as string | undefined;
+  /** DELETE */
+  if (actionId === "delete") {
+    await deleteRecipe(recipeId);
+    return redirect("/categories");
+  }
 
-  let ingredientsData = Object.entries(form).filter(([key]) =>
+  /** UPDATE */
+  let title = parsedForm.title as string | undefined;
+  let servings = parsedForm.servings as string | undefined;
+  let background = parsedForm.background as string | undefined;
+  let instructions = parsedForm.instructions as string | undefined;
+
+  let ingredientsData = Object.entries(parsedForm).filter(([key]) =>
     key.startsWith("ingredient")
   ) as [string, string][];
   let ingredients = prepIngredients(ingredientsData) as Array<{
@@ -176,7 +165,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     quantity: Ingredient["quantity"];
   }>;
 
-  let categoriesData = form.categories as string | string[] | undefined;
+  let categoriesData = parsedForm.categories as string | string[] | undefined;
   let categories = Array.isArray(categoriesData)
     ? categoriesData
     : categoriesData
@@ -207,9 +196,9 @@ export const action: ActionFunction = async ({ request, params }) => {
 };
 
 export default function EditRecipe() {
-  const { recipeData, categories } = useLoaderData<LoaderData>();
   const navigate = useNavigate();
-  const actionData = useActionData<ActionData>();
+  const fetcher = useFetcher();
+  const { recipeData, categories } = useLoaderData<LoaderData>();
 
   const onDismiss = () => {
     navigate(`/recipes/${recipeData.id}`);
@@ -235,10 +224,22 @@ export default function EditRecipe() {
       id="editRecipeModal"
       className="rounded-lg"
     >
-      <h3 className="mb-6 text-3xl font-bold md:mb-24">Edit Recipe</h3>
-      <Form method="post">
+      <div className="mb-6 flex items-center justify-between md:mb-24">
+        <h3 className="text-2xl font-bold">Edit Recipe</h3>
+        <fetcher.Form method="post">
+          <input hidden name="actionId" value="delete" />
+          <button
+            type="submit"
+            className="text-md rounded-lg border-2 border-red-500 px-2 py-1 font-semibold text-red-500"
+          >
+            Delete Recipe
+          </button>
+        </fetcher.Form>
+      </div>
+      <fetcher.Form method="post">
         <div className="flex flex-col flex-nowrap gap-8">
           <div className="flex  flex-col flex-nowrap">
+            <input hidden name="actionId" value="update" />
             <label htmlFor="title" className="text-md mb-2 font-bold uppercase">
               Title
             </label>
@@ -248,15 +249,15 @@ export default function EditRecipe() {
               name="title"
               defaultValue={recipeData.title}
               aria-invalid={
-                Boolean(actionData?.fieldErrors?.title) || undefined
+                Boolean(fetcher.data?.fieldErrors?.title) || undefined
               }
               aria-describedby={
-                actionData?.fieldErrors?.title ? "title-error" : undefined
+                fetcher.data?.fieldErrors?.title ? "title-error" : undefined
               }
             />
-            {actionData?.fieldErrors?.title ? (
+            {fetcher.data?.fieldErrors?.title ? (
               <p className="text-red-600" role="alert" id="title-error">
-                {actionData?.fieldErrors.title}
+                {fetcher.data?.fieldErrors.title}
               </p>
             ) : null}
           </div>
@@ -304,17 +305,17 @@ export default function EditRecipe() {
                 </li>
               ))}
             </ul>
-            {actionData?.fieldErrors?.categories ? (
+            {fetcher.data?.fieldErrors?.categories ? (
               <p className="text-red-600" role="alert" id="categories-error">
-                {actionData?.fieldErrors.categories}
+                {fetcher.data?.fieldErrors.categories}
               </p>
             ) : null}
           </fieldset>
 
           <fieldset>
-            {actionData?.fieldErrors?.ingredients ? (
+            {fetcher.data?.fieldErrors?.ingredients ? (
               <p className="text-red-600" role="alert" id="ingredients-error">
-                {actionData?.fieldErrors.ingredients}
+                {fetcher.data?.fieldErrors.ingredients}
               </p>
             ) : null}
             <legend className="text-md mb-2 font-bold uppercase">
@@ -470,22 +471,22 @@ export default function EditRecipe() {
               name="instructions"
               defaultValue={recipeData.instructions}
               aria-invalid={
-                Boolean(actionData?.fieldErrors?.instructions) || undefined
+                Boolean(fetcher.data?.fieldErrors?.instructions) || undefined
               }
               aria-describedby={
-                actionData?.fieldErrors?.instructions
+                fetcher.data?.fieldErrors?.instructions
                   ? "instructions-error"
                   : undefined
               }
             />
-            {actionData?.fieldErrors?.instructions ? (
+            {fetcher.data?.fieldErrors?.instructions ? (
               <p className="text-red-600" role="alert" id="instructions-error">
-                {actionData?.fieldErrors.instructions}
+                {fetcher.data?.fieldErrors.instructions}
               </p>
             ) : null}
           </div>
         </div>
-        <div className="flex  justify-end gap-4">
+        <div className="flex justify-end gap-4">
           <button
             type="button"
             onClick={onDismiss}
@@ -500,7 +501,7 @@ export default function EditRecipe() {
             Save
           </button>
         </div>
-      </Form>
+      </fetcher.Form>
     </Dialog>
   );
 }

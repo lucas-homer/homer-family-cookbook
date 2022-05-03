@@ -68,18 +68,24 @@ export async function getRecentlyViewed(
   });
 }
 
-export async function createUser(email: User["email"], password: string) {
+export async function createUser(
+  email: User["email"],
+  password: string,
+  firstName: string | null,
+  lastName: string | null
+) {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   return prisma.user.create({
     data: {
       email,
+      ...(firstName && { firstName }),
+      ...(lastName && { lastName }),
       password: {
         create: {
           hash: hashedPassword,
         },
       },
-      ...(email === "lucas.homer@gmail.com" && { role: "ADMIN" }),
     },
   });
 }

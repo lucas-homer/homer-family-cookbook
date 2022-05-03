@@ -224,3 +224,9 @@ export async function recordRecipeView({
     },
   });
 }
+
+export async function deleteRecipe(recipeId: Recipe["id"]) {
+  return prisma.recipe.delete({
+    where: { id: recipeId },
+  });
+}

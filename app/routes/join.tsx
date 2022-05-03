@@ -29,6 +29,8 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
+  const firstName = formData.get("firstName") as string | null;
+  const lastName = formData.get("lastName") as string | null;
   const redirectTo = formData.get("redirectTo");
 
   if (!validateEmail(email)) {
@@ -60,7 +62,7 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  const user = await createUser(email, password);
+  const user = await createUser(email, password, firstName, lastName);
 
   return createUserSession({
     request,
@@ -146,6 +148,39 @@ export default function Join() {
                   {actionData.errors.password}
                 </div>
               )}
+            </div>
+          </div>
+
+          <div>
+            <label
+              htmlFor="firstName"
+              className="block text-sm font-medium text-gray-700"
+            >
+              First name
+            </label>
+            <div className="mt-1">
+              <input
+                id="firstName"
+                name="firstName"
+                type="text"
+                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+              />
+            </div>
+          </div>
+          <div>
+            <label
+              htmlFor="lastName"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Last name
+            </label>
+            <div className="mt-1">
+              <input
+                id="lastName"
+                name="lastName"
+                type="text"
+                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+              />
             </div>
           </div>
 

@@ -1,7 +1,9 @@
+import { Recipe } from "@prisma/client";
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
 
 import { getUserById } from "~/models/user.server";
+import { getRecipe } from "./models/recipe.server";
 
 invariant(process.env.SESSION_SECRET, "SESSION_SECRET must be set");
 
@@ -67,6 +69,23 @@ export async function requireUser(request: Request) {
 
   const user = await getUserById(userId);
   if (user) return user;
+
+  throw await logout(request);
+}
+
+export async function requireAuthorOrAdmin(
+  request: Request,
+  recipeId: Recipe["id"]
+) {
+  const userId = await requireUserId(request);
+  const recipe = await getRecipe(recipeId);
+  if (userId === recipe?.author.id) {
+    return userId;
+  }
+  const user = await getUserById(userId);
+  if (user?.role === "ADMIN") {
+    return userId;
+  }
 
   throw await logout(request);
 }
