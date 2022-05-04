@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Ingredient, Category, User } from "@prisma/client";
 import queryString from "query-string";
+import { v4 as uuidv4 } from "uuid";
 import Dialog from "@reach/dialog";
 import styles from "@reach/dialog/styles.css";
 import {
@@ -84,12 +85,12 @@ function validateInstructions(instructions: string | undefined) {
 }
 
 function prepIngredients(rawData: [string, string][]) {
-  const ingredients = rawData.reduce((acc, [key, value]) => {
-    const startIndex = key.indexOf("[") + 1;
-    const endIndex = key.indexOf("]");
+  const ingredientsMap = rawData.reduce((acc, [key, value]) => {
+    const startUuid = key.indexOf("[") + 1;
+    const endUuid = key.indexOf("]");
 
     // put the value into the object at this index in acc
-    const propertyIndex = Number(key.slice(startIndex, endIndex));
+    const propertyUuid = key.slice(startUuid, endUuid);
 
     const propertyNameStart = key.lastIndexOf("[") + 1;
     const propertyNameEnd = key.lastIndexOf("]");
@@ -111,23 +112,17 @@ function prepIngredients(rawData: [string, string][]) {
         throw new Error(`propertyName: ${propertyName} is INVALID`);
     }
 
-    // if acc doesn't have an item at that index, we add an object with the propertyName: value entry inside
-    if (!acc[propertyIndex]) {
-      acc = [...acc, { [propertyName]: propertyValue }];
-      return acc;
-    }
-
-    // acc has an item at the index but that item doesn't have a property name
-    if (!acc[propertyIndex][propertyName]) {
-      acc[propertyIndex] = {
-        ...acc[propertyIndex],
+    acc = {
+      ...acc,
+      [propertyUuid]: {
+        ...acc[propertyUuid],
         [propertyName]: propertyValue,
-      };
-      return acc;
-    }
-    return acc;
-  }, [] as Array<Record<string, unknown>>);
+      },
+    };
 
+    return acc;
+  }, {} as Record<string, Record<string, unknown>>);
+  const ingredients = Object.values(ingredientsMap);
   return ingredients;
 }
 
@@ -384,63 +379,71 @@ export default function EditRecipe() {
                 </button>
               </li>
               <hr />
-              {ingredientsData.map((ingredient, index) => (
-                <li
-                  key={ingredient.id ?? new Date()}
-                  className="grid grid-cols-12 gap-px md:gap-2"
-                >
-                  <input
-                    hidden
-                    name={`ingredient[${index}][id]`}
-                    value={ingredient.id ?? undefined}
-                  />
-                  <div className="col-span-4 col-start-1 flex flex-col flex-nowrap gap-1">
-                    <label
-                      htmlFor={`ingredient[${index}][quantity]`}
-                      className="text-xs text-white"
-                    >
-                      Quantity
-                    </label>
-                    <input
-                      type="text"
-                      name={`ingredient[${index}][quantity]`}
-                      defaultValue={ingredient.quantity ?? ""}
-                      className="mr-2 rounded-lg bg-zinc-50 p-2"
-                    />
-                  </div>
-                  <div className="col-span-7 flex flex-col flex-nowrap gap-1">
-                    <label
-                      htmlFor={`ingredient[${index}][name]`}
-                      className="text-xs text-white"
-                    >
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      name={`ingredient[${index}][name]`}
-                      defaultValue={ingredient.name}
-                      className="  rounded-lg bg-zinc-50 p-2"
-                    />
-                  </div>
-                  <button
-                    onClick={() =>
-                      setIngredientsData((prevState) =>
-                        prevState.filter((item) => item.id !== ingredient.id)
-                      )
-                    }
-                    type="button"
-                    title="remove ingredient"
-                    className="col-end-13 flex justify-center self-end rounded-lg p-2 text-red-500  hover:bg-zinc-50 disabled:bg-inherit"
+              {ingredientsData.map((ingredient) => {
+                const uuid = uuidv4();
+                return (
+                  <li
+                    key={ingredient.id ?? uuid}
+                    className="grid grid-cols-12 gap-px md:gap-2"
                   >
-                    <div
-                      className="flex justify-center"
-                      style={{ height: "24px", width: "24px" }}
-                    >
-                      <Cross2Icon width={24} height={24} />
+                    <input
+                      hidden
+                      name={`ingredient[${uuid}][id]`}
+                      value={ingredient.id ?? undefined} // we specifically do NOT coalesce to `uuid` here to (downstream) differentiate update vs create
+                    />
+                    <div className="col-span-4 col-start-1 flex flex-col flex-nowrap gap-1">
+                      <label
+                        htmlFor={`ingredient[${uuid}][quantity]`}
+                        className="text-xs text-white"
+                      >
+                        Quantity
+                      </label>
+                      <input
+                        type="text"
+                        name={`ingredient[${uuid}][quantity]`}
+                        defaultValue={ingredient.quantity ?? ""}
+                        className="mr-2 rounded-lg bg-zinc-50 p-2"
+                      />
                     </div>
-                  </button>
-                </li>
-              ))}
+                    <div className="col-span-7 flex flex-col flex-nowrap gap-1">
+                      <label
+                        htmlFor={`ingredient[${uuid}][name]`}
+                        className="text-xs text-white"
+                      >
+                        Name
+                      </label>
+                      <input
+                        type="text"
+                        name={`ingredient[${uuid}][name]`}
+                        defaultValue={ingredient.name}
+                        className="  rounded-lg bg-zinc-50 p-2"
+                      />
+                    </div>
+                    <button
+                      onClick={() =>
+                        setIngredientsData((prevState) => {
+                          return prevState.filter((item) => {
+                            return (
+                              item.name !== ingredient.name &&
+                              item.quantity !== ingredient.quantity
+                            );
+                          });
+                        })
+                      }
+                      type="button"
+                      title="remove ingredient"
+                      className="col-end-13 flex justify-center self-end rounded-lg p-2 text-red-500  hover:bg-zinc-50 disabled:bg-inherit"
+                    >
+                      <div
+                        className="flex justify-center"
+                        style={{ height: "24px", width: "24px" }}
+                      >
+                        <Cross2Icon width={24} height={24} />
+                      </div>
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
           </fieldset>
           <div className="flex flex-col">
