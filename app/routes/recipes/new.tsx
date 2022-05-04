@@ -1,6 +1,7 @@
-import { useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { Ingredient, Category } from "@prisma/client";
 import queryString from "query-string";
+import { v4 as uuidv4 } from "uuid";
 import styles from "@reach/dialog/styles.css";
 import {
   ActionFunction,
@@ -92,12 +93,12 @@ function validateInstructions(instructions: string | undefined) {
 }
 
 function prepIngredients(rawData: [string, string][]) {
-  const ingredients = rawData.reduce((acc, [key, value]) => {
-    const startIndex = key.indexOf("[") + 1;
-    const endIndex = key.indexOf("]");
+  const ingredientsMap = rawData.reduce((acc, [key, value]) => {
+    const startUuid = key.indexOf("[") + 1;
+    const endUuid = key.indexOf("]");
 
     // put the value into the object at this index in acc
-    const propertyIndex = Number(key.slice(startIndex, endIndex));
+    const propertyUuid = key.slice(startUuid, endUuid);
 
     const propertyNameStart = key.lastIndexOf("[") + 1;
     const propertyNameEnd = key.lastIndexOf("]");
@@ -119,23 +120,17 @@ function prepIngredients(rawData: [string, string][]) {
         throw new Error(`propertyName: ${propertyName} is INVALID`);
     }
 
-    // if acc doesn't have an item at that index, we add an object with the propertyName: value entry inside
-    if (!acc[propertyIndex]) {
-      acc = [...acc, { [propertyName]: propertyValue }];
-      return acc;
-    }
-
-    // acc has an item at the index but that item doesn't have a property name
-    if (!acc[propertyIndex][propertyName]) {
-      acc[propertyIndex] = {
-        ...acc[propertyIndex],
+    acc = {
+      ...acc,
+      [propertyUuid]: {
+        ...acc[propertyUuid],
         [propertyName]: propertyValue,
-      };
-      return acc;
-    }
-    return acc;
-  }, [] as Array<Record<string, unknown>>);
+      },
+    };
 
+    return acc;
+  }, {} as Record<string, Record<string, unknown>>);
+  const ingredients = Object.values(ingredientsMap);
   return ingredients;
 }
 
@@ -193,22 +188,48 @@ export const action: ActionFunction = async ({ request, params }) => {
   return redirect(`/recipes/${newRecipe.id}`);
 };
 
+type NewIngredient = Pick<Ingredient, "name" | "quantity"> & { key: string };
 export default function CreateRecipe() {
   const { categories } = useLoaderData<LoaderData>();
   const actionData = useActionData<ActionData>();
   const navigate = useNavigate();
 
-  const [ingredientsData, setIngredientsData] = useState<
-    Pick<Ingredient, "name" | "quantity">[]
-  >([]);
-
   const newIngredientQuantityRef = useRef<HTMLInputElement>(null);
-  const initialNewIngredient: Pick<Ingredient, "name" | "quantity"> = {
+  const initialNewIngredient: NewIngredient = {
     name: "",
     quantity: "",
+    key: uuidv4(),
   };
   const [newIngredient, setNewIngredient] = useState(initialNewIngredient);
   const resetNewIngredient = () => setNewIngredient(initialNewIngredient);
+
+  const [ingredientsData, setIngredientsData] = useState<Array<NewIngredient>>(
+    []
+  );
+
+  const removeIngredient = (key: string) => {
+    setIngredientsData((prevState) =>
+      prevState.filter((item) => item.key !== key)
+    );
+  };
+  const handleIngredientInputChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    field: "name" | "quantity",
+    key: string
+  ) => {
+    setIngredientsData((prevState) => {
+      return prevState.map((ingredient) => {
+        if (ingredient.key !== key) {
+          return ingredient;
+        }
+
+        return {
+          ...ingredient,
+          [field]: event.target.value,
+        };
+      });
+    });
+  };
 
   return (
     <section>
@@ -330,7 +351,7 @@ export default function CreateRecipe() {
                   onClick={() => {
                     setIngredientsData((prevState) => [
                       ...prevState,
-                      newIngredient as Ingredient,
+                      newIngredient,
                     ]);
                     resetNewIngredient();
                     newIngredientQuantityRef.current &&
@@ -349,57 +370,60 @@ export default function CreateRecipe() {
                   </div>
                 </button>
               </li>
-              {ingredientsData.map((ingredient, index) => (
-                <li key={ingredient.name} className="grid grid-cols-12 gap-2">
-                  <div className="col-span-4 col-start-1 flex flex-col flex-nowrap gap-1">
-                    <label
-                      htmlFor={`ingredient[${index}][quantity]`}
-                      className="text-xs text-white"
-                    >
-                      Quantity
-                    </label>
-                    <input
-                      type="text"
-                      name={`ingredient[${index}][quantity]`}
-                      defaultValue={ingredient.quantity ?? ""}
-                      className="mr-2 rounded-lg bg-zinc-50 p-2"
-                    />
-                  </div>
-                  <div className="col-span-7 flex flex-col flex-nowrap gap-1">
-                    <label
-                      htmlFor={`ingredient[${index}][name]`}
-                      className="text-xs text-white"
-                    >
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      name={`ingredient[${index}][name]`}
-                      defaultValue={ingredient.name}
-                      className="  rounded-lg bg-zinc-50 p-2"
-                    />
-                  </div>
-                  <button
-                    onClick={() =>
-                      setIngredientsData((prevState) =>
-                        prevState.filter(
-                          (item) => item.name !== ingredient.name
-                        )
-                      )
-                    }
-                    type="button"
-                    title="remove ingredient"
-                    className="col-end-13 flex justify-center self-end rounded-lg p-2 text-red-500  hover:bg-zinc-50 disabled:bg-inherit"
-                  >
-                    <div
-                      className="flex justify-center"
-                      style={{ height: "24px", width: "24px" }}
-                    >
-                      <Cross2Icon width={24} height={24} />
+              {ingredientsData.map((ingredient) => {
+                const { key } = ingredient;
+                return (
+                  <li key={key} className="grid grid-cols-12 gap-2">
+                    <div className="col-span-4 col-start-1 flex flex-col flex-nowrap gap-1">
+                      <label
+                        htmlFor={`ingredient[${key}][quantity]`}
+                        className="text-xs text-white"
+                      >
+                        Quantity
+                      </label>
+                      <input
+                        type="text"
+                        name={`ingredient[${key}][quantity]`}
+                        value={ingredient.quantity ?? ""}
+                        className="mr-2 rounded-lg bg-zinc-50 p-2"
+                        onChange={(e) =>
+                          handleIngredientInputChange(e, "quantity", key)
+                        }
+                      />
                     </div>
-                  </button>
-                </li>
-              ))}
+                    <div className="col-span-7 flex flex-col flex-nowrap gap-1">
+                      <label
+                        htmlFor={`ingredient[${key}][name]`}
+                        className="text-xs text-white"
+                      >
+                        Name
+                      </label>
+                      <input
+                        type="text"
+                        name={`ingredient[${key}][name]`}
+                        value={ingredient.name}
+                        className="rounded-lg bg-zinc-50 p-2"
+                        onChange={(e) =>
+                          handleIngredientInputChange(e, "name", key)
+                        }
+                      />
+                    </div>
+                    <button
+                      onClick={() => removeIngredient(key)}
+                      type="button"
+                      title="remove ingredient"
+                      className="col-end-13 flex justify-center self-end rounded-lg p-2 text-red-500  hover:bg-zinc-50 disabled:bg-inherit"
+                    >
+                      <div
+                        className="flex justify-center"
+                        style={{ height: "24px", width: "24px" }}
+                      >
+                        <Cross2Icon width={24} height={24} />
+                      </div>
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
           </fieldset>
           <div className="flex flex-col">
