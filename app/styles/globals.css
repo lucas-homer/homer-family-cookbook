@@ -34,8 +34,13 @@
   font-display: swap;
 }
 
-@media only screen and (max-width: 639px) {
+@media only screen and (max-width: 768px) {
   #editRecipeModal {
+    min-width: 92%;
+  }
+}
+@media only screen and (max-width: 768px) {
+  #searchModal {
     min-width: 92%;
   }
 }

@@ -13,7 +13,6 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
-
 import tailwindStylesheetUrl from "./styles/tailwind.css";
 import globalStylesheetUrl from "./styles/globals.css";
 import mobileMenuStylesheetUrl from "./styles/mobile-menu.css";
