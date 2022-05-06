@@ -51,7 +51,7 @@ export default function Search() {
       </p>
 
       <Autocomplete
-        detachedMediaQuery="none"
+        // detachedMediaQuery="none"
         placeholder={"Search"}
         getSources={({ query }: { query: any }) => {
           return [
