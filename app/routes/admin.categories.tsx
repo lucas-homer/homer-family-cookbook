@@ -4,6 +4,7 @@ import { Form, Link, useActionData } from "@remix-run/react";
 import { createCategory } from "~/models/category.server";
 import { requireAdminUser } from "~/session.server";
 import { badRequest } from "~/errors.server";
+import { updateAlgolia } from "~/algolia.server";
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   await requireAdminUser(request);
@@ -42,6 +43,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   }
 
   await createCategory(name as string);
+  await updateAlgolia();
 
   return redirect(`/categories`);
 };

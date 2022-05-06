@@ -21,6 +21,7 @@ import { getCategories } from "~/models/category.server";
 import { createRecipe } from "~/models/recipe.server";
 import { requireUserId } from "~/session.server";
 import { badRequest } from "~/errors.server";
+import { updateAlgolia } from "~/algolia.server";
 
 export const links: LinksFunction = () => {
   return [
@@ -184,6 +185,8 @@ export const action: ActionFunction = async ({ request, params }) => {
     ingredients,
     categories,
   });
+
+  await updateAlgolia();
 
   return redirect(`/recipes/${newRecipe.id}`);
 };
