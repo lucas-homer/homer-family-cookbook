@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "~/db.server";
 import algoliasearch from "algoliasearch";
-
-const prisma = new PrismaClient();
 
 async function getRecipesForAlgolia() {
   return prisma.recipe.findMany({
@@ -41,7 +39,7 @@ export const getIndexName = () => {
   }homerfamilycookbook`;
 };
 
-async function updateAlgolia() {
+export async function updateAlgolia() {
   if (!process.env.ALGOLIA_APP_ID || !process.env.ALGOLIA_API_KEY) {
     throw new Error(
       `updateAlgolia fn missing env var(s): ALGOLIA_APP_ID: ${process.env.ALGOLIA_APP_ID} // ALGOLIA_API_KEY: ${process.env.ALGOLIA_API_KEY}`
@@ -69,12 +67,12 @@ async function updateAlgolia() {
   console.log("Algolia Index Updated ✅");
 }
 
-updateAlgolia()
-  .catch((e) => {
-    console.log("ERROR in Algolia script run");
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+// updateAlgolia()
+//   .catch((e) => {
+//     console.log("ERROR in Algolia script run");
+//     console.error(e);
+//     process.exit(1);
+//   })
+//   .finally(async () => {
+//     await prisma.$disconnect();
+//   });

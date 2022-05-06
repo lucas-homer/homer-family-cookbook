@@ -23,6 +23,7 @@ import {
 import { requireAuthorOrAdmin } from "~/session.server";
 import { badRequest } from "~/errors.server";
 import { CheckIcon, Cross2Icon } from "@radix-ui/react-icons";
+import { updateAlgolia } from "~/algolia.server";
 
 export const links: LinksFunction = () => {
   return [
@@ -186,6 +187,8 @@ export const action: ActionFunction = async ({ request, params }) => {
     ingredients,
     categories,
   });
+
+  await updateAlgolia();
 
   return redirect(`/recipes/${params.recipeId}`);
 };
