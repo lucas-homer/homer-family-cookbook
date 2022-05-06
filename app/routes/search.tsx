@@ -1,10 +1,11 @@
-import { useNavigate } from "@remix-run/react";
+import { useLoaderData, useNavigate } from "@remix-run/react";
 import algoliasearch from "algoliasearch/lite";
 import { getAlgoliaResults } from "@algolia/autocomplete-js";
 import { Autocomplete } from "~/components/autocomplete";
 import Dialog from "@reach/dialog";
 import styles from "@reach/dialog/styles.css";
 import { Cross2Icon } from "@radix-ui/react-icons";
+import { json, LoaderFunction } from "@remix-run/server-runtime";
 
 export const links = () => {
   return [
@@ -19,16 +20,39 @@ export const links = () => {
   ];
 };
 
-const searchClient = algoliasearch(
-  "HW88ALT84E",
-  "42af7b48a35f7754841b7c3bd0210b44"
-);
+type LoaderData = {
+  ENV: {
+    ALGOLIA_APP_ID: string;
+    ALGOLIA_API_KEY: string;
+  };
+};
+export const loader: LoaderFunction = async () => {
+  const { ALGOLIA_APP_ID, ALGOLIA_API_KEY } = process.env;
+  if (!ALGOLIA_APP_ID || !ALGOLIA_API_KEY) {
+    throw new Error(
+      `ENV vars missing - ALGOLIA_APP_ID: ${ALGOLIA_APP_ID} | ALGOLIA_API_KEY: ${ALGOLIA_API_KEY}`
+    );
+  }
+
+  return json<LoaderData>({
+    ENV: {
+      ALGOLIA_APP_ID,
+      ALGOLIA_API_KEY,
+    },
+  });
+};
 
 export default function Search() {
+  const data = useLoaderData() as LoaderData;
   const navigate = useNavigate();
   const onDismiss = () => {
     navigate(-1);
   };
+
+  const searchClient = algoliasearch(
+    data.ENV.ALGOLIA_APP_ID,
+    data.ENV.ALGOLIA_API_KEY
+  );
 
   return (
     <Dialog

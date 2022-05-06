@@ -5,7 +5,7 @@
   "license": "",
   "sideEffects": false,
   "scripts": {
-    "postbuild": "ts-node app/algolia.ts",
+    "postbuild": "ts-node app/algolia.server.ts",
     "build": "run-s build:*",
     "build:css": "npm run generate:css -- --minify",
     "build:remix": "remix build",
