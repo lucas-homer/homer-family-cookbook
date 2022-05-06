@@ -1,5 +1,6 @@
 import { prisma } from "~/db.server";
 import algoliasearch from "algoliasearch";
+import { getAlgoliaIndexName } from "./utils";
 
 async function getRecipesForAlgolia() {
   return prisma.recipe.findMany({
@@ -33,12 +34,6 @@ function transformRecipeDataForAlgoliaIndex(
   });
 }
 
-export const getIndexName = () => {
-  return `${
-    process.env.NODE_ENV !== "production" ? "dev_" : ""
-  }homerfamilycookbook`;
-};
-
 export async function updateAlgolia() {
   if (!process.env.ALGOLIA_APP_ID || !process.env.ALGOLIA_API_KEY) {
     throw new Error(
@@ -59,20 +54,10 @@ export async function updateAlgolia() {
   );
 
   // init the index
-  const index = searchClient.initIndex(getIndexName());
+  const index = searchClient.initIndex(getAlgoliaIndexName());
 
   // add objects to index
   await index.saveObjects(transformed);
 
   console.log("Algolia Index Updated ✅");
 }
-
-// updateAlgolia()
-//   .catch((e) => {
-//     console.log("ERROR in Algolia script run");
-//     console.error(e);
-//     process.exit(1);
-//   })
-//   .finally(async () => {
-//     await prisma.$disconnect();
-//   });

@@ -54,3 +54,9 @@ export function formatRecipeDate(date: Date) {
 
   return format(parseISO(date.toString()), "MMMM d, yyyy");
 }
+
+export function getAlgoliaIndexName() {
+  return `${
+    process.env.NODE_ENV !== "production" ? "dev_" : ""
+  }homerfamilycookbook`;
+}
