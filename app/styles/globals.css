@@ -42,5 +42,6 @@
 @media only screen and (max-width: 768px) {
   #searchModal {
     min-width: 92%;
+    margin: 3vh auto !important;
   }
 }

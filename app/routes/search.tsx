@@ -25,7 +25,6 @@ export default function Search() {
   const onDismiss = () => {
     navigate(-1);
   };
-  console.log("process.env.NODE_ENV", process.env.NODE_ENV);
   const searchClient = algoliasearch(
     "HW88ALT84E", // app id
     "1499c17180e21ba003f94140ee00633d" // search-only public key
@@ -57,9 +56,6 @@ export default function Search() {
           return [
             {
               sourceId: "recipes",
-              getItemUrl({ item }: { item: any }) {
-                return `/recipes/${item.id}`;
-              },
               getItems() {
                 return getAlgoliaResults({
                   searchClient,
@@ -77,7 +73,7 @@ export default function Search() {
               templates: {
                 item({ item, components }: { item: any; components: any }) {
                   return (
-                    <a className="aa-ItemLink" href={item.url}>
+                    <a className="aa-ItemLink" href={`/recipes/${item.id}`}>
                       <div className="aa-ItemContent">
                         <div className="aa-ItemContentBody">
                           <div className="aa-ItemContentTitle">
