@@ -27,6 +27,7 @@ const searchClient = algoliasearch(
 
 export default function Search() {
   const navigate = useNavigate();
+  // https://reactrouter.com/docs/en/v6/api#usenavigationtype
   const navType = useNavigationType();
 
   const onDismiss = () => {
