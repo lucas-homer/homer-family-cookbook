@@ -1,3 +1,13 @@
+import {
+  ClockIcon,
+  EnterIcon,
+  ExitIcon,
+  HeartIcon,
+  HomeIcon,
+  MagnifyingGlassIcon,
+  Pencil2Icon,
+  RocketIcon,
+} from "@radix-ui/react-icons";
 import { Form, NavLink } from "@remix-run/react";
 
 export default function DesktopMenu({
@@ -6,7 +16,7 @@ export default function DesktopMenu({
   userLoggedIn: boolean;
 }) {
   const getNavLinkStyles = (isActive: boolean) => {
-    return `block  py-4 pl-8 text-xl ${
+    return `flex w-full items-center gap-3  py-4 pl-8 text-xl ${
       isActive ? "bg-white font-semibold text-zinc-700" : "text-zinc-500"
     }`;
   };
@@ -23,7 +33,11 @@ export default function DesktopMenu({
               to="."
               aria-label="Home"
             >
-              🏠 <span>Home</span>
+              <div>
+                <HomeIcon height={18} width={18} />
+              </div>
+
+              <span>Home</span>
             </NavLink>
           </li>
           <li>
@@ -31,7 +45,10 @@ export default function DesktopMenu({
               className={({ isActive }) => getNavLinkStyles(isActive)}
               to="search"
             >
-              🔎 Search
+              <div>
+                <MagnifyingGlassIcon height={18} width={18} />
+              </div>
+              <span>Search</span>
             </NavLink>
           </li>
           <li>
@@ -39,7 +56,10 @@ export default function DesktopMenu({
               className={({ isActive }) => getNavLinkStyles(isActive)}
               to="categories"
             >
-              📚 Categories
+              <div>
+                <RocketIcon height={18} width={18} />
+              </div>
+              <span>Categories</span>
             </NavLink>
           </li>
           {userLoggedIn ? (
@@ -49,7 +69,10 @@ export default function DesktopMenu({
                   className={({ isActive }) => getNavLinkStyles(isActive)}
                   to="favorites"
                 >
-                  ❤️ Favorites
+                  <div>
+                    <HeartIcon height={18} width={18} />
+                  </div>
+                  <span>Favorites</span>
                 </NavLink>
               </li>
               <li>
@@ -57,7 +80,10 @@ export default function DesktopMenu({
                   className={({ isActive }) => getNavLinkStyles(isActive)}
                   to="recently-viewed"
                 >
-                  ⏲ Recently Viewed
+                  <div>
+                    <ClockIcon height={18} width={18} />
+                  </div>
+                  <span>Recently Viewed</span>
                 </NavLink>
               </li>
               <li>
@@ -65,16 +91,22 @@ export default function DesktopMenu({
                   className={({ isActive }) => getNavLinkStyles(isActive)}
                   to="recipes/new"
                 >
-                  📝 Add Recipe
+                  <div>
+                    <Pencil2Icon height={18} width={18} />
+                  </div>
+                  <span>Add Recipe</span>
                 </NavLink>
               </li>
               <li>
                 <Form action="/logout" method="post">
                   <button
                     type="submit"
-                    className="block w-full  py-4 pl-8 text-left text-xl text-zinc-500"
+                    className="flex w-full items-center gap-3  py-4 pl-8 text-left text-xl text-zinc-500"
                   >
-                    🔒 Logout
+                    <div>
+                      <ExitIcon height={18} width={18} />
+                    </div>
+                    <span>Logout</span>
                   </button>
                 </Form>
               </li>
@@ -84,9 +116,12 @@ export default function DesktopMenu({
               <Form action="/login" method="post">
                 <button
                   type="submit"
-                  className="block w-full   py-4 pl-8 text-left text-xl text-zinc-500"
+                  className="flex w-full items-center gap-3   py-4 pl-8 text-left text-xl text-zinc-500"
                 >
-                  🔓 Login
+                  <div>
+                    <EnterIcon height={18} width={18} />
+                  </div>
+                  <span>Login</span>
                 </button>
               </Form>
             </li>
