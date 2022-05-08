@@ -113,7 +113,7 @@ export default function DesktopMenu({
             </>
           ) : (
             <li>
-              <Form action="/login" method="post">
+              <Form action="/login">
                 <button
                   type="submit"
                   className="flex w-full items-center gap-3   py-4 pl-8 text-left text-xl text-zinc-500"

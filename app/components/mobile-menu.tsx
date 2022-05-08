@@ -203,7 +203,7 @@ export default function MobileMenu({
                 className="border-b border-gray-300  "
                 style={{ transitionDelay: "250ms" }}
               >
-                <Form action="/login" method="post">
+                <Form action="/login">
                   <button
                     type="submit"
                     onClick={toggleMenu}
