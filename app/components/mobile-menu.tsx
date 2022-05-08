@@ -78,7 +78,7 @@ export default function MobileMenu({
               </NavLink>
             </li>
             <li
-              className="text-md border-b border-gray-300  text-gray-900 "
+              className="text-md border-b border-gray-300   "
               style={{ transitionDelay: "175ms" }}
             >
               <NavLink
@@ -97,7 +97,7 @@ export default function MobileMenu({
               </NavLink>
             </li>
             <li
-              className="text-md border-b border-gray-300  text-gray-900 "
+              className="text-md border-b border-gray-300   "
               style={{ transitionDelay: "200ms" }}
             >
               <NavLink
@@ -139,7 +139,7 @@ export default function MobileMenu({
                   </NavLink>
                 </li>
                 <li
-                  className="text-md border-b border-gray-300  text-gray-900 "
+                  className="text-md border-b border-gray-300 "
                   style={{ transitionDelay: "225ms" }}
                 >
                   <NavLink
@@ -160,14 +160,14 @@ export default function MobileMenu({
                   </NavLink>
                 </li>
                 <li
-                  className="text-md border-b border-gray-300  text-gray-900 "
+                  className=" border-b border-gray-300   "
                   style={{ transitionDelay: "250ms" }}
                 >
                   <NavLink
                     to="/recipes/new"
                     onClick={toggleMenu}
                     className={({ isActive }) =>
-                      `flex items-center gap-2 text-zinc-900 ${
+                      `text-md flex items-center gap-2 text-zinc-900 ${
                         isActive
                           ? "font-semibold text-zinc-900"
                           : "text-zinc-500"
@@ -181,14 +181,14 @@ export default function MobileMenu({
                   </NavLink>
                 </li>
                 <li
-                  className="text-md border-b border-gray-300  text-gray-900 "
+                  className="  border-b  border-gray-300"
                   style={{ transitionDelay: "250ms" }}
                 >
                   <Form action="/logout" method="post">
                     <button
                       type="submit"
                       onClick={toggleMenu}
-                      className="flex items-center gap-2"
+                      className="text-md flex items-center gap-2 text-zinc-900"
                     >
                       <div>
                         <ExitIcon height={18} width={18} />
@@ -207,7 +207,7 @@ export default function MobileMenu({
                   <button
                     type="submit"
                     onClick={toggleMenu}
-                    className="text-md  flex items-center gap-2 text-gray-900"
+                    className="text-md  flex items-center gap-2 text-zinc-900"
                   >
                     <div>
                       <EnterIcon height={18} width={18} />
