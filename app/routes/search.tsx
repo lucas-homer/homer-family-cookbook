@@ -1,4 +1,4 @@
-import { useNavigate } from "@remix-run/react";
+import { useNavigate, useNavigationType } from "@remix-run/react";
 import algoliasearch from "algoliasearch/lite";
 import { getAlgoliaResults } from "@algolia/autocomplete-js";
 import { Autocomplete } from "~/components/autocomplete";
@@ -20,15 +20,29 @@ export const links = () => {
   ];
 };
 
+const searchClient = algoliasearch(
+  "HW88ALT84E", // app id
+  "1499c17180e21ba003f94140ee00633d" // search-only public key
+);
+
 export default function Search() {
   const navigate = useNavigate();
+  // https://reactrouter.com/docs/en/v6/api#usenavigationtype
+  const navType = useNavigationType();
+
   const onDismiss = () => {
-    navigate(-1);
+    /**
+     * When linked to /search from a link inside the app,
+     * we PUSH, which tells us we have someplace in the
+     * app to go back to, and thus, pass -1 to navigate
+     *  */
+    if (navType === "PUSH") {
+      navigate(-1);
+    } else {
+      // otherwise, just send users to home route, or else going 'back' takes them outside the app, which is unhelpful for the 'onDismiss' event
+      navigate("/");
+    }
   };
-  const searchClient = algoliasearch(
-    "HW88ALT84E", // app id
-    "1499c17180e21ba003f94140ee00633d" // search-only public key
-  );
 
   return (
     <Dialog

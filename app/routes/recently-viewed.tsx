@@ -38,12 +38,12 @@ export default function RecentlyViewed() {
             >
               {sortDirection === "newest" ? (
                 <>
-                  <ChevronDownIcon className="" />
+                  <ChevronDownIcon />
                   <span>Sort: Newest</span>
                 </>
               ) : (
                 <>
-                  <ChevronUpIcon className="" />
+                  <ChevronUpIcon />
                   <span>Sort: Oldest</span>
                 </>
               )}

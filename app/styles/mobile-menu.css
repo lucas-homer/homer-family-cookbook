@@ -50,10 +50,6 @@
   opacity: 1;
 }
 
-.menu > * + * {
-  margin-top: 24px;
-}
-
 @keyframes grow {
   0% {
     height: 0px;

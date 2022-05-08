@@ -1,6 +1,16 @@
 import { useDelayedRender } from "~/useDelayedRender";
 import { useState, useEffect } from "react";
 import { Form, NavLink } from "@remix-run/react";
+import {
+  ClockIcon,
+  EnterIcon,
+  ExitIcon,
+  HeartIcon,
+  HomeIcon,
+  MagnifyingGlassIcon,
+  Pencil2Icon,
+  RocketIcon,
+} from "@radix-ui/react-icons";
 
 export default function MobileMenu({
   userLoggedIn,
@@ -47,75 +57,143 @@ export default function MobileMenu({
         <nav>
           <ul
             className={`menu
-           relative flex flex-col
+           relative flex flex-col gap-8
           ${isMenuRendered ? "menuRendered" : ""}
           `}
           >
-            <li
-              className="text-md border-b border-gray-300 font-semibold text-gray-900 "
-              style={{ transitionDelay: "150ms" }}
-            >
-              <NavLink to="/" className="flex w-auto pb-4" onClick={toggleMenu}>
-                🏠 Home
+            <li className="" style={{ transitionDelay: "150ms" }}>
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  `flex items-center gap-2 text-zinc-900 ${
+                    isActive ? "font-semibold text-zinc-900" : "text-zinc-500"
+                  }`
+                }
+                onClick={toggleMenu}
+              >
+                <div>
+                  <HomeIcon height={18} width={18} />
+                </div>
+                <span>Home</span>
               </NavLink>
             </li>
             <li
-              className="text-md border-b border-gray-300 font-semibold text-gray-900 "
+              className="text-md border-b border-gray-300  text-gray-900 "
               style={{ transitionDelay: "175ms" }}
             >
               <NavLink
                 to="/search"
-                className="flex w-auto pb-4"
+                className={({ isActive }) =>
+                  `flex items-center gap-2 text-zinc-900 ${
+                    isActive ? "font-semibold text-zinc-900" : "text-zinc-500"
+                  }`
+                }
                 onClick={toggleMenu}
               >
-                🔎 Search
+                <div>
+                  <MagnifyingGlassIcon height={18} width={18} />
+                </div>
+                <span>Search</span>
               </NavLink>
             </li>
             <li
-              className="text-md border-b border-gray-300 font-semibold text-gray-900 "
+              className="text-md border-b border-gray-300  text-gray-900 "
               style={{ transitionDelay: "200ms" }}
             >
               <NavLink
                 to="/categories"
-                className="flex w-auto pb-4"
+                className={({ isActive }) =>
+                  `flex items-center gap-2 text-zinc-900 ${
+                    isActive ? "font-semibold text-zinc-900" : "text-zinc-500"
+                  }`
+                }
                 onClick={toggleMenu}
               >
-                📚 Categories
+                <div>
+                  <RocketIcon height={18} width={18} />
+                </div>
+                <span>Categories</span>
               </NavLink>
             </li>
             {userLoggedIn ? (
               <>
                 <li
-                  className="text-md border-b border-gray-300 font-semibold text-gray-900 "
+                  className="text-md border-b border-gray-300  text-gray-900 "
                   style={{ transitionDelay: "225ms" }}
                 >
-                  <NavLink to="/favorites" onClick={toggleMenu}>
-                    ❤️ Favorites
+                  <NavLink
+                    to="/favorites"
+                    onClick={toggleMenu}
+                    className={({ isActive }) =>
+                      `flex items-center gap-2 text-zinc-900 ${
+                        isActive
+                          ? "font-semibold text-zinc-900"
+                          : "text-zinc-500"
+                      }`
+                    }
+                  >
+                    <div>
+                      <HeartIcon height={18} width={18} />
+                    </div>
+                    <span>Favorites</span>
                   </NavLink>
                 </li>
                 <li
-                  className="text-md border-b border-gray-300 font-semibold text-gray-900 "
+                  className="text-md border-b border-gray-300  text-gray-900 "
                   style={{ transitionDelay: "225ms" }}
                 >
-                  <NavLink to="/recently-viewed" onClick={toggleMenu}>
-                    ⏲ Recently Viewed
+                  <NavLink
+                    to="/recently-viewed"
+                    onClick={toggleMenu}
+                    className={({ isActive }) =>
+                      `flex items-center gap-2 text-zinc-900 ${
+                        isActive
+                          ? "font-semibold text-zinc-900"
+                          : "text-zinc-500"
+                      }`
+                    }
+                  >
+                    <div>
+                      <ClockIcon height={18} width={18} />
+                    </div>
+                    <span>Recently Viewed</span>
                   </NavLink>
                 </li>
                 <li
-                  className="text-md border-b border-gray-300 font-semibold text-gray-900 "
+                  className="text-md border-b border-gray-300  text-gray-900 "
                   style={{ transitionDelay: "250ms" }}
                 >
-                  <NavLink to="/recipes/new" onClick={toggleMenu}>
-                    📝 Add Recipe
+                  <NavLink
+                    to="/recipes/new"
+                    onClick={toggleMenu}
+                    className={({ isActive }) =>
+                      `flex items-center gap-2 text-zinc-900 ${
+                        isActive
+                          ? "font-semibold text-zinc-900"
+                          : "text-zinc-500"
+                      }`
+                    }
+                  >
+                    <div>
+                      <Pencil2Icon height={18} width={18} />
+                    </div>
+                    <span>Add Recipe</span>
                   </NavLink>
                 </li>
                 <li
-                  className="text-md border-b border-gray-300 font-semibold text-gray-900 "
+                  className="text-md border-b border-gray-300  text-gray-900 "
                   style={{ transitionDelay: "250ms" }}
                 >
                   <Form action="/logout" method="post">
-                    <button type="submit" onClick={toggleMenu}>
-                      🔒 Logout
+                    <button
+                      type="submit"
+                      onClick={toggleMenu}
+                      className="flex items-center gap-2"
+                    >
+                      <div>
+                        <ExitIcon height={18} width={18} />
+                      </div>
+                      <span>Log out</span>
                     </button>
                   </Form>
                 </li>
@@ -125,13 +203,16 @@ export default function MobileMenu({
                 className="border-b border-gray-300  "
                 style={{ transitionDelay: "250ms" }}
               >
-                <Form action="/login" method="post">
+                <Form action="/login">
                   <button
                     type="submit"
                     onClick={toggleMenu}
-                    className="text-md font-semibold text-gray-900"
+                    className="text-md  flex items-center gap-2 text-gray-900"
                   >
-                    🔓 Login
+                    <div>
+                      <EnterIcon height={18} width={18} />
+                    </div>
+                    <span>Login</span>
                   </button>
                 </Form>
               </li>
