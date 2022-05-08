@@ -50,6 +50,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       userId,
       recipeId: params.recipeId,
     });
+    console.log("Added recipe to recently viewed");
   }
 
   return json<LoaderData>({ recipeData, notes });

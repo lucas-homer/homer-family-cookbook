@@ -47,7 +47,7 @@ export async function getUserProfile(userId: User["id"]) {
 
 export async function getRecentlyViewed(
   userId: User["id"],
-  sort: "newest" | "oldest" = "newest"
+  sort: "newest" | "oldest" | undefined
 ) {
   return prisma.recipeRead.findMany({
     where: {
@@ -55,7 +55,7 @@ export async function getRecentlyViewed(
     },
     orderBy: [
       {
-        updatedAt: sort === "newest" ? "desc" : "asc",
+        updatedAt: sort === "oldest" ? "asc" : "desc",
       },
     ],
     include: {
