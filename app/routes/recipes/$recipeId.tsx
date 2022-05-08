@@ -247,7 +247,7 @@ export default function Recipe() {
         <ul>
           {recipeData?.ingredients?.map((ingredient) => (
             <li key={ingredient.id} className="mb-3 text-lg">
-              <p>{`-- ${ingredient.quantity} ${ingredient.name}`}</p>
+              <p>{`-- ${ingredient.quantity ?? ""} ${ingredient.name}`}</p>
             </li>
           ))}
         </ul>
