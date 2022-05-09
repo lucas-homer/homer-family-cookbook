@@ -30,7 +30,7 @@ export default function DesktopMenu({
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "k" && (event.metaKey || event.ctrlKey)) {
         event.preventDefault();
-        console.log("made it!");
+
         // if the "search modal" is "open," go back
         if (location.pathname === "/search") {
           if (navType === "PUSH") {
