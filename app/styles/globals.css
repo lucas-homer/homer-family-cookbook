@@ -43,5 +43,6 @@
   #searchModal {
     min-width: 92%;
     margin: 3vh auto !important;
+    padding: 16px !important;
   }
 }
