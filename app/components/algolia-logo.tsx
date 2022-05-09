@@ -1,4 +1,6 @@
-export default function AlgoliaLogo(props) {
+type Props = HTMLOrSVGElement;
+
+export default function AlgoliaLogo(props: Props) {
   return (
     <svg {...props} viewBox="0 0 77 19">
       <path
