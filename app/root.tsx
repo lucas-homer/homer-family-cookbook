@@ -19,6 +19,7 @@ import mobileMenuStylesheetUrl from "./styles/mobile-menu.css";
 import { getUser } from "./session.server";
 import MobileMenu from "./components/mobile-menu";
 import DesktopMenu from "./components/desktop-menu";
+import SearchButton from "./components/search-button";
 
 export const links: LinksFunction = () => {
   return [
@@ -89,6 +90,7 @@ export default function App() {
       <body className="flex h-full min-h-screen flex-col flex-nowrap md:flex-row">
         <header className="md:h-full md:min-h-screen md:overflow-y-auto">
           <MobileMenu userLoggedIn={Boolean(data.user)} />
+          <SearchButton />
           <DesktopMenu userLoggedIn={Boolean(data.user)} />
         </header>
 
@@ -97,11 +99,6 @@ export default function App() {
         </main>
 
         <ScrollRestoration />
-        {/* <script
-          dangerouslySetInnerHTML={{
-            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
-          }}
-        /> */}
         <Scripts />
         <LiveReload />
       </body>
