@@ -140,7 +140,7 @@ export default function Search() {
             className="flex items-center gap-1 text-zinc-300"
           >
             <span className="aa-AlgoliaLabel">Search by</span>
-            <AlgoliaLogo height={18} alt="algolia logo" />
+            <AlgoliaLogo height={18} />
           </a>
         </div>
       </footer>
