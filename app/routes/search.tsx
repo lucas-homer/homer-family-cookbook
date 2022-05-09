@@ -6,6 +6,7 @@ import Dialog from "@reach/dialog";
 import styles from "@reach/dialog/styles.css";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { getAlgoliaIndexName } from "~/utils";
+import AlgoliaLogo from "~/components/algolia-logo";
 
 export const links = () => {
   return [
@@ -52,20 +53,17 @@ export default function Search() {
       id="searchModal"
       className="rounded-lg"
     >
-      <div className="mb-2 flex items-baseline justify-between">
-        <h2 className="text-xl">Search the Site</h2>
+      <div className="mb-4 flex items-baseline justify-between">
+        <h2 className="text-xl">Search</h2>
         <button onClick={onDismiss} className="flex flex-nowrap items-center">
           <span className="mr-1 pb-0.5">esc</span>
           <Cross2Icon width={24} height={24} />
         </button>
       </div>
-      <p className="mb-4">
-        You can search for recipes, categories, or ingredients.
-      </p>
 
       <Autocomplete
         detachedMediaQuery="none"
-        placeholder={"Search"}
+        placeholder={"Recipes, categories, ingredients..."}
         getSources={({ query }: { query: any }) => {
           return [
             {
@@ -133,6 +131,19 @@ export default function Search() {
           ];
         }}
       />
+      <footer className="aa-Footer mt-2 flex items-center justify-end">
+        <div className="aa-AlgoliaLogo">
+          <a
+            href="https://www.algolia.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 text-zinc-300"
+          >
+            <span className="aa-AlgoliaLabel">Search by</span>
+            <AlgoliaLogo height={18} />
+          </a>
+        </div>
+      </footer>
     </Dialog>
   );
 }

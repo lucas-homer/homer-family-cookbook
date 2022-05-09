@@ -1,6 +1,6 @@
-type Props = HTMLOrSVGElement;
+import { SVGProps } from "react";
 
-export default function AlgoliaLogo(props: Props) {
+export default function AlgoliaLogo(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...props} viewBox="0 0 77 19">
       <path

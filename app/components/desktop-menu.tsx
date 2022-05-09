@@ -8,18 +8,57 @@ import {
   Pencil2Icon,
   RocketIcon,
 } from "@radix-ui/react-icons";
-import { Form, NavLink } from "@remix-run/react";
+import {
+  Form,
+  NavLink,
+  useLocation,
+  useNavigate,
+  useNavigationType,
+} from "@remix-run/react";
+import { useEffect } from "react";
 
 export default function DesktopMenu({
   userLoggedIn,
 }: {
   userLoggedIn: boolean;
 }) {
+  const navigate = useNavigate();
+  const navType = useNavigationType();
+  const location = useLocation();
+
+  useEffect(() => {
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "k" && (event.metaKey || event.ctrlKey)) {
+        event.preventDefault();
+
+        // if the "search modal" is "open," go back
+        if (location.pathname === "/search") {
+          if (navType === "PUSH") {
+            navigate(-1);
+          } else {
+            // otherwise, just send users to home route, or else going 'back' takes them outside the app, which is unhelpful for the 'onDismiss' event
+            navigate("/");
+          }
+        }
+
+        // go to search
+        navigate("/search");
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [location.pathname, navType, navigate]);
+
   const getNavLinkStyles = (isActive: boolean) => {
     return `flex w-full items-center gap-3  py-4 pl-8 text-xl ${
       isActive ? "bg-white font-semibold text-zinc-700" : "text-zinc-500"
     }`;
   };
+
   return (
     <div className="hidden h-full w-80 bg-gray-50 md:block">
       <h3 className="mb-12 p-8 font-extrabold text-teal-700">
@@ -48,7 +87,9 @@ export default function DesktopMenu({
               <div>
                 <MagnifyingGlassIcon height={18} width={18} />
               </div>
-              <span>Search</span>
+              <span>
+                Search <span className="">(⌘ K)</span>{" "}
+              </span>
             </NavLink>
           </li>
           <li>
