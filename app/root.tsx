@@ -102,11 +102,11 @@ export default function App() {
           <DesktopMenu userLoggedIn={Boolean(data.user)} />
         </header>
 
-        <main className="flex-1 overflow-y-auto p-6 md:px-8">
-          <SkipNavContent>
+        <SkipNavContent className="flex flex-1 flex-col overflow-y-auto">
+          <main className="flex-1 p-6 md:px-8">
             <Outlet />
-          </SkipNavContent>
-        </main>
+          </main>
+        </SkipNavContent>
 
         <ScrollRestoration />
         <Scripts />
