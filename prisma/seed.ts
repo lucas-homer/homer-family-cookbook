@@ -6,9 +6,7 @@ const prisma = new PrismaClient();
 async function seed() {
   const email = "lucas@gmail.com";
   // cleanup the existing database
-  await prisma.user.delete({ where: { email } }).catch(() => {
-    // no worries if it doesn't exist yet
-  });
+  await prisma.user.deleteMany({});
   await prisma.category.deleteMany({});
   await prisma.ingredient.deleteMany({});
   await prisma.recipe.deleteMany({});
