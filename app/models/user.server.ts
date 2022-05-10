@@ -71,7 +71,7 @@ export async function getRecentlyViewed(
 export async function createUser(
   email: User["email"],
   password: string,
-  firstName: User["firstName"],
+  firstName: User["firstName"] | null,
   lastName: string | null
 ) {
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -79,7 +79,7 @@ export async function createUser(
   return prisma.user.create({
     data: {
       email,
-      firstName,
+      ...(firstName && { firstName }),
       ...(lastName && { lastName }),
       password: {
         create: {
@@ -121,4 +121,20 @@ export async function verifyLogin(
   const { password: _password, ...userWithoutPassword } = userWithPassword;
 
   return userWithoutPassword;
+}
+
+export async function updateUserName(
+  userId: User["id"],
+  firstName: User["firstName"],
+  lastName: User["lastName"]
+) {
+  return prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      firstName,
+      lastName,
+    },
+  });
 }
