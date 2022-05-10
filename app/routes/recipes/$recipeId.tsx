@@ -1,4 +1,5 @@
 import { Note } from "@prisma/client";
+import { HeartFilledIcon, HeartIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import {
   ActionFunction,
   json,
@@ -174,28 +175,29 @@ export default function Recipe() {
   const createNoteContentRef = useRef<HTMLTextAreaElement>(null);
 
   const fetcher = useFetcher();
-  const actionId = fetcher.submission?.formData.get("actionId");
+  const { state, submission } = fetcher;
+  const actionId = submission?.formData.get("actionId");
   const isCreatingNote = actionId === actionIds.addNote;
   const isUpdatingFavorite =
     actionId === actionIds.favorite || actionId === actionIds.unfavorite;
 
   // after saving new note, reset and focus back into the new note input
   useEffect(() => {
-    if (!isCreatingNote && fetcher.type !== "init") {
+    if (state === "loading" && isCreatingNote) {
       createNoteContentRef.current?.focus();
       createNoteFormRef.current?.reset();
     }
-  }, [isCreatingNote, fetcher.type]);
+  }, [isCreatingNote, state]);
 
   const isRecipeFavorited =
     recipeData?.favoritedUsers?.some((item) => item.userId === user?.id) ??
     false;
 
   const favoriteButtonText = isUpdatingFavorite
-    ? "Saving..."
+    ? "saving..."
     : isRecipeFavorited
-    ? "REMOVE FROM FAVORITES"
-    : "FAVORITE THIS RECIPE";
+    ? "Unfavorite"
+    : "Favorite";
 
   const isUserAuthor = recipeData?.userId === user?.id;
   const isUserAdmin = user?.role === "ADMIN";
@@ -205,31 +207,40 @@ export default function Recipe() {
       {/* ****RECIPE*** */}
       <section className="">
         <div className="mb-4">
-          <div className="flex justify-between">
-            <h1 className="mb-2 text-4xl">{recipeData?.title}</h1>
+          <h1 className="mb-2 text-4xl">{recipeData?.title}</h1>
+          <div className="flex items-center justify-start gap-6">
             {isUserAuthor || isUserAdmin ? (
               <Link
                 to={`/recipes/${recipeData?.id}/edit`}
-                className="underline underline-offset-4"
+                className="text-md flex items-center gap-1 text-zinc-900 underline-offset-4"
               >
-                Edit Recipe
+                <div>
+                  <Pencil1Icon />
+                </div>
+                <span>Edit</span>
               </Link>
             ) : null}
+            {user ? (
+              <fetcher.Form method="post">
+                <button
+                  disabled={isUpdatingFavorite}
+                  type="submit"
+                  name="actionId"
+                  value={
+                    isRecipeFavorited
+                      ? actionIds.unfavorite
+                      : actionIds.favorite
+                  }
+                  className="text-md flex items-center gap-1 text-zinc-900"
+                >
+                  <div>
+                    {isRecipeFavorited ? <HeartFilledIcon /> : <HeartIcon />}
+                  </div>
+                  <span>{favoriteButtonText}</span>
+                </button>
+              </fetcher.Form>
+            ) : null}
           </div>
-          {user ? (
-            <fetcher.Form method="post">
-              <button
-                disabled={isUpdatingFavorite}
-                type="submit"
-                name="actionId"
-                value={
-                  isRecipeFavorited ? actionIds.unfavorite : actionIds.favorite
-                }
-              >
-                {favoriteButtonText}
-              </button>
-            </fetcher.Form>
-          ) : null}
         </div>
         {recipeData?.background ? (
           <p className="prose-lg mb-8 max-w-lg whitespace-pre-line italic">
