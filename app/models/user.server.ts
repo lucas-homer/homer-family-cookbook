@@ -71,7 +71,7 @@ export async function getRecentlyViewed(
 export async function createUser(
   email: User["email"],
   password: string,
-  firstName: User["firstName"] | null,
+  firstName: User["firstName"],
   lastName: string | null
 ) {
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -79,7 +79,7 @@ export async function createUser(
   return prisma.user.create({
     data: {
       email,
-      ...(firstName && { firstName }),
+      firstName,
       ...(lastName && { lastName }),
       password: {
         create: {
