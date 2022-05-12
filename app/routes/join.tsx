@@ -22,6 +22,7 @@ interface ActionData {
   errors: {
     email?: string;
     password?: string;
+    firstName?: string;
   };
 }
 
@@ -49,7 +50,14 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (password.length < 8) {
     return json<ActionData>(
-      { errors: { password: "Password is too short" } },
+      { errors: { password: "Password must be at least 8 characters." } },
+      { status: 400 }
+    );
+  }
+
+  if (typeof firstName !== "string" || !firstName.trim().length) {
+    return json<ActionData>(
+      { errors: { firstName: "First name required" } },
       { status: 400 }
     );
   }
@@ -163,8 +171,15 @@ export default function Join() {
                 id="firstName"
                 name="firstName"
                 type="text"
+                aria-invalid={actionData?.errors?.firstName ? true : undefined}
+                aria-describedby="firstName-error"
                 className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
               />
+              {actionData?.errors?.firstName && (
+                <div className="pt-1 text-red-700" id="firstName-error">
+                  {actionData.errors.firstName}
+                </div>
+              )}{" "}
             </div>
           </div>
           <div>

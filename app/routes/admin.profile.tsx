@@ -7,7 +7,7 @@ import {
 import { Form, Link, useActionData, useLoaderData } from "@remix-run/react";
 
 import { getUser, requireAdminUser, requireUser } from "~/session.server";
-// import { badRequest } from "~/errors.server";
+import { badRequest } from "~/errors.server";
 import { updateUserName } from "~/models/user.server";
 
 type LoaderData = {
@@ -32,11 +32,11 @@ type ActionData = {
   };
 };
 
-// function validateFirstName(name: string | null) {
-//   if (typeof name !== "string" || !name.trim().length) {
-//     return "First Name required";
-//   }
-// }
+function validateFirstName(name: string | null) {
+  if (typeof name !== "string" || !name.trim().length) {
+    return "First Name required";
+  }
+}
 
 export const action: ActionFunction = async ({ request, params }) => {
   await requireAdminUser(request);
@@ -50,16 +50,16 @@ export const action: ActionFunction = async ({ request, params }) => {
   let firstName = form.get("firstName") as string | null;
   let lastName = form.get("lastName") as string | null;
 
-  // const fieldErrors = {
-  //   firstName: validateFirstName(firstName),
-  // };
-  // const fields = { firstName };
+  const fieldErrors = {
+    firstName: validateFirstName(firstName),
+  };
+  const fields = { firstName };
 
-  // if (Object.values(fieldErrors).some(Boolean)) {
-  //   return badRequest({ fieldErrors, fields });
-  // }
+  if (Object.values(fieldErrors).some(Boolean)) {
+    return badRequest({ fieldErrors, fields });
+  }
 
-  await updateUserName(user?.id, firstName, lastName || null);
+  await updateUserName(user?.id, firstName as string, lastName || null);
 
   return redirect(`/admin/profile`);
 };
