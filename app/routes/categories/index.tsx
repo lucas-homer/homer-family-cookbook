@@ -1,3 +1,5 @@
+import { MetaFunction } from "@remix-run/node";
+
 export default function CategoriesIndex() {
   return (
     <section>
@@ -5,3 +7,10 @@ export default function CategoriesIndex() {
     </section>
   );
 }
+
+export const meta: MetaFunction = () => {
+  return {
+    title: `Recipes by Category`,
+    description: `Browse recipes for each category`,
+  };
+};

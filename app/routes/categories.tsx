@@ -1,4 +1,4 @@
-import { json, LoaderFunction } from "@remix-run/node";
+import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import { getCategories } from "~/models/category.server";
 
@@ -10,6 +10,13 @@ export const loader: LoaderFunction = async () => {
   return json<LoaderData>({
     categories: await getCategories(),
   });
+};
+
+export const meta: MetaFunction = () => {
+  return {
+    title: `Recipes by category`,
+    description: `Browse recipes for each category`,
+  };
 };
 
 export default function Categories() {

@@ -8,6 +8,7 @@ import {
   ActionFunction,
   LinksFunction,
   LoaderFunction,
+  MetaFunction,
   redirect,
 } from "@remix-run/node";
 import invariant from "tiny-invariant";
@@ -50,6 +51,23 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   return {
     recipeData,
     categories,
+  };
+};
+
+export const meta: MetaFunction = ({
+  data,
+}: {
+  data: LoaderData | undefined;
+}) => {
+  if (!data) {
+    return {
+      title: "No recipe",
+      description: "No recipe found",
+    };
+  }
+  return {
+    title: `Edit "${data.recipeData.title}"`,
+    description: `Make changes to recipe "${data.recipeData.title}`,
   };
 };
 

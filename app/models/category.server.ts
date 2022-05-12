@@ -35,3 +35,14 @@ export async function createCategory(name: Category["name"]) {
     },
   });
 }
+
+export async function getCategoryNameById(categoryId: Category["id"]) {
+  return prisma.category.findUnique({
+    where: {
+      id: categoryId,
+    },
+    select: {
+      name: true,
+    },
+  });
+}

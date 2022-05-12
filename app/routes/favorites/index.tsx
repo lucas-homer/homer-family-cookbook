@@ -1,22 +1,41 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
-import { json, LoaderFunction } from "@remix-run/node";
+import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import RecipeSummary from "~/components/recipe-summary";
 import { getFavoriteRecipesByCategory } from "~/models/recipe.server";
-import { requireUserId } from "~/session.server";
+import { requireUser } from "~/session.server";
 
 type LoaderData = {
   recipes: Awaited<ReturnType<typeof getFavoriteRecipesByCategory>>;
+  user: Awaited<ReturnType<typeof requireUser>>;
 };
 
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const userId = await requireUserId(request);
+  const user = await requireUser(request);
   const url = new URL(request.url);
   const sort = url.searchParams.get("sort") as "asc" | "desc" | undefined;
 
   return json<LoaderData>({
-    recipes: await getFavoriteRecipesByCategory(userId, null, sort),
+    recipes: await getFavoriteRecipesByCategory(user.id, null, sort),
+    user,
   });
+};
+
+export const meta: MetaFunction = ({
+  data,
+}: {
+  data: LoaderData | undefined;
+}) => {
+  if (!data) {
+    return {
+      title: "No favorites",
+      description: "No favorite recipes found",
+    };
+  }
+  return {
+    title: `${data.user.firstName}'s Favorite Recipes`,
+    description: `See the extra special ones`,
+  };
 };
 
 export default function FavoriteCategoryID() {
