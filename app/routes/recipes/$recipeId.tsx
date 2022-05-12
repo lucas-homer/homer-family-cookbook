@@ -4,6 +4,7 @@ import {
   ActionFunction,
   json,
   LoaderFunction,
+  MetaFunction,
   redirect,
 } from "@remix-run/node";
 import { Link, useFetcher, useLoaderData, useParams } from "@remix-run/react";
@@ -55,6 +56,25 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   }
 
   return json<LoaderData>({ recipeData, notes });
+};
+
+export const meta: MetaFunction = ({
+  data,
+}: {
+  data: LoaderData | undefined;
+}) => {
+  if (!data) {
+    return {
+      title: "No recipe",
+      description: "No recipe found",
+    };
+  }
+  return {
+    title: `${data.recipeData?.title}`,
+    description: `By ${data.recipeData?.author.firstName} ${
+      data.recipeData?.author.lastName ?? ""
+    }`,
+  };
 };
 
 export const actionIds = {

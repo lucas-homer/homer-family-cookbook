@@ -7,6 +7,7 @@ import styles from "@reach/dialog/styles.css";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { getAlgoliaIndexName } from "~/utils";
 import AlgoliaLogo from "~/components/algolia-logo";
+import { MetaFunction } from "@remix-run/node";
 
 export const links = () => {
   return [
@@ -19,6 +20,13 @@ export const links = () => {
       href: styles,
     },
   ];
+};
+
+export const meta: MetaFunction = () => {
+  return {
+    title: `Search`,
+    description: `Search for recipes by title, categories, or ingredients`,
+  };
 };
 
 const searchClient = algoliasearch(

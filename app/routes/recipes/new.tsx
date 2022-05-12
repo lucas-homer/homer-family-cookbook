@@ -7,6 +7,7 @@ import {
   ActionFunction,
   LinksFunction,
   LoaderFunction,
+  MetaFunction,
   redirect,
 } from "@remix-run/node";
 import {
@@ -30,6 +31,13 @@ export const links: LinksFunction = () => {
       href: styles,
     },
   ];
+};
+
+export const meta: MetaFunction = () => {
+  return {
+    title: `Create Recipe`,
+    description: `Add a recipe to the Homer Family Cookbook`,
+  };
 };
 
 type LoaderData = {

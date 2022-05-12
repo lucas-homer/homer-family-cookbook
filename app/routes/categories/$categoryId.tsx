@@ -1,12 +1,14 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
-import { json, LoaderFunction } from "@remix-run/node";
+import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import RecipeSummary from "~/components/recipe-summary";
+import { getCategoryNameById } from "~/models/category.server";
 import { getRecipesByCategory } from "~/models/recipe.server";
 
 type LoaderData = {
   recipes: Awaited<ReturnType<typeof getRecipesByCategory>>;
+  categoryName: Awaited<ReturnType<typeof getCategoryNameById>>;
 };
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -16,7 +18,26 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   return json<LoaderData>({
     recipes: await getRecipesByCategory(params.categoryId, sort),
+    categoryName: await getCategoryNameById(params.categoryId),
   });
+};
+
+export const meta: MetaFunction = ({
+  data,
+}: {
+  data: LoaderData | undefined;
+}) => {
+  if (!data) {
+    return {
+      title: "No recipes",
+      description: "No recipes for the provided category",
+    };
+  }
+
+  return {
+    title: `Recipes by category - ${data?.categoryName}`,
+    description: `All the recipes in the ${data.categoryName} category`,
+  };
 };
 
 export default function CategoryID() {

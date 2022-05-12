@@ -1,4 +1,4 @@
-import { json, LoaderFunction } from "@remix-run/node";
+import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { NavLink, Outlet, useLoaderData, useLocation } from "@remix-run/react";
 import { getFavoriteCategories } from "~/models/category.server";
 import { requireUserId } from "~/session.server";
@@ -13,6 +13,13 @@ export const loader: LoaderFunction = async ({ request }) => {
   return json<LoaderData>({
     favoriteCategories,
   });
+};
+
+export const meta: MetaFunction = () => {
+  return {
+    title: `Favorites`,
+    description: `Browse your favorite recipes`,
+  };
 };
 
 export default function Favorites() {

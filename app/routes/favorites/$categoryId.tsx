@@ -1,13 +1,15 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
-import { json, LoaderFunction } from "@remix-run/node";
+import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import RecipeSummary from "~/components/recipe-summary";
 import { getFavoriteRecipesByCategory } from "~/models/recipe.server";
+import { getCategoryNameById } from "~/models/category.server";
 import { requireUserId } from "~/session.server";
 
 type LoaderData = {
   recipes: Awaited<ReturnType<typeof getFavoriteRecipesByCategory>>;
+  categoryName: Awaited<ReturnType<typeof getCategoryNameById>>;
 };
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -22,7 +24,26 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       params.categoryId,
       sort
     ),
+    categoryName: await getCategoryNameById(params.categoryId),
   });
+};
+
+export const meta: MetaFunction = ({
+  data,
+}: {
+  data: LoaderData | undefined;
+}) => {
+  if (!data) {
+    return {
+      title: "No favorites",
+      description: "No favorite recipes found",
+    };
+  }
+
+  return {
+    title: `Favorites by category - ${data?.categoryName}`,
+    description: `All your favorite recipes in the ${data.categoryName} category`,
+  };
 };
 
 export default function FavoriteCategoryID() {

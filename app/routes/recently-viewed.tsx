@@ -1,22 +1,36 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
-import { json, LoaderFunction } from "@remix-run/node";
+import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import RecipeSummary from "~/components/recipe-summary";
 import { getRecentlyViewed } from "~/models/user.server";
-import { requireUserId } from "~/session.server";
+import { requireUser } from "~/session.server";
 
 type LoaderData = {
   recipes: Awaited<ReturnType<typeof getRecentlyViewed>>;
+  user: Awaited<ReturnType<typeof requireUser>>;
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const userId = await requireUserId(request);
+  const user = await requireUser(request);
   const url = new URL(request.url);
   const sort = url.searchParams.get("sort") as "newest" | "oldest" | undefined;
 
-  const recipes = await getRecentlyViewed(userId, sort);
+  const recipes = await getRecentlyViewed(user.id, sort);
 
-  return json<LoaderData>({ recipes });
+  return json<LoaderData>({ recipes, user });
+};
+
+export const meta: MetaFunction = ({ data }: { data: LoaderData }) => {
+  if (!data) {
+    return {
+      title: `No recipes found`,
+      description: `No recently viewed recipes found`,
+    };
+  }
+  return {
+    title: `${data.user.firstName}'s Recently Viewed`,
+    description: `Browse recipes you recently viewed`,
+  };
 };
 
 export default function RecentlyViewed() {
