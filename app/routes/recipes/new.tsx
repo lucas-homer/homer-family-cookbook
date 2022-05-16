@@ -12,7 +12,9 @@ import {
 } from "@remix-run/node";
 import {
   Form,
+  Link,
   useActionData,
+  useCatch,
   useLoaderData,
   useNavigate,
 } from "@remix-run/react";
@@ -23,6 +25,7 @@ import { createRecipe } from "~/models/recipe.server";
 import { requireUserId } from "~/session.server";
 import { badRequest } from "~/errors.server";
 import { updateAlgolia } from "~/algolia.server";
+import BoundaryMessage from "~/components/boundary-message";
 
 export const links: LinksFunction = () => {
   return [
@@ -496,5 +499,28 @@ export default function CreateRecipe() {
         </div>
       </Form>
     </section>
+  );
+}
+
+export function CatchBoundary() {
+  const caught = useCatch();
+
+  if (caught.status === 401) {
+    return (
+      <BoundaryMessage>
+        <p>You must be logged in to create a recipe.</p>
+        <Link to="/login">Login</Link>
+      </BoundaryMessage>
+    );
+  }
+}
+
+export function ErrorBoundary() {
+  return (
+    <BoundaryMessage>
+      <p className="text-xl">
+        Something unexpected went wrong. Sorry about that.
+      </p>
+    </BoundaryMessage>
   );
 }

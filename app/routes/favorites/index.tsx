@@ -1,6 +1,12 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
+import {
+  Link,
+  useCatch,
+  useLoaderData,
+  useSearchParams,
+} from "@remix-run/react";
+import BoundaryMessage from "~/components/boundary-message";
 import RecipeSummary from "~/components/recipe-summary";
 import { getFavoriteRecipesByCategory } from "~/models/recipe.server";
 import { requireUser } from "~/session.server";
@@ -73,5 +79,31 @@ export default function FavoriteCategoryID() {
     </>
   ) : (
     <p className="text-md my-6 text-zinc-500">No recipes in this category</p>
+  );
+}
+
+export function CatchBoundary() {
+  const caught = useCatch();
+  switch (caught.status) {
+    case 401: {
+      return (
+        <BoundaryMessage>
+          <p className="text-xl">Sorry, but that's unauthorized around here.</p>
+        </BoundaryMessage>
+      );
+    }
+    default: {
+      throw new Error(`Unhandled error: ${caught.status}`);
+    }
+  }
+}
+
+export function ErrorBoundary() {
+  return (
+    <BoundaryMessage>
+      <p className="text-xl">
+        {`There was an error loading favorite recipes.`}
+      </p>
+    </BoundaryMessage>
   );
 }
