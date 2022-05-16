@@ -7,9 +7,16 @@ import {
   MetaFunction,
   redirect,
 } from "@remix-run/node";
-import { Link, useFetcher, useLoaderData, useParams } from "@remix-run/react";
+import {
+  Link,
+  useCatch,
+  useFetcher,
+  useLoaderData,
+  useParams,
+} from "@remix-run/react";
 import { useEffect, useRef } from "react";
 import invariant from "tiny-invariant";
+import BoundaryMessage from "~/components/boundary-message";
 import NoteItem from "~/components/note";
 import { badRequest } from "~/errors.server";
 import {
@@ -374,5 +381,42 @@ export default function Recipe() {
         </ul>
       </section>
     </div>
+  );
+}
+
+export function CatchBoundary() {
+  const caught = useCatch();
+  const params = useParams();
+  switch (caught.status) {
+    case 404: {
+      return (
+        <BoundaryMessage>
+          <p className="text-xl">
+            The Recipe ID - {params.recipeId} - does not exist!
+          </p>
+        </BoundaryMessage>
+      );
+    }
+    case 401: {
+      return (
+        <BoundaryMessage>
+          <p className="text-xl">Sorry, but that's unauthorized around here.</p>
+        </BoundaryMessage>
+      );
+    }
+    default: {
+      throw new Error(`Unhandled error: ${caught.status}`);
+    }
+  }
+}
+
+export function ErrorBoundary() {
+  const { recipeId } = useParams();
+  return (
+    <BoundaryMessage>
+      <p className="text-xl">
+        {`There was an error loading the recipe with the Recipe id -- [${recipeId}].`}
+      </p>
+    </BoundaryMessage>
   );
 }
