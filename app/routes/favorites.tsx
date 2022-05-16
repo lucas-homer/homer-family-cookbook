@@ -46,7 +46,7 @@ export default function Favorites() {
             <NavLink
               to={category.id}
               className={({ isActive }) =>
-                `block ${
+                `block capitalize ${
                   isActive ? "border-b-2 border-black" : "text-zinc-500"
                 }`
               }

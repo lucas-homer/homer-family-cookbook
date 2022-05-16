@@ -1,11 +1,18 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
+import {
+  Link,
+  useCatch,
+  useLoaderData,
+  useParams,
+  useSearchParams,
+} from "@remix-run/react";
 import invariant from "tiny-invariant";
 import RecipeSummary from "~/components/recipe-summary";
 import { getFavoriteRecipesByCategory } from "~/models/recipe.server";
 import { getCategoryNameById } from "~/models/category.server";
 import { requireUserId } from "~/session.server";
+import BoundaryMessage from "~/components/boundary-message";
 
 type LoaderData = {
   recipes: Awaited<ReturnType<typeof getFavoriteRecipesByCategory>>;
@@ -18,13 +25,20 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url);
   const sort = url.searchParams.get("sort") as "asc" | "desc" | undefined;
 
+  const [recipes, categoryName] = await Promise.all([
+    await getFavoriteRecipesByCategory(userId, params.categoryId, sort),
+    await getCategoryNameById(params.categoryId),
+  ]);
+
+  if (!recipes.length || !categoryName) {
+    throw new Response("", {
+      status: 404,
+    });
+  }
+
   return json<LoaderData>({
-    recipes: await getFavoriteRecipesByCategory(
-      userId,
-      params.categoryId,
-      sort
-    ),
-    categoryName: await getCategoryNameById(params.categoryId),
+    recipes,
+    categoryName,
   });
 };
 
@@ -81,5 +95,42 @@ export default function FavoriteCategoryID() {
     </>
   ) : (
     <p className="text-md my-6 text-zinc-500">No recipes in this category</p>
+  );
+}
+
+export function CatchBoundary() {
+  const caught = useCatch();
+  const params = useParams();
+  switch (caught.status) {
+    case 404: {
+      return (
+        <BoundaryMessage>
+          <p className="text-xl">
+            The Category ID - {params.categoryId} - does not exist!
+          </p>
+        </BoundaryMessage>
+      );
+    }
+    case 401: {
+      return (
+        <BoundaryMessage>
+          <p className="text-xl">Sorry, but that's unauthorized around here.</p>
+        </BoundaryMessage>
+      );
+    }
+    default: {
+      throw new Error(`Unhandled error: ${caught.status}`);
+    }
+  }
+}
+
+export function ErrorBoundary() {
+  const { categoryId } = useParams();
+  return (
+    <BoundaryMessage>
+      <p className="text-xl">
+        {`There was an error loading favorite recipes with the Category id -- [${categoryId}].`}
+      </p>
+    </BoundaryMessage>
   );
 }

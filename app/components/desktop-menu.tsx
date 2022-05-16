@@ -54,14 +54,16 @@ export default function DesktopMenu({
   }, [location.pathname, navType, navigate]);
 
   const getNavLinkStyles = (isActive: boolean) => {
-    return `flex w-full items-center gap-3  py-4 pl-8 text-xl ${
-      isActive ? "bg-white font-semibold text-zinc-700" : "text-zinc-500"
+    return `flex items-center gap-3 mx-6 my-3 px-4 py-3 text-xl ${
+      isActive
+        ? "bg-white font-semibold text-zinc-700 rounded-lg"
+        : "text-zinc-500"
     }`;
   };
 
   return (
     <div className="hidden h-full w-80 bg-gray-50 md:block">
-      <h3 className="mb-12 p-8 font-extrabold text-teal-700">
+      <h3 className="mb-12 p-10 font-extrabold text-teal-700">
         Homer Family Cookbook
       </h3>
       <nav className="mb-12">
@@ -142,7 +144,7 @@ export default function DesktopMenu({
                 <Form action="/logout" method="post">
                   <button
                     type="submit"
-                    className="flex w-full items-center gap-3  py-4 pl-8 text-left text-xl text-zinc-500"
+                    className="mx-6 my-3  flex items-center  gap-3 py-3 px-4 text-left text-xl text-zinc-500"
                   >
                     <div>
                       <ExitIcon height={18} width={18} />
@@ -157,7 +159,7 @@ export default function DesktopMenu({
               <Form action="/login">
                 <button
                   type="submit"
-                  className="flex w-full items-center gap-3   py-4 pl-8 text-left text-xl text-zinc-500"
+                  className="mx-6  my-3 flex  items-center gap-3 px-4 py-3 text-left text-xl text-zinc-500"
                 >
                   <div>
                     <EnterIcon height={18} width={18} />

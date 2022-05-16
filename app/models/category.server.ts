@@ -7,25 +7,41 @@ export async function getCategories() {
 
 // get all categories of recipes favorited by user
 export async function getFavoriteCategories(userId: User["id"]) {
-  const allCategories = await prisma.category.findMany({
+  // get user's favorite recipes
+  const favoriteRecipes = await prisma.usersFavoriteRecipes.findMany({
+    where: {
+      userId,
+    },
     include: {
-      recipes: {
-        select: {
-          favoritedUsers: {
-            where: {
-              userId: userId,
-            },
-          },
+      recipe: {
+        include: {
+          categories: true,
         },
       },
     },
   });
 
-  const filtered = allCategories.filter((currentCategory) => {
-    return currentCategory.recipes.length > 0;
+  // reduce down favoriteRecipes' categories to deduped list of categories
+  const dedupedCategories = favoriteRecipes.reduce((acc, currentRecipe) => {
+    const recipeCategories = currentRecipe.recipe.categories;
+
+    const newCategories = recipeCategories.filter(
+      (category) => !acc.some((item) => item.id === category.id)
+    );
+
+    if (newCategories.length) {
+      acc.push(...newCategories);
+    }
+
+    return acc;
+  }, [] as Array<Category>);
+
+  // sort asc
+  const sorted = dedupedCategories.sort((a, b) => {
+    return a.name < b.name ? -1 : 1;
   });
 
-  return filtered;
+  return sorted;
 }
 
 export async function createCategory(name: Category["name"]) {
