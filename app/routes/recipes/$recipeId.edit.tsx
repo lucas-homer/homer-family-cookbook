@@ -21,10 +21,10 @@ import {
   GetRecipeResponse,
   updateRecipe,
 } from "~/models/recipe.server";
-import { requireAuthorOrAdmin } from "~/session.server";
-import { badRequest } from "~/errors.server";
+import { requireAuthorOrAdmin } from "~/lib/session.server";
+import { badRequest } from "~/lib/errors.server";
 import { CheckIcon, Cross2Icon } from "@radix-ui/react-icons";
-import { updateAlgolia } from "~/algolia.server";
+import { updateAlgolia } from "~/lib/algolia.server";
 
 export const links: LinksFunction = () => {
   return [

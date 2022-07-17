@@ -1,7 +1,7 @@
 import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { NavLink, Outlet, useLoaderData, useLocation } from "@remix-run/react";
 import { getFavoriteCategories } from "~/models/category.server";
-import { requireUserId } from "~/session.server";
+import { requireUserId } from "~/lib/session.server";
 
 type LoaderData = {
   favoriteCategories: Awaited<ReturnType<typeof getFavoriteCategories>>;

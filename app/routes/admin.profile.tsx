@@ -6,8 +6,8 @@ import {
 } from "@remix-run/node";
 import { Form, Link, useActionData, useLoaderData } from "@remix-run/react";
 
-import { getUser, requireAdminUser, requireUser } from "~/session.server";
-import { badRequest } from "~/errors.server";
+import { getUser, requireAdminUser, requireUser } from "~/lib/session.server";
+import { badRequest } from "~/lib/errors.server";
 import { updateUserName } from "~/models/user.server";
 
 type LoaderData = {

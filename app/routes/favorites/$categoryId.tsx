@@ -11,7 +11,7 @@ import invariant from "tiny-invariant";
 import RecipeSummary from "~/components/recipe-summary";
 import { getFavoriteRecipesByCategory } from "~/models/recipe.server";
 import { getCategoryNameById } from "~/models/category.server";
-import { requireUserId } from "~/session.server";
+import { requireUserId } from "~/lib/session.server";
 import BoundaryMessage from "~/components/boundary-message";
 
 type LoaderData = {

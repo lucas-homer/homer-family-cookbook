@@ -22,9 +22,9 @@ import { CheckIcon, Cross2Icon } from "@radix-ui/react-icons";
 
 import { getCategories } from "~/models/category.server";
 import { createRecipe } from "~/models/recipe.server";
-import { requireUserId } from "~/session.server";
-import { badRequest } from "~/errors.server";
-import { updateAlgolia } from "~/algolia.server";
+import { requireUserId } from "~/lib/session.server";
+import { badRequest } from "~/lib/errors.server";
+import { updateAlgolia } from "~/lib/algolia.server";
 import BoundaryMessage from "~/components/boundary-message";
 
 export const links: LinksFunction = () => {
