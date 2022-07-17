@@ -1,7 +1,7 @@
 import type { Password, User } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
-import { prisma } from "~/db.server";
+import { prisma } from "~/lib/db.server";
 
 export type { User } from "@prisma/client";
 
@@ -94,6 +94,23 @@ export async function deleteUserByEmail(email: User["email"]) {
   return prisma.user.delete({ where: { email } });
 }
 
+// export async function requestResetPassword(email: User["email"]) {
+//   const user = await getUserByEmail(email);
+//   if (!user) {
+//     return null;
+//   }
+//   // TODO: send email with reset password link
+//   try {
+//     await sendResetEmail(user)
+//   } catch(error: unknown) {
+//     console.error(error)
+//   }
+
+//   }
+//   // TODO: store reset password token in database
+//   // TODO: return reset password token
+
+//
 export async function verifyLogin(
   email: User["email"],
   password: Password["hash"]
