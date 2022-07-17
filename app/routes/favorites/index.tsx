@@ -9,7 +9,7 @@ import {
 import BoundaryMessage from "~/components/boundary-message";
 import RecipeSummary from "~/components/recipe-summary";
 import { getFavoriteRecipesByCategory } from "~/models/recipe.server";
-import { requireUser } from "~/session.server";
+import { requireUser } from "~/lib/session.server";
 
 type LoaderData = {
   recipes: Awaited<ReturnType<typeof getFavoriteRecipesByCategory>>;

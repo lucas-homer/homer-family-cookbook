@@ -5,9 +5,10 @@ import { Autocomplete } from "~/components/autocomplete";
 import Dialog from "@reach/dialog";
 import styles from "@reach/dialog/styles.css";
 import { Cross2Icon } from "@radix-ui/react-icons";
-import { getAlgoliaIndexName } from "~/utils";
+import { getAlgoliaIndexName } from "~/lib/utils";
 import AlgoliaLogo from "~/components/algolia-logo";
 import { MetaFunction } from "@remix-run/node";
+import React from "react";
 
 export const links = () => {
   return [
@@ -107,8 +108,8 @@ export default function Search() {
                             {/* <components.Snippet
                                 hit={item}
                                 attribute="title"
-                              />
-                              <components.Snippet
+                                />
+                                <components.Snippet
                                 hit={item}
                                 attribute="ingredients[]"
                               /> */}

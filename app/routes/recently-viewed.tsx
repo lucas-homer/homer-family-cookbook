@@ -3,7 +3,7 @@ import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import RecipeSummary from "~/components/recipe-summary";
 import { getRecentlyViewed } from "~/models/user.server";
-import { requireUser } from "~/session.server";
+import { requireUser } from "~/lib/session.server";
 
 type LoaderData = {
   recipes: Awaited<ReturnType<typeof getRecentlyViewed>>;

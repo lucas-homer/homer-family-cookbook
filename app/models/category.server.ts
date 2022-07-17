@@ -1,4 +1,4 @@
-import { prisma } from "~/db.server";
+import { prisma } from "~/lib/db.server";
 import { Category, User } from "@prisma/client";
 
 export async function getCategories() {

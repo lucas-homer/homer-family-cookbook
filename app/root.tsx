@@ -18,7 +18,7 @@ import skipNavStyles from "@reach/skip-nav/styles.css";
 import tailwindStylesheetUrl from "./styles/tailwind.css";
 import globalStylesheetUrl from "./styles/globals.css";
 import mobileMenuStylesheetUrl from "./styles/mobile-menu.css";
-import { getUser } from "./session.server";
+import { getUser } from "./lib/session.server";
 import MobileMenu from "./components/mobile-menu";
 import DesktopMenu from "./components/desktop-menu";
 import SearchButton from "./components/search-button";

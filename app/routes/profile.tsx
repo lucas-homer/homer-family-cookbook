@@ -7,7 +7,7 @@ import type {
 } from "@prisma/client";
 import type { LoaderFunction } from "@remix-run/node";
 
-import { requireUserId } from "~/session.server";
+import { requireUserId } from "~/lib/session.server";
 import { getUserProfile } from "~/models/user.server";
 
 type LoaderData = {

@@ -1,5 +1,5 @@
 import { Note, Recipe } from "@prisma/client";
-import { prisma } from "~/db.server";
+import { prisma } from "~/lib/db.server";
 
 export async function getRecipeNotes(recipeId: Recipe["id"]) {
   return prisma.note.findMany({

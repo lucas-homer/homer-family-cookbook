@@ -18,7 +18,7 @@ import { useEffect, useRef } from "react";
 import invariant from "tiny-invariant";
 import BoundaryMessage from "~/components/boundary-message";
 import NoteItem from "~/components/note";
-import { badRequest } from "~/errors.server";
+import { badRequest } from "~/lib/errors.server";
 import {
   createNote,
   deleteNote,
@@ -31,8 +31,8 @@ import {
   recordRecipeView,
   unfavoriteRecipe,
 } from "~/models/recipe.server";
-import { getUserId, requireUserId } from "~/session.server";
-import { useOptionalUser } from "~/utils";
+import { getUserId, requireUserId } from "~/lib/session.server";
+import { useOptionalUser } from "~/lib/utils";
 
 type LoaderData = {
   recipeData: Awaited<ReturnType<typeof getRecipe>>;

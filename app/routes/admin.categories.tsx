@@ -2,9 +2,9 @@ import { ActionFunction, LoaderFunction, redirect } from "@remix-run/node";
 import { Form, Link, useActionData } from "@remix-run/react";
 
 import { createCategory } from "~/models/category.server";
-import { requireAdminUser } from "~/session.server";
-import { badRequest } from "~/errors.server";
-import { updateAlgolia } from "~/algolia.server";
+import { requireAdminUser } from "~/lib/session.server";
+import { badRequest } from "~/lib/errors.server";
+import { updateAlgolia } from "~/lib/algolia.server";
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   await requireAdminUser(request);

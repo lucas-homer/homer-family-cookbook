@@ -5,7 +5,7 @@ import {
   User,
   UsersFavoriteRecipes,
 } from "@prisma/client";
-import { prisma } from "~/db.server";
+import { prisma } from "~/lib/db.server";
 
 export type GetRecipeResponse = Recipe & {
   categories: Category[];

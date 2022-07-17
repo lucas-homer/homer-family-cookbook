@@ -1,7 +1,7 @@
 import { Recipe, RecipeRead, User } from "@prisma/client";
 import { EyeOpenIcon } from "@radix-ui/react-icons";
 import { Link } from "@remix-run/react";
-import { formatRecipeDate } from "~/utils";
+import { formatRecipeDate } from "~/lib/utils";
 
 type Props = {
   recipe: Recipe & { author: User };

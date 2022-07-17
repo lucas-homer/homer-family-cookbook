@@ -1,4 +1,4 @@
-import { prisma } from "~/db.server";
+import { prisma } from "~/lib/db.server";
 import algoliasearch from "algoliasearch";
 import { getAlgoliaIndexName } from "./utils";
 
