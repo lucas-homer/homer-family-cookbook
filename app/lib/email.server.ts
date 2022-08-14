@@ -40,7 +40,7 @@ export async function sendResetTokenEmail(email: string, token: string) {
     from: process.env.EMAIL_SENDER,
     to: email, // todo -- get production access
     // to: "success@simulator.amazonses.com", // for testing
-    subject: "Reset your password",
+    subject: "Password Reset Token - Homer Family Cookbook",
     html: generateEmail(`
       \n\n
       <a href="${process.env.APP_BASE_URL}/reset-password?token=${token}&email=${email}">Click here to reset your password</a>`),
