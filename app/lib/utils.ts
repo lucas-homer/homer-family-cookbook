@@ -1,8 +1,7 @@
 import { useMatches } from "@remix-run/react";
 import { useMemo } from "react";
 import { format, parseISO } from "date-fns";
-
-import type { User } from "~/models/user.server";
+import type { User } from "@prisma/client";
 
 /**
  * This base hook is used in other hooks to quickly search for specific data
