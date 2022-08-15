@@ -7,6 +7,8 @@ invariant(
   "AWS_SECRET_ACCESS_KEY is required"
 );
 invariant(process.env.SMTP_HOST, "SMTP_HOST is required");
+invariant(process.env.EMAIL_SENDER, "EMAIL_SENDER is required");
+invariant(process.env.APP_BASE_URL, "APP_BASE_URL is required");
 
 const transporter = nodemailer.createTransport({
   port: 465,
@@ -31,9 +33,6 @@ const generateEmail = (text: string) => `
     <p>${text}</p>
   </div>
 `;
-
-invariant(process.env.EMAIL_SENDER, "EMAIL_SENDER is required");
-invariant(process.env.APP_BASE_URL, "APP_BASE_URL is required");
 
 export async function sendResetTokenEmail(email: string, token: string) {
   const mailOptions = {
