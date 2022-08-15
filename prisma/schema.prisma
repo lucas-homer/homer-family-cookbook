@@ -5,6 +5,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native"]
 }
 
 enum Role {
@@ -23,6 +24,8 @@ model User {
   updatedAt DateTime @updatedAt
 
   password Password?
+  resetToken String?
+  resetExpires DateTime?
 
   recipes         Recipe[]
   favoriteRecipes UsersFavoriteRecipes[]

@@ -155,7 +155,7 @@ export default function LoginPage() {
           >
             Log in
           </button>
-          <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between">
+          <div className="flex flex-col items-center gap-4">
             <div className="flex flex-nowrap items-center">
               <input
                 id="remember"
@@ -180,6 +180,18 @@ export default function LoginPage() {
                 }}
               >
                 Sign up
+              </Link>
+            </div>
+            <div className="text-center text-sm text-gray-500">
+              Forgot Password?{" "}
+              <Link
+                className="text-blue-500 underline"
+                to={{
+                  pathname: "/forgot-password",
+                  search: searchParams.toString(),
+                }}
+              >
+                Reset your password
               </Link>
             </div>
           </div>

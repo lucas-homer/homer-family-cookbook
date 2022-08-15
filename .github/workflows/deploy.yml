@@ -72,6 +72,7 @@ jobs:
 
   cypress:
     name: ⚫️ Cypress
+    if: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev') && github.event_name == 'push' }}
     runs-on: ubuntu-latest
     steps:
       - name: 🛑 Cancel Previous Runs
@@ -90,6 +91,8 @@ jobs:
 
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
+        with:
+          useLockFile: false
 
       - name: 🐳 Docker compose
         # the sleep is just there to give time for postgres to get started
@@ -104,7 +107,7 @@ jobs:
         run: npm run build
 
       - name: 🌳 Cypress run
-        uses: cypress-io/github-action@v3
+        uses: cypress-io/github-action@v4
         with:
           start: npm run start:mocks
           wait-on: "http://localhost:8811"
