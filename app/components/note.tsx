@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Note } from "@prisma/client";
 import { actionIds } from "~/routes/recipes/$recipeId";
 import { useActionData, useFetcher } from "@remix-run/react";
+import { Textarea } from "./ui/textarea";
 
 type NoteProps = {
   note: Note;
@@ -56,11 +57,10 @@ export default function NoteItem({ note, isUserNoteAuthor }: NoteProps) {
           <div className="flex flex-nowrap justify-between">
             <div>
               <input hidden name="noteId" defaultValue={note.id} />
-              <textarea
+              <Textarea
                 disabled={fetcher.state === "submitting"}
                 ref={editNoteContentRef}
                 id="content"
-                className="rounded-md border-2 border-solid border-gray-400"
                 name="content"
                 defaultValue={editNoteFormData.content}
                 aria-invalid={

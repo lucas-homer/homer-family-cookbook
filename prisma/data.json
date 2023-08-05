@@ -1,0 +1,1909 @@
+{
+  "categoryNames": [
+    "appetizer",
+    "beverage",
+    "bread",
+    "breakfast",
+    "cake",
+    "candy",
+    "dessert",
+    "entree",
+    "pie",
+    "preserve",
+    "sauce",
+    "side",
+    "salad",
+    "miscellaneous"
+  ],
+  "appetizer": [
+    {
+      "title": "Crab Artichoke Dip",
+      "servings": "Serves four",
+      "ingredients": [
+        "6 oz crabmeat (canned is ok)",
+        "1 C grated Parmesan cheese",
+        "1 C mayo",
+        "1 14 oz can artichokes, drained and chopped",
+        "A dash of tabasco or cayenne",
+        "A dash of lemon juice"
+      ],
+      "instructions": "Combine all ingredients and bake at 350°F for about 20 minutes."
+    },
+    {
+      "title": "Crab Muffin Toasts",
+      "servings": "Serves six",
+      "ingredients": [
+        "1 jar Old English Spread",
+        "6 oz can drained crab meat",
+        "1 stick melted butter",
+        "3 –4 cloves crushed garlic",
+        "6 English muffin halves (maybe more?)"
+      ],
+      "instructions": "Blend ingredients and spread on muffin halves. Bake at 400°F for 15–20 minutes, until lightly browned and bubbly. Cut into quarters."
+    },
+    {
+      "title": "Fruit Dip",
+      "ingredients": [
+        "1 8 oz package cream cheese at room temperature",
+        "1 7 oz jar marshmallow fluff"
+      ],
+      "instructions": "Blend together. Serve with pears, melon, apples and/or strawberries."
+    },
+    {
+      "title": "Salami Pickle Roll-ups",
+      "ingredients": [
+        "Sliced salami (not spicy)",
+        "1 jar Old English pineapple cheese spread",
+        "Small dill pickles cut into spears"
+      ],
+      "instructions": "Spread a generous teaspoon of cheese spread on a slice of salami. Place a pickle spear at the edge and roll up (with cheese on the inside). Hold together with a toothpick. Make lots of them and watch them disappear!"
+    }
+  ],
+  "beverage": [
+    {
+      "title": "Grandma DuChateau’s Tom and Jerrys",
+      "description": "This drink is a tradition in the upper Midwest, and Grandma would make it every December for an annual party with friends. As a kid I never got to try it, but now I understand why my parents and their friends liked it. I’ve slightly modified the very sketchy original recipe to add amount measurements based on a few other Tom and Jerry recipes.",
+      "instructions": [
+        "Chill the egg whites.",
+        "Beat the egg yolks to soft peaks in a bowl. Beat the butter and confectioners' sugar until light and fluffy in another bowl. Add the egg yolk and vanilla to the butter mixture; mix. Then stir in the spices.",
+        "Beat the egg whites until they form stiff peaks.",
+        "Stir the egg yolk mixture into the egg whites; beat until well blended. Batter can be frozen or kept in refrigerator for several weeks.",
+        "In a coffee mug, pour 1 shot brandy and 1 shot rum. Add boiling water to the mug to make it 3/4 full, then add a heaping tablespoon batter. Sprinkle with nutmeg and serve."
+      ],
+      "servings": "Serves six",
+      "ingredients": [
+        "4 separated eggs",
+        "4 oz room temperature butter",
+        "Dash of salt",
+        "1 lb powdered sugar",
+        "1/4 tsp Vanilla",
+        "1/4 tsp nutmeg",
+        "1/4 tsp ground cloves",
+        "1/4 tsp ground allspice",
+        "Brandy, Rum"
+      ]
+    },
+    {
+      "title": "Frozen Margaritas",
+      "description": "The size of the limeade can will determine how many margaritas you ultimately make. If you only want a few, choose a small can of limeade. If you want a party, choose a large can of limeade.",
+      "instructions": "Using the limeade can as a measure, add the following to the frozen (do not thaw) limeade and mix in a blender: 3 cans water, 1 can tequila (gold), 1/3 can triple sec. Serve in salt-rimmed glasses.",
+      "ingredients": [
+        "1 can limeade",
+        "Water",
+        "Tequila",
+        "Triple Sec",
+        "Salt for glasses"
+      ],
+      "servings": "It's not a competition"
+    },
+    {
+      "title": "Mom's Egg Nog",
+      "description": "I remember making this for Gail, Douglas, Janis, and Wes when Emily was 6 months old (the holidays, 1983). Douglas couldn’t get enough!",
+      "instructions": "Mix, pour (or ladle) into glasses, and sprinkle with nutmeg. Yummy!",
+      "ingredients": [
+        "1 quart grocery store egg nog",
+        "1 quart vanilla ice cream, softened",
+        "1 C brandy",
+        "1/2 C rum"
+      ],
+      "servings": "4–6"
+    },
+    {
+      "title": "Uncle Bill's Martinis",
+      "description": "Uncle Bill used to keep a jug of this in the freezer for impromptu happy hours, as it was always 5 o’clock somewhere. He used vodka, but you can substitute gin if you’d like. This recipe is enough for one martini. Extrapolate if you want to make more than one at a time. Better yet, make a bunch in advance without using ice, and keep them in the freezer.",
+      "instructions": "Combine vodka and a breath of dry vermouth (a few drops; by no means more than about 1/2 teaspoon) in a cocktail shaker with ice. SHAKE, do not stir, the martini. You don’t want to dilute the alcohol. Strain into a small glass and add one large green olive that still has the pit (this is a crucial detail to an authentic Uncle Bill Martini. If you can’t find green olives with a pit, get them without, but don’t use any kind of stuffed olive, even if it’s just pimento).",
+      "ingredients": [
+        "1 double shot vodka",
+        "A few drops dry vermouth",
+        "Large green olive with pit"
+      ],
+      "servings": "1 cocktail"
+    },
+    {
+      "title": "Uncle Carl Rubsamen’s Manhattans",
+      "instructions": "Pour over ice and add a stemmed maraschino cherry.",
+      "ingredients": [
+        "1 shot dry vermouth",
+        "1 shot sweet vermouth",
+        "1 shot whiskey (like Seagram’s Canadian)"
+      ],
+      "servings": "1 cocktail"
+    }
+  ],
+  "bread": [
+    {
+      "title": "Banana Bread",
+      "instructions": "Preheat oven to 350°F and grease a loaf pan. Cream shortening and sugar. Add eggs. Add bananas. Add dry things and nuts. Bake for 1 hour.",
+      "ingredients": [
+        "1/2 C shortening (oil or oleo)",
+        "1 C sugar",
+        "2 eggs",
+        "2 T sour cream",
+        "3 mashed bananas",
+        "2 C flour",
+        "1/4 tsp salt",
+        "1 tsp baking soda",
+        "1 C chopped walnuts (or chocolate chips!)"
+      ],
+      "servings": "1 loaf"
+    },
+    {
+      "title": "Blueberry Coffee Cake",
+      "instructions": "Preheat oven to 350°F. Grease and flour a tube pan or bundt pan. Cream butter and sugar, add egg. Fold in sour cream and vanilla. Add dry ingredients. Fold in blueberries (either fresh or frozen, but if you use frozen, toss them with a tablespoon or so of flour so that they don’t all sink to the bottom half of the coffee cake). Bake for 55–60 minutes. Cool in pan, them remove from pan and sift powdered sugar over top.",
+      "ingredients": [
+        "1 C butter (room temp)",
+        "2 C sugar",
+        "2 eggs (room temp)",
+        "1 C sour cream",
+        "1/2 tsp vanilla",
+        "2 C flour",
+        "1 tsp baking powder",
+        "1/4 tsp salt",
+        "1/2 – 1 1/2 C. blueberries"
+      ],
+      "servings": "12"
+    },
+    {
+      "title": "Dad's Blueberry Scones",
+      "description": "From America's Test Kitchen",
+      "servings": "8",
+      "ingredients": [
+        "16 T unsalted butter (2 sticks), frozen whole (see notes)",
+        "1 1/2 C fresh blueberries (about 7 1/2 oz), picked over (see notes) or frozen blueberries",
+        "1/2 C whole milk",
+        "1/2 C sour cream",
+        "2 C unbleached all-purpose flour (10 oz), plus additional for work surface",
+        "1/2 C sugar (3 1/2 oz), plus 1 tablespoon for sprinkling",
+        "2 tsp baking powder",
+        "1/4 tsp baking soda",
+        "1/2 tsp table salt",
+        "1 tsp grated lemon zest"
+      ],
+      "instructions": "It is important to work the dough as little as possible—work quickly and knead and fold the dough only the number of times called for. The butter should be frozen solid before grating. In hot or humid environments, chill the flour mixture and work bowls before use. While the recipe calls for 2 whole sticks of butter, only 10 T are actually used. If fresh berries are unavailable, an equal amount of frozen berries (do not defrost) can be substituted. An equal amount of raspberries, blackberries, or strawberries can be used in place of the blueberries. Cut larger berries into 1/4- to 1/2-inch pieces before incorporating. Refrigerate or freeze leftover scones, wrapped in foil, in an airtight container. To serve, remove foil and place scones on a baking sheet in a 375°F oven. Heat until warmed through and re-crisped, 8 to 10 minutes if refrigerated, 16 to 20 minutes if frozen. See final step for information on making the scone dough in advance. Heat oven to 425°F. Score and remove 1/2 of wrapper from frozen butter. Grate unwrapped ends on large holes of box grater (total of 8 T). Put grated butter in freezer until needed. Melt 2 T of remaining butter and set aside. Save remaining 6 T butter for another use. Put blueberries in freezer until needed. \n Whisk together milk and sour cream in medium bowl; chill until needed. Whisk flour, 1/2 C sugar, baking powder, baking soda, salt, and zest in another medium bowl. Add frozen butter to flour mixture and toss with fingers until coated. \n Add milk mixture to flour mixture; fold with spatula till just combined. Transfer to liberally floured work surface. Dust dough with flour; with floured hands, knead dough 6 to 8 times, until it just holds together in ragged ball, adding flour as needed to prevent sticking. \n Roll dough into an approximately 12-inch square. Fold dough into thirds like a business letter, using a bench scraper or metal spatula to release dough if it sticks to countertop. Lift short ends and fold into thirds again to form an approximately 4-inch square. Transfer dough to a plate lightly dusted with flour and chill in freezer 5 minutes. \n Transfer dough to a floured work surface and roll into an approximately 12-inch square again. Sprinkle blueberries evenly over surface of dough, then press down so they are embedded in dough. Using bench scraper, loosen dough from work surface. Roll dough, pressing to form tight log. Lay seam-side down and press log into a 12-inch by 4-inch rectangle. Using a sharp, floured knife, cut rectangle crosswise into 4 equal rectangles. Cut each rectangle diagonally to form 2 triangles and transfer to baking sheet. \n Brush tops with melted butter and sprinkle with remaining tablespoon of sugar. Bake until tops and bottoms are golden brown, 18 to 25 minutes. Cool on a wire rack about 10 minutes. \n Make Ahead: Put unbaked scones on baking sheet, and either refrigerate them overnight or freeze them. To bake, for refrigerated, heat oven to 425°F and follow step 6. For frozen, heat oven to 375°F and bake 25–30 minutes."
+    },
+    {
+      "title": "Grandma Hiller’s Double Bread",
+      "instructions": "Preheat the oven to 350°F. Combine the water, oats, oil, molasses and salt in a large bowl, mix until blended and cool to lukewarm. Then add 2 packages of yeast dissolved in 1/2 C warm water and mix well. Combine the eggs and flours with the oats / molasses / yeast mixture, cover and let stand 15 minutes. Then shape into 2 loaves and let rise until double (about 2 hours). Bake for about an hour (this is a high altitude amount of time — it may take less time elsewhere).",
+      "servings": "2",
+      "ingredients": [
+        "1 1/2 C boiling water",
+        "1 C rolled oats",
+        "1/3 C vegetable oil",
+        "1/2 C molasses",
+        "1 T Salt",
+        "2 packages yeast",
+        "1/2 C warm water",
+        "2 eggs",
+        "2 1/2 C whole wheat flour",
+        "3 C white flour"
+      ]
+    },
+    {
+      "title": "Jayhawk Bread",
+      "description": "Also known as Kansas Brown Bread, this recipe is from Grandma Irene Hammer.",
+      "instructions": "Preheat the oven to 350°F. Put raisins and water in small saucepan; cover and bring to a boil. Remove from heat and let the raisins steam while mixing other ingredients. First combine all dry ingredients then stir in buttermilk and molasses. Stir in raisins (use just the raisins for a drier bread, use water and raisins for a moist bread). For pans, use cans (for example soup cans or 1 lb. coffee cans). Grease cans or use spray oil. Fill no more than 1/2 full of batter. Bake for 1 hour or until done. Remove from cans, wrap and freeze if desired.",
+      "servings": "Not specified",
+      "ingredients": [
+        "1 C raisins",
+        "1 T water",
+        "2 C unbleached flour",
+        "2 C whole wheat flour",
+        "2 tsp baking soda",
+        "1 tsp salt",
+        "1 C brown sugar (packed)",
+        "2 C buttermilk",
+        "1/2 C molasses"
+      ]
+    },
+    {
+      "title": "Grandma Hiller’s No-Knead Sweet Rolls",
+      "description": "You can use this recipe for dinner rolls, cinnamon rolls (see below), or braided coffee cakes.",
+      "instructions": "Blend first five ingredients. Combine with beaten eggs and the flour. Let stand 15 minutes covered. Shape and let rise 1 hour. May be chilled before rising (can chill 2 hours to 2 days). For rolls, bake at 400°F for 15–20 minutes. For gooey cinnamon rolls, roll out dough and spread with butter, then sprinkle with cinnamon. Roll up and cut. Let rise. If desired, before placing rolls in pan, mix 1/2 C brown sugar melted with 1/2 C butter, and chopped nuts. Bake at 375°F for 25 minutes.",
+      "servings": "3 dozen dinner rolls",
+      "ingredients": [
+        "1/3 C shortening",
+        "3 T sugar",
+        "1 T salt",
+        "1 C scalded milk (very hot but not boiling; should have a foam on top), cool it to lukewarm by adding 1 C water",
+        "2 packages yeast dissolved as directed, using some of the milk-water from above",
+        "2 eggs, beaten",
+        "6 1/2 C all-purpose flour"
+      ]
+    },
+    {
+      "title": "Pumpkin Streusel Muffins",
+      "description": "",
+      "instructions": "Preheat oven to 350°F and line a 12–muffin tin with paper liners. To make the struesel topping, combine 1/2 C butter, 2 T each of sugar and brown sugar, 1/2 tsp cinnamon, and 3/4 C flour. Mix well, breaking up any large chunks to pea size. Cream remaining butter and sugars, then mix in eggs, vanilla, and pumpkin. Combine all dry ingredients then blend dry ingredients into wet mixture, mixing until no streaks remain. Drop in paper-lined muffin tins using a large cookie scoop. Sprinkle with streusel. Bake for 20–25 minutes. Once cooled, drizzle muffins with a glaze: 6 T powdered sugar mixed with 1 T milk.",
+      "servings": "12 muffins",
+      "ingredients": [
+        "1/2 C soft butter, divided",
+        "2 T plus 1/2 C sugar",
+        "2 T plus 1/2 C brown sugar",
+        "2 eggs",
+        "1 tsp vanilla",
+        "1 1/2 C pumpkin puree",
+        "1/4 tsp salt",
+        "1 tsp baking soda",
+        "1/2 tsp baking powder",
+        "1/2 tsp plus 1 1/2 tsp cinnamon",
+        "1/2 tsp allspice",
+        "1/4 tsp nutmeg",
+        "Pinch of ground cloves",
+        "3/4 C plus 2 C flour"
+      ]
+    },
+    {
+      "title": "Streuselkuchen (Crumb Cake)",
+      "description": "",
+      "instructions": "Preheat the oven to 350°F and butter a 10 x 15 inch (approximate) baking pan. Dissolve yeast in warm water according to package instructions. Combine butter, sugar, salt and lemon rind in a bowl. Scald milk and pour into bowl. Stir until butter has melted. Cool to lukewarm. Add 1 C flour and yeast; mix well. Set aside in a warm corner until the mixture becomes light and bubbly (about 15–30 minutes). Stir in egg yolks and whole egg and gradually beat in 1 1/2 to 2 C of flour until you have a soft, light and smooth dough. Turn on a floured board and knead until dough is smooth and elastic and forms blisters. Shape into a ball, place in a clean floured bowl, cover with a thin kitchen towel, set in a warm corner, and let rise until doubled in bulk — about 1 to 1 1/2 hours. Punch dough down and let it rest for 10 minutes. Roll or pat out the dough to finger thickness (about 1/2 inch) and place in the buttered pan. With a fork, mix streusel ingredients until it forms little clumps. If the mixture is too fine, add more melted butter. If the clumps are too large, add more flour. Brush the dough with melted butter and add crumb (streusel) generously to the top. Let rise until almost double in bulk. Bake for 30–45 minutes, or until the cake is done and the crumbs are golden brown. After it is out of the oven and has cooled, dust with confectioner’s sugar.",
+      "servings": "",
+      "ingredients": [
+        "For the cake:",
+        "1 package dry yeast",
+        "1/4 C warm water",
+        "1/4 C softened butter",
+        "1/4 C sugar",
+        "1/2 tsp salt",
+        "Grated rind of 1/2 lemon (optional)",
+        "1/2 C scalded milk",
+        "1 C flour",
+        "2 egg yolks",
+        "1 whole egg",
+        "1 1/2 to 2 C flour",
+        "2–3 T melted butter",
+        "For the streusel:",
+        "1 1/2 to 1 3/4 C flour",
+        "3/4 C sugar (can use light brown sugar and adjust to taste)",
+        "1 tsp cinnamon (adjust to taste)",
+        "1/4 lb unsalted butter, melted"
+      ]
+    },
+    {
+      "title": "Zucchini Bread",
+      "description": "",
+      "instructions": "Preheat the oven to 350°F. Grease and line two large loaf pans with parchment or foil. Mix wet ingredients in one bowl. Mix dry ingredients in another. Add dry ingredients to wet, don't overmix! Pour into the loaf pans and bake for 1 to 1 1/4 hours. Let cool in pans for 10 minutes, then remove from pans.",
+      "servings": "2 loaves",
+      "ingredients": [
+        "3 beaten eggs",
+        "2 C sugar",
+        "1 C oil",
+        "2 C grated zucchini",
+        "3 C flour (try part whole wheat!)",
+        "1 tsp baking soda",
+        "1/2 tsp baking powder",
+        "1 tsp salt",
+        "2 tsp cinnamon",
+        "3 tsp vanilla"
+      ]
+    }
+  ],
+  "breakfast": [
+    {
+      "title": "Breakfast Pizza",
+      "description": "The recipe below is how it's presented in the Oak Hill cookbook; however, depending upon how many people you are feeding, (and how large your pan is) it's easily doubled or more. The recipe is very forgiving. I always use more cheese, more potatoes, and more eggs than this recipe calls for, even if just making a single batch. Be sure to have more packages of crescent roll dough than you think you'll need. The only ingredient I don't get carried away with is the sausage.",
+      "instructions": "In a skillet, cook sausage until browned, drain off excess fat. Separate crescent roll dough into 8 triangles and place into an ungreased pan (the original recipe calls for a round 12-inch pizza pan; however I've always used a cookie sheet because it has sides to hold all the yummy stuff (and it allows for the coveted corner pieces); hence the need for increasing ingredients. Press the dough over the bottom and up the sides of the pan to form a crust; seal perforations. Spoon sausage over crust. Sprinkle with potatoes. Top with cheddar cheese. Beat in a bowl the eggs, milk, salt and pepper and pour over the crust. Sprinkle with Parmesan. Bake at 375°F for 25–30 minutes (a larger pan will require more time). A 12-inch round pizza pan is supposed to be 6–8 servings, but that's for small servings.",
+      "servings": "6-8",
+      "ingredients": [
+        "1 lb pork sausage (I usually get Jimmy Dean sage sausage in the tube. If you can't find it in your grocery store next to the bacon, check the freezer case)",
+        "1 pkg crescent rolls (have an extra tube)",
+        "1 C frozen loose packed hash browns (shredded are best but the cubed ones are ok too)",
+        "1 C shredded Cheddar cheese",
+        "5 eggs",
+        "1/4 C milk",
+        "1/2 tsp salt",
+        "1/8 tsp pepper",
+        "2 T Parmesan (I always use more)"
+      ]
+    },
+    {
+      "title": "Heavenly Hots",
+      "description": "From The Breakfast Book by Marion Cunningham.",
+      "instructions": "Put the eggs in a mixing bowl and stir until well blended. Add the salt, baking soda, flour, sour cream, and sugar, and mix well. All of this can be done in a blender, if you prefer. Heat a griddle or frying pan until it is good and hot, film with grease, and drop small spoonfuls of batter onto the griddle—just enough to spread to an approximately 2 1/2 inch round. When a few bubbles appear on top of the pancakes, turn them over and cook briefly. Make ahead: The batter will keep, refrigerated, for up to one week.",
+      "servings": "50-60 silver dollar size pancakes",
+      "ingredients": [
+        "4 eggs",
+        "1/2 tsp salt",
+        "1/2 tsp baking soda",
+        "1/4 C cake flour",
+        "2 C sour cream",
+        "3 T sugar"
+      ]
+    },
+    {
+      "title": "Lemon Pancakes",
+      "description": "These spectacular pancakes from Marion Cunningham (The Breakfast Book – home also to Zeppelins and Heavenly Hots), are made with cottage cheese, lemon peel and beaten egg whites, which makes them puff up like a soufflé. You have to whip the egg whites using an electric mixer, but they’re worth it. Serve with blueberries or raspberries (or raspberry syrup).",
+      "instructions": "In a bowl, stir together the egg yolks, flour, cottage cheese, butter, sugar, salt and lemon zest until well mixed. In the bowl of a stand mixer, beat the egg whites until they hold stiff peaks. With large spoon or spatula, fold whites into yolk mixture, stirring gently until there are no yellow or white streaks. Heat skillet or griddle over medium heat. Grease lightly and spoon out about three large tablespoons of batter for each pancake. Cook slowly for about 1 1/2 minutes, then turn pancake over and cook for about 30 seconds. Keep pancakes warm in a 250°F oven until ready to serve.",
+      "servings": "12 3-inch pancakes",
+      "ingredients": [
+        "3 eggs, separated",
+        "1/4 C all-purpose flour",
+        "3/4 C cottage cheese",
+        "1/4 C (half a stick) butter, melted, plus more butter for greasing skillet",
+        "2 T sugar",
+        "1/4 tsp salt",
+        "1 T grated lemon zest"
+      ]
+    },
+    {
+      "title": "New Year’s Pancakes",
+      "description": "This is my Great Grandma Raske’s recipe. She and Grandpa Raske were raised near the North Sea on the northwestern coast of Germany—which used to be known as Ostfriesland. It was a tradition to serve these pancakes on New Year’s Eve. These pancakes are not meant to be light and fluffy.",
+      "instructions": "Mix all dry ingredients in a large bowl. Then combine water and syrup and add to dry ingredients. Store the pancake batter in the refrigerator at least 4 hours (longer is better) to allow the flavors to blend. On the day of serving, add the ingredients noted at left, except the bacon and sausage. Lightly fry the bacon cut into small pieces. Slice and lightly fry the sausage. Heat a lightly greased fry pan or griddle over medium heat. Place small pieces of bacon on the pan for each individual pancake; cover with a spoon of batter and then place sausage on top of each pancake. Make the pancakes no more than about 3–4 inches across. Fry slowly; keep warm in oven and serve with butter and syrup. It used to be tradition at Grandma Raske’s house to use all leftover cakes for rolling up and eating cold.",
+      "servings": "12 3-inch pancakes",
+      "ingredients": [
+        "3 C graham flour (Bob’s Red Mill makes it)",
+        "1 C white flour",
+        "1 1/4 boxes of anise seed (about 8 T), crushed (try to get anise seeds in glass containers as glass keeps them better than other containers)",
+        "1/2 tsp salt",
+        "1 C water",
+        "1 C dark Karo syrup (there are no substitutes)",
+        "On the day of serving:",
+        "2 beaten eggs",
+        "1 1/2 tsp baking soda",
+        "1/2 C dark Karo syrup",
+        "3/4 C water",
+        "3/4 lb bacon",
+        "Old-fashioned German sausage (in a tube, like Thüringer), or either beef sausage or summer sausage"
+      ]
+    },
+    {
+      "title": "Zeppelins",
+      "description": "From The Breakfast Book by Marion Cunningham, these delicious pancakes are made with buttermilk, sour cream, and egg whites, giving them a light and airy texture.",
+      "instructions": "Mix together the egg yolks, buttermilk and sour cream in a large bowl until well blended. Add the butter and stir until just mixed. Add the flour, baking soda and salt. Beat until smooth. Beat the egg whites until stiff but still moist. Gently stir the whites into the batter. When your griddle or frying pan is moderately hot, film with grease and spoon on about 1/3 cup of batter per pancake (these can be made larger or smaller). Turn them over when little bubbles appear on top and cook briefly on the other side. This batter keeps well in the refrigerator for several days; it will, however, lose a little of its airiness, so just stir in another beaten egg white before using.",
+      "servings": "about 18 6-inch pancakes",
+      "ingredients": [
+        "2 eggs, separated",
+        "1 1/2 C buttermilk",
+        "1/2 cup sour cream",
+        "1/4 C butter, melted",
+        "1 C all-purpose flour",
+        "3/4 tsp baking soda",
+        "1/2 tsp salt"
+      ]
+    }
+  ],
+  "cake": [
+    {
+      "title": "Apple Dapple Cake",
+      "description": "A delicious and moist apple cake with pecans, topped with a rich brown sugar sauce. Perfect for any occasion. If you don’t have a 10 1/2” x 15” inch pan, you can use a 9” x 13” pan and bake the cake a little longer. You might be able to use two 9” round cake pans, although I haven’t tried this.",
+      "instructions": "Preheat the oven to 350°F and grease a 10 1/2 x 15-inch pan. Mix the vegetable oil, sugar, eggs, and vanilla together. Sift together the flour, salt, and baking soda and add to the oil sugar egg mixture. Fold in the pecans and chopped apples, and pour into the pan. Bake for about 40 minutes or until a toothpick inserted in the center comes out clean. To make the sauce, bring the brown sugar, milk, and butter to a boil and cook for three minutes. Pour over the warm cake and let soak for 2 hours before serving. This cake freezes well.",
+      "servings": "",
+      "ingredients": [
+        "1 1/2 C vegetable oil",
+        "2 C sugar",
+        "3 eggs",
+        "2 tsp vanilla",
+        "3 C flour",
+        "1 tsp salt",
+        "1 tsp baking soda",
+        "1 1/2 C pecans",
+        "3 C chopped apples",
+        "1 C brown sugar",
+        "1/4 C milk",
+        "1/2 C margarine or butter"
+      ]
+    },
+    {
+      "title": "Best Rum Cake Ever",
+      "description": "A fun and delicious rum cake recipe that requires some rum sampling before and during the preparation process. Remember to enjoy the rum and cake responsibly!",
+      "instructions": "Before you start, sample the rum to check for quality. It must not have too strong a molasses taste. Fill a glass to the brim and drink the run again to be sure it is just right. Now, select a large mixing bowl. With an electric mixer, beat 1 C butter in a large fluffy bowl. Add 1 tsp of sugar and beat again. Meanwhile, make sure that the rum hasn’t become too warm. Drink another cup. Open a second quart if necessary. Add 2 large eggs, 2 C dried fruit and beat till high. If fruit gets stuck to beaters, just pry it loose with a screwdriver. Sample the rum again, checking for consistency. Next, sift 3 C of pepper or salt (Doesn’t matter). Sample rum, sift in chopped butter and strained nuts. Add 1 tablespoon of brown sugar. Mix well. Grease oven and turn cake pan to 350 degrees. Now, pour the whole mess into the oven and bake. Lastly, check rum again. Go to bed.",
+      "servings": "",
+      "ingredients": [
+        "1 or 2 quarts rum",
+        "1 tsp sugar",
+        "1 C dried fruit",
+        "1 tsp lemon juice",
+        "3/4 C walnuts",
+        "1 C butter",
+        "2 large eggs",
+        "1/2 tsp baking powder",
+        "1 C brown sugar"
+      ]
+    },
+    {
+      "title": "Grandma DuChateau's Carrot Cake",
+      "description": "A delicious and moist carrot cake recipe with a scrumptious cream cheese frosting. This cake is perfect for special occasions or just as a delightful treat.",
+      "instructions": "Preheat the oven to 350°F and grease a 9 x 13 baking pan. Mix the cake flour, white sugar, baking soda, salt, cinnamon, finely grated raw carrots, and chopped walnuts (optional) together in a large bowl. Beat in vegetable oil. Then beat in the eggs, one at a time. Bake for 40–45 minutes or until a toothpick in center comes out clean. Meanwhile, make the frosting by beating together the butter, cream cheese, and powdered sugar until light and fluffy. When the cake is cool, frost. This recipe can be cut in half to make a smaller cake. The cake also freezes well.",
+      "servings": "",
+      "ingredients": [
+        "2 C cake flour",
+        "2 C white sugar",
+        "2 tsp baking soda",
+        "1 tsp salt",
+        "2 tsp cinnamon",
+        "3 C finely grated raw carrots",
+        "1/2 C chopped walnuts (optional)",
+        "1 1/2 C vegetable oil",
+        "4 eggs",
+        "1/2 C room temp butter or margarine",
+        "8 oz cream cheese",
+        "1 lb package of powdered sugar"
+      ]
+    },
+    {
+      "title": "Chocolate Bundt Cake",
+      "description": "A rich, moist, and delicious chocolate bundt cake with chocolate chips, perfect for special occasions or as a sweet treat.",
+      "instructions": "Preheat the oven to 325°F. Grease and flour a bundt pan. Mix all ingredients except the chocolate chips together thoroughly. Fold in chocolate chips. Pour into a greased and floured bundt pan. Bake for 60–65 minutes. Cool 1/2 hour in pan, then remove from pan. Let stand overnight. Dust with powdered sugar before serving.",
+      "servings": "",
+      "ingredients": [
+        "1 box Duncan Hines Devil's Food Cake Mix",
+        "1 regular size box instant chocolate pudding",
+        "1 C sour cream",
+        "1/2 C oil",
+        "1/2 C brewed coffee",
+        "1/2 C rum (or milk)",
+        "4 eggs",
+        "2 C chocolate chips"
+      ]
+    },
+    {
+      "title": "Mom's (whole fruit) Fruitcake",
+      "description": "A delicious and unique fruitcake recipe that even fruitcake skeptics will enjoy. Made with whole fruit and nuts, this fruitcake is perfect for the holiday season or as a special treat.",
+      "instructions": "Combine the fruit (not including the nuts) and soak them in DARK RUM overnight. Drain the fruit and save the rum. Then add nuts. Combine flour, baking powder, and salt, and sift it over the fruit and nuts. Toss lightly. Combine the eggs, sugar, vanilla and beat until fluffy. Pour over the fruit mixture and stir gently to combine. Grease the sides and bottoms of two loaf pans, line with brown paper and grease the paper. Fill pans pressing filling down firmly. Bake at 300°F for 1 3/4 hours. Cover fruitcakes with buttered foil if browning too much. Remove to a rack, spoon 1/4 C brandy over the cake. Invert, peel off paper, turn right side up, and spoon 1/2 C brandy on top of each cake. Wrap each cake in cheesecloth that's been soaked in brandy and the leftover rum. Then wrap each cake in foil and store in the fridge for at least two weeks, (I like to store them for a month).",
+      "servings": "2 loaves",
+      "ingredients": [
+        "Brandy and rum",
+        "2 C walnuts",
+        "2 C almonds or pecans (almonds are my preference)",
+        "16 oz whole pitted dates",
+        "15 oz dried whole apricots",
+        "12 oz whole pitted prunes",
+        "1/2 C currants",
+        "16 oz candied cherries (make sure there is no citron in them)",
+        "1 1/2 C unbleached flour",
+        "1 tsp baking powder",
+        "1 tsp salt",
+        "6 eggs",
+        "1 C sugar",
+        "2 tsp vanilla"
+      ]
+    },
+    {
+      "title": "Peanut Butter Cake",
+      "description": "A delicious and easy-to-make peanut butter cake with chocolate icing. Perfect for any occasion, this cake is sure to impress.",
+      "instructions": "Preheat oven to 350°F and grease and flour 2 9-inch layer cake pans. Prepare the cake mix according to box directions, beating in 1/2 C peanut butter. Bake and cool completely. For the icing: Combine syrup and semi-sweet chocolate in a heavy small saucepan. Stir over medium heat until chocolate is melted. Transfer to a large bowl. Stir in the remaining 2 C peanut butter, then powdered sugar, then milk. Stir until smooth. Fill and frost the layer cake. Garnish with chopped peanuts.",
+      "servings": "2 loaves",
+      "ingredients": [
+        "1 package regular yellow cake mix (preferably Duncan Hines)",
+        "2 1/2 C creamy peanut butter",
+        "3/4 C chocolate syrup",
+        "1 C powdered sugar",
+        "1/4 C milk",
+        "8 oz semi-sweet baking chocolate, chopped (not chocolate chips, as they contain wax)",
+        "Chopped peanuts"
+      ]
+    },
+    {
+      "title": "Peanut Butter Cake",
+      "description": "A delicious and easy-to-make peanut butter cake with chocolate icing. Perfect for any occasion, this cake is sure to impress.",
+      "instructions": "Preheat oven to 350°F and grease and flour 2 9-inch layer cake pans. Prepare the cake mix according to box directions, beating in 1/2 C peanut butter. Bake and cool completely. For the icing: Combine syrup and semi-sweet chocolate in a heavy small saucepan. Stir over medium heat until chocolate is melted. Transfer to a large bowl. Stir in the remaining 2 C peanut butter, then powdered sugar, then milk. Stir until smooth. Fill and frost the layer cake. Garnish with chopped peanuts.",
+      "servings": "2 loaves",
+      "ingredients": [
+        "1 package regular yellow cake mix (preferably Duncan Hines)",
+        "2 1/2 C creamy peanut butter",
+        "3/4 C chocolate syrup",
+        "1 C powdered sugar",
+        "1/4 C milk",
+        "8 oz semi-sweet baking chocolate, chopped (not chocolate chips, as they contain wax)",
+        "Chopped peanuts"
+      ]
+    },
+    {
+      "title": "Team Taylor Wedding Cake",
+      "description": "A beautiful and delicious wedding cake featuring buttermilk, thyme, and lemon zest. Filled and frosted with vanilla buttercream icing and lemon curd, this cake is perfect for special occasions.",
+      "instructions": "Preheat the oven to 325°F. Butter (or spray with non-stick baking spray) three 9-inch round cake pans. Line the bottom of each pan with a round of parchment or waxed paper and butter (or spray) the paper. Combine the cake flour, sugar, baking powder, and salt in a large mixer bowl. With the mixer on low speed, blend for 30 seconds. Add the butter a few cubes at a time and mix until it resembles breadcrumbs. Add the buttermilk, then raise the speed to medium and beat until light and fluffy, 2 to 3 minutes. In a smaller bowl, whisk together the eggs, egg yolks, and vanilla. Add the wet ingredients to the dry, in 2 or 3 additions and beat until just combined. There will be 9 C of batter; pour 3 C batter into each pan. Bake for 26 to 28 minutes, or until a cake tester or toothpick inserted in the center comes out clean. After the layers have cooled completely, wrap them in plastic wrap and refrigerate. To assemble, fill between each layer with vanilla buttercream icing and lemon curd, and frost the outside of the cake lightly (not too thick) with vanilla buttercream. Top with raspberries! Note: This recipe also works well in two 8-inch pans, but will need to bake for longer (closer to 45 mins). You will have thicker cake layers that you can then horizontally slice when cooled to create four layers total. I’d suggest lemon curd between the top and bottom layers and raspberries (cut in half) in the middle, with vanilla buttercream for the outside of the cake.",
+      "servings": "Three 9-inch layers",
+      "ingredients": [
+        "3 3/4 C cake flour",
+        "2 1/2 C sugar",
+        "1 T plus 2 3/4 tsp baking powder",
+        "1/2 tsp salt",
+        "2 1/2 sticks (10 oz) unsalted butter at room temperature, cut into cubes",
+        "1 1/4 C plus 1/3 C buttermilk",
+        "5 whole eggs",
+        "2 egg yolks",
+        "2 1/2 tsp vanilla extract",
+        "2 1/2 T fresh thyme, leaves picked and chopped",
+        "2 1/2 T lemon zest (about 2 lemons)"
+      ]
+    }
+  ],
+  "candy": [
+    {
+      "title": "Smith College Fudge",
+      "instructions": "Mix the first four ingredients together. Melt the butter and pour in the previously mixed ingredients. Bring to boil and boil for 2 1/2 minutes. Then add the chopped chocolate and boil another 5 minutes. Remove from heat and add vanilla; beat until it thickens. Stir constantly from the time you put it on to cook until it is ready to pour into an 8-inch buttered baking pan. Nuts are optional but should be added just before pouring into baking pan. Cool and cut.",
+      "servings": "One 8-inch pan",
+      "ingredients": [
+        "1 C white sugar",
+        "1 C packed brown sugar",
+        "1/4 C Karo syrup",
+        "1/2 C sweet cream",
+        "1/4 C butter",
+        "4 oz chopped chocolate",
+        "1 tsp vanilla",
+        "Nuts (optional)"
+      ]
+    },
+    {
+      "title": "Never Fail Fudge",
+      "instructions": "Combine first 5 ingredients. Stir over low heat until blended. Bring to a boil over moderate heat, being careful not to mistake air bubbles for boiling. Then boil slowly, constantly stirring, for 5 minutes (to soft ball stage). Remove from heat. Stir in chocolate and vanilla until chocolate is melted. Then turn into a buttered 8- or 9-inch baking pan and cool.",
+      "servings": "One 8- or 9-inch pan",
+      "ingredients": [
+        "2 1/2 C sugar",
+        "1/4 C butter or margarine",
+        "1 small can (5 oz) evaporated milk",
+        "1 (7 1/2 oz) jar Marshmallow Fluff",
+        "3/4 tsp salt",
+        "3/4 tsp vanilla",
+        "1 12 oz pkg semi-sweet chocolate chips"
+      ]
+    },
+    {
+      "title": "Peanut Brittle",
+      "instructions": "Cook sugar and Karo syrup until light brown (hard crack stage). Add the butter, stir. Then add the baking soda, stir. Next add the peanuts, stir and quickly pour onto a greased cookie sheet. Cool and break apart.",
+      "servings": "",
+      "ingredients": [
+        "1 C sugar",
+        "1/2 C Karo syrup",
+        "1 T butter",
+        "1 tsp baking soda",
+        "3/4 C salted peanuts"
+      ]
+    }
+  ],
+  "dessert": [
+    {
+      "title": "Lemon Curd",
+      "description": "There’s nothing that compares to Ina Garten’s lemon curd. You can store it in the fridge for weeks, or freeze it. Use it for lemon tart filling, filling between cake layers, or spread it on toast like jam. Or just eat it out of a bowl with a little whipped cream. Delicious.",
+      "instructions": "Using a carrot peeler*, remove the zest of 3 lemons, being careful to avoid the white pith. Put the zest in a food processor fitted with the steel blade. Add the sugar and pulse until the zest is very finely minced into the sugar. Cream the butter and beat in the sugar and lemon mixture. Add the eggs, one at a time, and then add the lemon juice and salt. Mix well until combined. Pour the mixture into a 2-quart saucepan and cook over low heat until thickened (about 10 minutes), stirring constantly. The lemon curd will thicken at about 170°F, or just below simmer. Remove from heat and cool, or refrigerate. *Emily uses a zester/fine grater and rubs the grated zest into the sugar, leaving it to sit and infuse for a bit. Works just as well.",
+      "ingredients": [
+        "3 lemons",
+        "1 1/2 C Sugar",
+        "1/4 lb. unsalted butter, room temperature",
+        "4 extra large eggs (don’t substitute large eggs)",
+        "1/2 C lemon juice (3 to 4 lemons)",
+        "1/8 tsp kosher salt"
+      ]
+    },
+    {
+      "title": "Butter Cookies",
+      "instructions": "Preheat oven to 350°F. Cream butter and sugar. Add half of the flour and both eggs; mix. Combine with remaining flour and extract. Roll into a log and wrap in wax paper. Refrigerate at least overnight. Slice and bake for 10–12 minutes, just until barely beginning to get golden. The cookies should not be browned. Once cooled, combine the frosting ingredients—using enough powdered sugar to make a frosting thick enough that it will not run. Frost the cookies.",
+      "servings": "",
+      "ingredients": [
+        "2 C room temperature butter",
+        "1 C sugar",
+        "2 eggs",
+        "1 T almond extract",
+        "4 C flour",
+        "Frosting:",
+        "1/4 C cherry or maraschino cherry juice",
+        "1/4 C room temperature butter",
+        "Powdered sugar (as much as necessary)"
+      ]
+    },
+    {
+      "title": "Chocolate Crinkles",
+      "instructions": "Preheat oven to 375°F. Combine first 4 ingredients; beat in eggs one at a time. Stir in milk. Stir flour and baking powder together and then stir them into egg mixture. Chill until thoroughly cold. Using about a tablespoon of dough for each, shape into balls; roll in powdered sugar. Place on greased cookie sheet. Bake for 10–12 minutes.",
+      "servings": "",
+      "ingredients": [
+        "1 1/2 C sugar",
+        "1/2 C vegetable oil",
+        "3 oz unsweetened chocolate, melted and cooled",
+        "2 tsp vanilla",
+        "3 eggs",
+        "1/4 C milk",
+        "2 C flour",
+        "2 tsp baking powder",
+        "Sifted powdered sugar"
+      ]
+    },
+    {
+      "title": "Double Chocolate Rebels",
+      "instructions": "Preheat oven to 350°F. Sift dry ingredients (except oats & chocolate chips). Whisk wet ingredients together and add dry ingredients gradually. Add in oats and chocolate chips and mix well. Drop by teaspoon onto a lined cookie sheet. Bake for 12–14 minutes. May be sprinkled with sugar.",
+      "servings": "",
+      "ingredients": [
+        "1 C flour",
+        "1/2 tsp salt",
+        "6 T cocoa",
+        "1/2 tsp baking soda",
+        "1 1/4 C oleo (or butter)",
+        "1 tsp vanilla",
+        "1 1/2 cup sugar",
+        "1 beaten egg",
+        "1/4 C oats",
+        "6 oz chocolate chips"
+      ]
+    },
+    {
+      "title": "Lemon Bars",
+      "instructions": "Preheat oven to 350°F. Combine the 1 cup flour, 1/4 cup powdered sugar, and 1/2 cup softened butter, and pat into an ungreased 8-inch square pan. Bake for 20 minutes. Beat filling ingredients together until frothy. Pour over the crust and bake at for 25 minutes or until golden brown. Cool. Dust with powdered sugar.",
+      "servings": "",
+      "ingredients": [
+        "1 C flour",
+        "1/4 C powdered sugar",
+        "1/2 C softened butter",
+        "2 eggs, beaten",
+        "1 C sugar",
+        "2 T flour",
+        "1/2 tsp baking powder",
+        "2 T lemon juice",
+        "1 T lemon zest"
+      ]
+    },
+    {
+      "title": "Martha Stewart Brownies",
+      "instructions": "Preheat oven to 350°F. Grease 9x13 baking pan, or spray with vegetable oil. Set a heat-proof bowl over simmering water. Put the chocolate and butter into the bowl and melt until smooth, stirring occasionally. Remove from heat and allow to cool. In a small bowl, stir flour and salt together, set aside. In a large mixing bowl, combine eggs, sugars and vanilla, beat well with a whisk. Add cooled chocolate to egg mixture, whisk until combined. Slowly add the flour mixture, beat until combined. Pour batter into pan, bake for 30 minutes. Let cool for as long as the masses can stand it. Cut into squares.",
+      "servings": "",
+      "ingredients": [
+        "1 1/2 sticks unsalted butter",
+        "8 oz bittersweet baker's chocolate",
+        "4 large eggs",
+        "1 1/2 C granulated sugar",
+        "1/2 C packed dark brown sugar",
+        "1 tablespoon vanilla",
+        "1 1/3 C flour",
+        "1/2 tsp salt"
+      ]
+    },
+    {
+      "title": "Martha Stewart Brownies",
+      "description": "From Favorite Comfort Food",
+      "instructions": "Preheat oven to 350°F. Grease 9 x 13 baking pan, or spray with vegetable oil (such as Pam). Set a heat-proof bowl over simmering water. Put the chocolate and butter into the bowl and melt until smooth, stirring occasionally. Remove from heat and allow to cool. In a small bowl, stir flour and salt together, set aside. In a large mixing bowl, combine eggs, sugars and vanilla, beat well with a whisk. Add cooled chocolate to egg mixture, whisk until combined. Slowly add the flour mixture, beat until combined. Pour batter into pan, bake for 30 minutes. Let cool for as long as the masses can stand it. Cut into squares.",
+      "ingredients": [
+        "1 1/2 sticks unsalted butter",
+        "8 oz bittersweet baker's chocolate",
+        "4 large eggs",
+        "1 1/2 C granulated sugar",
+        "1/2 C packed dark brown sugar",
+        "1 tablespoon vanilla",
+        "1 1/3 C flour",
+        "1/2 tsp salt"
+      ],
+      "servings": ""
+    },
+    {
+      "title": "Mocha Logs",
+      "description": "Preheat oven to 375°F.",
+      "instructions": "Cream butter and sugar, beat in egg and vanilla. Sift together dry ingredients, including coffee powder, and gradually blend into creamed mixture. Using star plate on a cookie press, form cookies in 3 inch strips on ungreased cookie sheet. Bake for 10 to 12 minutes. Dip ends in melted chocolate and sprinkle chocolate with nuts.",
+      "ingredients": [
+        "1 C butter",
+        "3/4 C sugar",
+        "2 T instant coffee powder (such as Medaglia D’Oro instant expresso powder)",
+        "1/2 tsp salt",
+        "1 egg",
+        "1 tsp vanilla",
+        "2 1/4 C sifted flour",
+        "1/4 tsp baking powder",
+        "Semisweet chocolate, melted (not sure of amount—start with about 6 oz semisweet chocolate chips)",
+        "Finely chopped pecans"
+      ],
+      "servings": ""
+    },
+    {
+      "title": "Molasses Cookies",
+      "instructions": "Preheat oven to 375°F. Add sugar to melted butter, add molasses and egg, then add dry ingredients. Chill about 2 hours. Form into tablespoon sized balls, roll in sugar and place on parchment lined cookie sheets. Bake for 8–10 minutes.",
+      "ingredients": [
+        "3/4 C melted margarine or butter",
+        "1 C sugar",
+        "1/4 C dark (robust) molasses",
+        "1 egg",
+        "2 tsp baking soda",
+        "2 C flour",
+        "1/2 tsp salt",
+        "1/2 tsp cloves",
+        "1/2 tsp ginger",
+        "1 tsp cinnamon"
+      ],
+      "servings": ""
+    },
+    {
+      "title": "Monster Cookies",
+      "description": "No flour in these!",
+      "instructions": "Preheat oven to 350°F. Beat all ingredients together well. Drop by tablespoon onto a cookie sheet. Bake for 8–10 minutes.",
+      "ingredients": [
+        "1 C brown sugar",
+        "1 C white sugar",
+        "1/2 C (1 stick) butter",
+        "2 tsp baking soda",
+        "1 1/2 C chunky peanut butter",
+        "3 eggs",
+        "1 tsp vanilla",
+        "4 1/2 C rolled or quick oats",
+        "1 C chocolate chips (or M&Ms, or a mix of both)"
+      ],
+      "servings": ""
+    },
+    {
+      "title": "Peanut Blossoms",
+      "description": "",
+      "instructions": "Preheat oven to 375°F. In a large bowl, beat the butter and peanut butter until fluffy. Add sugars and beat til smooth. Add the egg, beat. Add milk and vanilla and beat. Combine all dry ingredients in a separate bowl. Add dry ingredients gradually to wet mixture until well combined. Using about a tablespoon of dough, roll into balls, then roll in sugar. Bake for 10–12 minutes; in the last minute, take out the tray of cookies and put a chocolate kiss or star on each one, then bake one minute more.",
+      "ingredients": [
+        "1 3/4 C flour",
+        "1 tsp soda",
+        "1/2 tsp salt",
+        "1/2 C sugar",
+        "1/2 C brown sugar, packed",
+        "1/2 C margarine or butter, softened",
+        "1/2 C peanut butter",
+        "1 egg",
+        "2 T milk",
+        "1 tsp vanilla"
+      ],
+      "servings": ""
+    },
+    {
+      "title": "Peanut Butter Cookies",
+      "description": "",
+      "instructions": "Preheat oven to 350°F. In a large bowl, combine the flour, baking soda, baking powder, and salt. Set aside. In another large bowl, beat the butter and peanut butter until fluffy. Add sugars and beat til smooth. Add the egg, beat. Add milk and vanilla and beat. Using large teaspoonfuls, roll individual cookies into balls, then roll in the sugar. Place on ungreased cookie sheets. Using a fork, lightly indent each cookie with a criss cross pattern, but don’t flatten them. Bake for 10–12 minutes, being careful not to overbake.",
+      "ingredients": [
+        "1 1/4 C flour",
+        "3/4 tsp baking soda",
+        "1/2 tsp baking powder",
+        "1/4 tsp salt",
+        "1/2 C butter, room temperature",
+        "1 C peanut butter",
+        "3/4 C sugar",
+        "1/2 C firmly packed brown sugar",
+        "1 egg, room temperature",
+        "1 T milk",
+        "1 tsp vanilla",
+        "Additional sugar to roll cookies in"
+      ],
+      "servings": ""
+    },
+    {
+      "title": "Peanut Butter Rice Krispie Treats",
+      "description": "",
+      "instructions": "Put rice krispies in a large bowl. Melt the two sugars then add the peanut butter to the melted sugar and mix well. Pour this mixture over the rice krispies, mix, and quickly put in a greased 9 x 13 pan; pat down. Melt chocolate chips and butterscotch chips together, blending well. Top the rice krispie treats and let cool.",
+      "ingredients": [
+        "6 C rice crispies",
+        "1 C peanut butter",
+        "1 C sugar",
+        "1 C corn syrup",
+        "1 C chocolate chips",
+        "1 C butterscotch chips"
+      ],
+      "servings": ""
+    },
+    {
+      "title": "Ranger Cookies",
+      "description": "",
+      "instructions": "Preheat oven to 350°F. Cream margarine and sugars, add eggs, vanilla, and oats. Sift flour, baking powder, soda, and salt; blend with margarine mixture. Blend in cereal and coconut, mix well. Drop by tablespoon on greased or parchment paper lined pan. Bake for 10–12 minutes.",
+      "ingredients": [
+        "1 C margarine or butter",
+        "1 C sugar",
+        "1 C brown sugar",
+        "2 eggs",
+        "1 tsp vanilla",
+        "2 C oats",
+        "2 C flour",
+        "1/2 tsp baking powder",
+        "1 tsp baking soda",
+        "1/2 to 1 tsp salt",
+        "2 C rice krispies or corn flakes",
+        "1 C shredded coconut",
+        "handful of chocolate chips"
+      ],
+      "servings": ""
+    },
+    {
+      "title": "Grandma DuChateau’s Rosettes",
+      "description": "",
+      "instructions": "Blend the eggs, salt, sugar, and lemon extract. Then alternately stir flour and milk into the egg mixture and beat until smooth (it should look like heavy cream). Heat about 2 1/2 inches of vegetable oil in a large heavy pan or dutch oven. The temperature should be maintained at about 325 to 350°F. Dip a rosette iron into oil, then into the batter. Hold the batter-coated iron over the oil a moment, then immerse it into the oil. Remove the rosette from the iron with a fork, and fry until light golden brown. Drain cooked rosettes on paper towels; dust with powdered sugar or cinnamon sugar.",
+      "ingredients": [
+        "2 eggs",
+        "1/4 tsp salt",
+        "1 T sugar",
+        "1 T lemon extract (not juice)",
+        "1 1/4 C flour",
+        "1 C milk",
+        "Vegetable oil for frying",
+        "Powdered sugar or cinnamon sugar for dusting"
+      ],
+      "servings": "About 3 dozen"
+    },
+    {
+      "title": "Seven Layer Bars",
+      "description": "",
+      "instructions": "Preheat oven to 350°F. \nMelt margarine in the bottom of a 9 x 13 pan. Add graham cracker crumbs and spread them out uniformly. Sprinkle the chocolate chips on top of the cracker crumbs. Sprinkle the coconut on top of the chocolate chips. Spread the sliced almonds on top of the coconut. Pour the condensed milk over the almonds.\nBake for 35–45 minutes or until golden brown. Cool.",
+      "ingredients": [
+        "1 stick margarine or butter",
+        "2 C graham cracker crumbs",
+        "1 12 oz package semi-sweet chocolate chips",
+        "1 large package shredded coconut",
+        "1 package sliced almonds",
+        "2 cans Eagle Brand condensed milk"
+      ],
+      "servings": ""
+    },
+    {
+      "title": "Springerle",
+      "description": "This recipe is from Dad’s Aunt Margie (Grandma Homer’s oldest sister). These cookies are a traditional German Christmas cookie, and require a special wooden “roller” to make impressions in the cookie dough. Grandma Homer gave me hers, and I treasure it. It’s hand carved, and they’re hard to come by these days. The best way to learn how to make these is by practicing with someone first (like me, maybe!)",
+      "ingredients": [
+        "6 eggs",
+        "3 C sugar",
+        "3/4 tsp salt",
+        "2 to 2 1/2 tsp ammonium carbonate (the amount depends on how fresh the ammonium carbonate is. You can order ammonium carbonate from Amazon.)",
+        "4 T crushed anise seed (best anise seed comes in glass jars)",
+        "1 to 1 1/2 tsp anise oil (not anise extract)",
+        "6 C flour (or less)"
+      ],
+      "instructions": "Preheat oven to 350°F. Beat the eggs and sugar for 1/2 hour on medium speed (easiest with a stand mixer). Add the rest of the ingredients to the egg sugar mixture. Roll out the dough to 1/4 inch thick. Roll with a Springerle mold and cut out the molded cookies. Let them dry on an anise seed covered cookie sheet overnight. Bake at for 12–15 minutes. Once cool, pack them in a cookie tin and store them in a cool, dry, dark spot for at least 3 weeks to a month before serving."
+    },
+    {
+      "title": "Sugar Cookies",
+      "ingredients": [
+        "3 C flour",
+        "2 tsp baking powder",
+        "1 tsp baking soda",
+        "1/4 tsp nutmeg",
+        "Dash of salt",
+        "1 C Crisco or room temperature butter",
+        "2 eggs",
+        "1 C sugar",
+        "1/4 C milk",
+        "1 tsp vanilla"
+      ],
+      "instructions": "Preheat oven to 400°F. Sift the first 5 ingredients together. Cut in Crisco (or room temp butter) to flour mixture. Beat the eggs, add sugar, milk and vanilla, then beat to mix thoroughly. Mix with flour mixture. Roll and cut. Bake for 10 minutes.",
+      "servings": null,
+      "description": "To roll, cut, and decorate!"
+    },
+    {
+      "title": "Tate's Bake Shop Chocolate Chip Cookies",
+      "description": "From \"Tate's Bake Shop Cookbook\" by Kathleen King",
+      "ingredients": [
+        "2 C all-purpose flour (220g)",
+        "1 tsp baking soda",
+        "1 tsp salt",
+        "1 C salted butter (225g)",
+        "3/4 C sugar (170g)",
+        "3/4 C firmly packed dark brown sugar (135g)",
+        "1 tsp water",
+        "1 tsp vanilla",
+        "2 large eggs",
+        "2 C semisweet chocolate chips"
+      ],
+      "instructions": "Preheat oven to 350°F. Grease two cookie sheets or line them with silicone sheet pan liners (such as Silpat). In a large bowl, stir together the flour, baking soda, and salt. In another large bowl, cream the butter and sugars. Add the water and vanilla. Mix the ingredients until they are just combined. Add the eggs and mix them lightly. Stir in the flour mixture. Fold in the chocolate chips. Don't over-mix the dough. Drop the cookies 2 inches apart onto the prepared cookie sheets using two tablespoons or an ice cream scoop. Bake them for 12 minutes or until the edges and centers are brown. They should be light and crispy! Remove the cookies to a wire rack to cool.",
+      "servings": "Makes 4 1/2 dozen 3-inch cookies"
+    },
+    {
+      "title": "Thumbprint Cookies",
+      "description": "A classic cookie recipe that's perfect for holidays or anytime you're craving a sweet treat. These cookies have a crunchy nutty exterior and a sweet jam-filled center that's sure to please everyone!",
+      "instructions": "Preheat oven to 350°F and place the oven rack in the center of the oven. Line a baking sheet with parchment paper.\n\nBeat the butter with an electric mixer until smooth. Add the sugar and beat until incorporated. Add the egg yolk and vanilla extract and beat until combined. Scrape down the sides and bottom of your bowl as needed.\n\nIn a separate bowl, whisk together the flour and salt. Add the flour mixture to the batter and beat just until combined. If the batter is too soft to roll into balls, refrigerate for about 30 to 60 minutes.\n\nIn a small bowl, whisk the egg white until frothy. Place the finely chopped nuts on a plate. Roll the batter into 1 inch balls (15g for each cookie). Then, taking one ball of dough at a time, first roll it in the egg white and then roll in the nuts. Place on the prepared baking sheet spacing about 2 inches apart. Using your thumb or end of a wooden spoon, make an indentation into the center of each cookie.\n\nBake for about 12 minutes, or until cookies are just set and the nuts have nicely browned. Remove from oven and place on wire rack to cool. Once mostly cooled, fill (spoon or pipe) the indentation with about 1/2 teaspoon of your favorite jam. Raspberry is a classic, but Grandma Ruthie used whatever she had around. Strawberry or apricot work well!\n\nNote: This recipe can be doubled.",
+      "ingredients": [
+        "1/2 C (113g) unsalted butter, at room temperature",
+        "1/4 C (50g) granulated white sugar",
+        "1 large egg, separated",
+        "1/2 tsp pure vanilla extract",
+        "1 C (130g) all purpose flour",
+        "1/4 tsp salt",
+        "3/4 – 1 C (75 – 100g) walnuts, toasted and finely chopped (can also use pecans, almonds, or hazelnuts)",
+        "1/4 C raspberry jam (can use other flavors of jam)"
+      ],
+      "servings": "19-20 cookies"
+    },
+    {
+      "title": "Apple Crisp",
+      "servings": "6",
+      "ingredients": [
+        "4 cups peeled, cored and sliced apples",
+        "2/3 – 3/4 cup brown sugar depending on the sweetness of the fruit",
+        "1/2 cup flour",
+        "1/2 cup oatmeal",
+        "3/4 teaspoon cinnamon",
+        "3/4 teaspoon nutmeg",
+        "1/3 cup room temperature butter"
+      ],
+      "instructions": "Preheat the oven to 375°F. Butter an 8 inch square baking dish, and put the apples in the dish. Combine the brown sugar, flour, oats, cinnamon, nutmeg, and butter and mix thoroughly (it should be crumbly). Top the fruit with the mixture and bake for about 30 minutes or until the apples are done."
+    },
+    {
+      "title": "Brownie Pudding",
+      "description": "From Ina Garten",
+      "instructions": "Preheat the oven to 325°F. Lightly butter a 2-quart (9 by 12 by 2-inch) oval baking dish. Melt the 1/2 pound of butter and set aside to cool. In the bowl of an electric mixer fitted with the paddle attachment, beat the eggs and sugar on medium-high speed for 5 to 10 minutes, until very thick and light yellow. Meanwhile, sift the cocoa powder and flour together and set aside. When the egg and sugar mixture is ready, reduce the speed to low and add the vanilla seeds, framboise, if using, and the cocoa powder and flour mixture. Mix only until combined. With mixer still on low, slowly pour in the cooled butter and mix again just until combined. Pour the brownie mixture into the prepared dish and place it in a larger baking pan. Add enough of the hottest tap water to the pan to come halfway up the side of the dish and bake for exactly 1 hour. A cake tester inserted 2 inches from the side will come out 3/4 clean. The center will appear very under-baked; this dessert is between a brownie and a pudding. Allow to cool and serve with vanilla ice cream.",
+      "ingredients": [
+        "1/2 pound (2 sticks) unsalted butter, plus extra for buttering the dish",
+        "4 extra-large eggs, at room temperature",
+        "2 cups sugar",
+        "3/4 cup good cocoa powder",
+        "1/2 cup all-purpose flour",
+        "Seeds scraped from 1 vanilla bean",
+        "1 tablespoon framboise liqueur, optional",
+        "Vanilla ice cream, for serving"
+      ],
+      "servings": "6"
+    },
+    {
+      "title": "Cheesecake",
+      "servings": "8-10",
+      "ingredients": [
+        "1 graham cracker crust, prepared from purchased boxed graham cracker crumbs",
+        "12 oz cream cheese, softened",
+        "4 eggs, well beaten",
+        "1 C sugar",
+        "1 tsp vanilla",
+        "2 C sour cream",
+        "1/2 C sugar"
+      ],
+      "instructions": "Preheat the oven to 350°F. Prepare crust per package directions, and press into place on the bottom and sides of a 9-inch springform pan. Mix cream cheese, eggs, sugar and vanilla thoroughly, and pour over crust. Bake at for 45 minutes, remove and cool for 15 minutes. Mix topping and spread over cheesecake. Bake for 10 minutes. Cool and refrigerate several hours before serving."
+    },
+    {
+      "title": "Chocolate Trifle",
+      "description": "This is one of your all-time favorites. The recipe serves a crowd unless chocolate addicts are present. ",
+      "instructions": "Make holes using a fork, all over top of brownies. Drizzle Kahlua or coffee over top. Let stand 10 minutes. Chop brownies into small pieces and divide into 2 piles. Put 1 pile into the bottom of a glass trifle bowl, or other (preferably glass) bowl capable of holding about 3 quarts. Layer half of the mousse, half of the crushed candy bars, and half of the whipped topping over brownies. Repeat layers beginning with remaining brownies. Chill. Garnish with shaved chocolate and a sprinkle of crushed candy. Note: You can use 2 instant chocolate pudding mixes (4 servings each) instead of the instant chocolate mousse. Beat the combined pudding mixes with 4 C milk until smooth.",
+      "ingredients": [
+        "1 fudge brownie mix (preferably Duncan Hines), or your own brownie recipe, prepared",
+        "1/3 C Kahlua (or sweetened black coffee)",
+        "3 instant chocolate mousse dessert mixes, prepared (each mix should be 3.1 oz)",
+        "8 chocolate covered crispy toffee bars (such as Heath or Skor), 1 1/2 oz each, crushed, reserving just a few crushed crumbs for the top of the trifle",
+        "4 C frozen light whipped topping, thawed"
+      ],
+      "servings": "Serves a crowd, unless chocolate addicts are present. You can also half or quarter the recipe for smaller servings."
+    },
+    {
+      "title": "Cream Puffs",
+      "ingredients": [
+        "1/2 C water",
+        "1/2 C whole milk",
+        "1/2 C unsalted butter",
+        "1/4 tsp salt",
+        "1 C flour",
+        "4 large eggs, room temperature"
+      ],
+      "instructions": "Preheat the oven to 425°F and line a rimmed baking sheet with parchment paper. In a medium saucepan, combine water, milk, butter, sugar, and salt. Bring just to a boil over medium heat then remove from heat and stir in 1 cup flour all at once with a wooden spoon. Once flour is incorporated, place back over medium heat stirring constantly for 1 1/2 to 2 minutes to release extra moisture and partially cook the flour. A thin film will form on the bottom of the pan and dough will come together into a smooth ball. Transfer the dough to a large mixing bowl and beat using an electric mixer on medium speed for 1 minute to cool the dough slightly. Add 4 eggs, 1 at a time, allowing for full incorporation between additions. Beat another minute until dough is smooth and forms a thick ribbon when pulled up. Option 1: Transfer the dough to a piping bag fitted with a 1/2 inch round tip. Pipe 28 round puffs, each 1 1/2 inch in diameter and 1/2 inch tall. Keep them 1” apart and avoid making peaks on the dough. Bake for 10 minutes in the center of the oven. Without opening the oven, reduce temp to 325°F and bake 20 – 25 min longer or until golden. Transfer to wire rack. Option 2: This is what Grandma DuChateau would do: once the eggs are incorporated into the dough, simply drop dough by 1/4 C onto the baking sheet and bake at 400°F (not 425) for 35 – 40 minutes or until golden brown. Transfer to wire rack and cool. Once cool, cut the top of the puffs and pull out any unbaked dough from the inside of each puff before filling. Put the top back on, once filled.",
+      "servings": null
+    },
+    {
+      "title": "Easy Lemon Dessert",
+      "ingredients": [
+        "2 cans Eagle Brand condensed milk",
+        "1 pint (2 C) whipping cream",
+        "4 fresh lemons, juiced and zested"
+      ],
+      "instructions": "Mix the milk and cream together, then add the juice and zest from 4 lemons. Pour into a graham cracker crumb-lined 9x13 inch pan and refrigerate for 6 hours or overnight. Serve with a little whipped cream."
+    },
+    {
+      "title": "4th of July Ice Cream",
+      "description": "Grandma DuChateau's recipe for old-fashioned crank ice cream",
+      "instructions": "Blend eggs, salt, vanilla, sugar, cream, and 1 quart milk. Pour into ice cream maker and if you need more liquid, add more milk. Crank ice cream maker until the ice cream is almost firm, then either leave the ice cream in the ice cream maker with towels to keep it cold or put the ice cream in the freezer until serving.",
+      "ingredients": [
+        "6 eggs, beaten well",
+        "Salt to taste, about 1 tsp",
+        "1 1/2 tsp vanilla extract",
+        "2 C sugar",
+        "1 quart cream",
+        "1 to 2 quarts milk"
+      ],
+      "servings": "6"
+    },
+    {
+      "title": "4th of July Ice Cream",
+      "description": "This is Grandma DuChateau's recipe—designed to be made in an old-fashioned crank ice cream freezer.",
+      "instructions": "Blend eggs, salt, vanilla, sugar, cream, and 1 quart milk. Pour into ice cream maker and if you need more liquid, add more milk. Crank ice cream maker until the ice cream is almost firm, then either leave the ice cream in the ice cream maker with towels to keep it cold or put the ice cream in the freezer until serving.",
+      "ingredients": [
+        "6 eggs, beaten well",
+        "Salt to taste, about 1 tsp",
+        "1 1/2 tsp vanilla extract",
+        "2 cups sugar",
+        "1 quart cream",
+        "1 to 2 quarts milk"
+      ]
+    },
+    {
+      "title": "Peach Cobbler",
+      "ingredients": [
+        "Peaches (either fresh or canned)",
+        "2 C Bisquick",
+        "2/3 C milk",
+        "2 T sugar",
+        "1 beaten egg"
+      ],
+      "instructions": "Butter an 8-inch square glass pan and preheat oven to 350°F.\nFor peaches: \nIf using canned peaches, drain them and then add a little thickening (flour or corn starch — I use flour) and cinnamon, nutmeg, sugar (amount depends on sweetness of peaches). If using frozen peaches (not thawed), toss with the same but use more flour and sugar. If using fresh peaches be sure to taste them to see how sweet they are before adding the sugar. Combine and pour into the pan. \n\nFor cobbler top:\nMix together the rest of the ingredients and spoon over the peaches. \n\nBake until cobbler top is golden brown (could be about an hour, especially if you use frozen peaches). You'll know it's done when it bubbles out of the pan and makes a mess in the bottom of your oven."
+    },
+    {
+      "title": "Rhubarb Dessert",
+      "description": "",
+      "instructions": "Grease a 9x9x2 inch baking pan, and preheat the oven to 350°F. Beat eggs lightly, add sugar and flour. Combine with rhubarb and place in the pan. Sprinkle the dry cake mix over the top. Sprinkle coconut and nuts over the top of the cake mix, and then drizzle melted butter over the coconut and nuts. Bake for 45 minutes.",
+      "ingredients": [
+        "4 C cut rhubarb",
+        "1 C sugar",
+        "2 eggs",
+        "2 T flour",
+        "1 Jiffy white cake mix",
+        "1/2 C butter, melted",
+        "1/2 C coconut",
+        "1/2 C chopped nuts"
+      ],
+      "servings": ""
+    },
+    {
+      "title": "Rum Raisin Bread Pudding with Vanilla Rum Sauce",
+      "instructions": "Preheat the oven to 350°F. In a large saucepan, add milk, butter, vanilla, cinnamon, brown sugar, run and raisins and heat until warm. Simmer until sugar dissolves. Put the cubed bread in a large bowl and pour the hot milk mixture over the bread. Let sit for 30 minutes so the bread absorbs the milk. Add the beaten eggs to the bread and milk mixture and stir. Pour bread pudding into a buttered 1 1/2 quart baking dish and bake for 50 minutes. To make the sauce: Melt butter. Mix sugar and cornstarch and stir into butter. Pour in milk and cook while stirring until it begins to boil. Cook until thick. Remove from heat and stir in rum. Pour over warm bread pudding.",
+      "ingredients": [
+        "3 C milk",
+        "3 T butter",
+        "1 tsp vanilla",
+        "1 tsp cinnamon",
+        "3/4 C packed brown sugar",
+        "3 T rum",
+        "1/2 C raisins",
+        "7 half inch thick slices of brioche bread, cubed or torn",
+        "4 eggs, beaten",
+        "2 T butter",
+        "1 T cornstarch",
+        "1/2 C sugar",
+        "1 C milk",
+        "3 T rum"
+      ]
+    }
+  ],
+  "entree": [
+    {
+      "title": "Beer Brats",
+      "servings": "8-10",
+      "ingredients": [
+        "10 uncooked bratwurst",
+        "1 large onion thinly sliced",
+        "2 to 4 (12 oz) cans beer (total liquid used should be 48 oz, so if you use less than 48 oz of beer you must make up the liquid with water. Dad prefers an IPA or pale ale – something with a little bite to it.)",
+        "10 brat buns split, for serving",
+        "Ketchup, mustard, relish, sauerkraut, and cooked onions, for serving"
+      ],
+      "instructions": "Preheat grill to medium-high heat. Clean and oil grate. In a large pot over medium-high heat, add brats, onion, and beer. Bring to a boil, reduce heat, and simmer until brats are cooked through, about 10 to 12 minutes. Remove brats to a bowl or platter. Continue cooking onions in beer while grilling the brats — remove with a slotted spoon and use as a topping — if desired. Increase heat to medium and cook brats, turning frequently, until browned, about 5 minutes. Serve on buns with your favorite toppings."
+    },
+    {
+      "title": "Borough Market Cheese Toastie",
+      "description": "If you've ever wanted to re-create Kappacasein's famous Borough Market cheese toastie at home, here's how it's done. This recipe is by Bill Oglethorpe, Kappacasien’s owner.",
+      "instructions": "Assemble the sandwich and place it in a hot, lightly greased griddle pan (assuming you don't have a panini toaster). Place a frying pan on top of the sandwich and weigh it down with a couple of cans. Cook for about 3 minutes until the crust starts to brown and the cheese melts through the pores of the bread. Flip it a couple of times so it cooks evenly, but make sure you don't overcook it, or you won't be able to taste all the flavors.",
+      "ingredients": [
+        "80g Montgomery's Cheddar, grated",
+        "10g Comté cheese, grated",
+        "10g Ogleshield cheese, grated",
+        "2 slices of Poilâne sourdough bread",
+        "2 tsp mixed chopped white and red onions, leek and crushed garlic"
+      ],
+      "servings": "1 TOASTIE"
+    },
+    {
+      "title": "Chicago Deep Dish Pizza",
+      "description": "Similar to Uno's, this recipe is from \"The Frugal Gormet Cooks American\"",
+      "instructions": "In the bowl of an electric mixer, dissolve the yeast in the water. Add the oils, cornmeal, and 3 cups of the flour. Beat for 10 minutes. Add the dough hook and mix in the additional 2 1/2 cups flour. Knead for several minutes with the mixer. Pour out the dough onto a plastic-covered or lightly oiled countertop and cover with a very large metal bowl. Allow to rise until it doubles in bulk. Punch down and allow to rise again. Punch down a second time and you are ready to make your pizza.\n\nOil round cake pans or deep-dish pizza pans. Put a bit of dough in each and push it out to the edges, using your fingers. Use enough dough so that you can run the crust right up the sides of the pans. Try to make it approximately 1/8\" thick throughout the pan.\n\nThe filling for 9- or 10-inch pan:\nPlace the cheese in tile-like layers on the bottom of the pie. Next put in the tomatoes and the basil, oregano, garlic and salt. Add any additional filling toppings (like sausage or veggies), and then add the Parmesan cheese and drizzle with olive oil \nBake the pies at 450°F until the filling looks done and the crusts are golden brown (about 45 minutes).",
+      "ingredients": [
+        "2 (1/4 oz) packages quick-rising yeast",
+        "2 C tepid water (90 oF)",
+        "1/2 C vegetable oil",
+        "4 T olive oil",
+        "1/2 C cornmeal",
+        "5 1/2 C flour",
+        "1/3 lb sliced mozzarella cheese",
+        "2 C canned plum tomatoes, drained and squished",
+        "1 tsp basil leaves",
+        "1 tsp oregano",
+        "2 garlic cloves, peeled and crushed",
+        "3 T grated parmesan cheese, for topping",
+        "3 T olive oil"
+      ],
+      "servings": "1 pie"
+    },
+    {
+      "title": "Chicken and Rice Casserole",
+      "description": "",
+      "instructions": "Preheat the oven to 350°F. Place uncooked rice in the bottom of a greased baking pan and top with chicken. Combine the canned soup, onion soup mix, and milk, and pour over the top of the chicken. Bake for about an hour, covered (may take longer).",
+      "ingredients": [
+        "5 or 6 chicken thighs (or other chicken pieces), not boneless skinless",
+        "1 C uncooked rice",
+        "1 can mushroom soup",
+        "1 can cream of celery or chicken soup",
+        "1 can evaporated milk",
+        "1/2 of a package of onion soup mix"
+      ],
+      "servings": "4-5"
+    },
+    {
+      "title": "Chipped Beef on Toast",
+      "description": "",
+      "instructions": "Two servings (unless you’re feeding Mom, in which case this is one serving). Cut beef into ribbons or pieces. Melt butter in a medium saucepan on medium heat. Mix in flour and pepper with a whisk or fork and cook for 30 seconds or so. Slowly add milk, whisking constantly. Bring to simmer and let the sauce thicken, then add beef. Simmer for five minutes. Serve over buttered toast.",
+      "ingredients": [
+        "1 (2 oz) package dried beef",
+        "About 2 T butter",
+        "1/4 C flour",
+        "2 C milk",
+        "A little pepper"
+      ],
+      "servings": "2"
+    },
+    {
+      "title": "Grandma Hiller’s Chicken and Dumplings",
+      "description": "",
+      "instructions": "To make the soup:\nPlace chicken pieces in a large pot or Dutch oven and add enough water to cover the chicken. Add celery, carrots, onion, salt, thyme, rosemary, and pepper. Bring to boiling and reduce heat to a simmer until chicken is cooked (about 20 minutes).\nTo make the dumplings:\nSift together flour, baking powder and salt. Beat the egg and milk in a separate bowl. Add dry ingredients to milk/egg mixture and mix thoroughly without overbeating. \nDrop dumplings by spoonfuls into simmering broth, cover and steam the dumplings for 20 minutes without lifting the lid. Taste the soup and add more salt and pepper as needed.",
+      "ingredients": [
+        "1 3 to 4 lb chicken, cut into parts",
+        "2 ribs celery (with leaves), sliced thin",
+        "2 carrots, peeled and sliced thin",
+        "1 large onion, chopped",
+        "2 tsp salt",
+        "1 1/2 tsp dried thyme",
+        "1/2 tsp dried rosemary",
+        "1/2 tsp pepper",
+        "2 C flour",
+        "2 tsp baking powder",
+        "3/4 tsp salt",
+        "1 egg",
+        "3/4 C milk"
+      ],
+      "servings": "About 4"
+    },
+    {
+      "title": "Crabmeat Casserole",
+      "description": "This recipe is from the first edition of a Marion Cunningham cookbook that’s now out of print. We used to always have it after Easter, when there would usually be an abundance of leftover hard-boiled eggs. The casserole is very very rich!",
+      "ingredients": [
+        "1 C heavy cream",
+        "1 C mayonnaise",
+        "1 T minced parsley",
+        "1 T minced onion",
+        "Salt and pepper",
+        "3 1/2 C crabmeat",
+        "6 hard-boiled eggs, chopped",
+        "1 C buttered breadcrumbs"
+      ],
+      "instructions": "Preheat the oven to 350°F, butter a shallow baking dish. Combine cream, mayo, parsley, onion, salt and pepper, crab, and eggs. Toss lightly and spread in the baking dish. Sprinkle with the breadcrumbs. Bake about 30 minutes. Note: you can substitute half and half for the cream, and use light mayo. I used to also make it with imitation crabmeat but it’s not as tasty.",
+      "servings": "4-6"
+    },
+    {
+      "title": "Honey Mustard Baked Chicken",
+      "description": "",
+      "ingredients": [
+        "6 chicken breasts (or less if you want lots of extra sauce)",
+        "1/2 C melted butter",
+        "1/2 C honey",
+        "1/4 C yellow or Dijon mustard (Mom uses Dijon)",
+        "1 tsp salt",
+        "2 tsp curry powder (or more to taste)"
+      ],
+      "instructions": "Preheat oven to 350°F. Place chicken in a shallow baking dish. Combine rest of ingredients and pour over chicken. Bake for 30 minutes.",
+      "servings": "6"
+    },
+    {
+      "title": "Hot Chicken Salad",
+      "description": "",
+      "instructions": "Preheat oven to 425°F. Mix first 7 ingredients and put in a casserole (or cake pan). Top with shredded cheese and potato chips. Bake for 25 minutes.",
+      "ingredients": [
+        "2 C cooked chicken, cubed",
+        "2 C diced celery",
+        "3/4 C mayo",
+        "1/3 C toasted slivered almonds",
+        "2 T lemon juice",
+        "2 tsp grated onion",
+        "1/2 tsp salt",
+        "2 oz shredded mild cheddar cheese",
+        "1 C crushed potato chips"
+      ],
+      "servings": "Makes 4-6 servings"
+    },
+    {
+      "title": "Lemon Chicken and Potatoes",
+      "description": null,
+      "instructions": "Preheat oven to 350°F. Wash and pat dry the chicken. Cut potatoes into chunks. Coat chicken and potatoes with breadcrumbs and arrange in a large roasting pan. Melt margarine, squeeze lemon for juice, then mix butter and lemon juice with herbs and garlic. Spoon over chicken and potatoes. Bake for about 1 hr 15 minutes, baste chicken and potatoes occasionally with pan juices while baking.",
+      "ingredients": [
+        "3–4 lbs chicken parts",
+        "4–5 medium red potatoes, peeled",
+        "1/2 C margarine or butter",
+        "1 large fresh lemon",
+        "3–4 cloves garlic, minced",
+        "1 C Italian seasoned breadcrumbs (you might need a bit more)",
+        "1/2 tsp dried basil",
+        "1/2 tsp dried oregano",
+        "Coarse ground pepper"
+      ],
+      "servings": "4–6"
+    },
+    {
+      "title": "Make Ahead Kale and Feta Frittata",
+      "description": "A delicious and easy recipe for a frittata that can be made ahead and frozen for later.",
+      "servings": "4-6",
+      "ingredients": [
+        "8 eggs, lightly beaten",
+        "3 C fresh kale, spinach, or swiss chard, torn into bite-size pieces",
+        "4 oz crumbled feta",
+        "2 T whole milk, half and half, or cream",
+        "1 1/2 tsp dried dill",
+        "1/2 tsp kosher salt",
+        "1 tsp butter"
+      ],
+      "instructions": "Combine the first 6 ingredients (through the salt) in a quart size zip-top freezer bag and freeze until ready to prepare (or don’t freeze – just continue with directions below). If you’re starting with a frozen mixture, thaw. You can do a quick thaw by putting the bag of frozen mixture into a bowl of very warm tap water for about 20 minutes. Preheat the oven to 375°F. Heat a small (9 or 10 inch) ovenproof nonstick skillet (a well-seasoned cast iron pan would also work), melt the 1 tsp butter. Pour the bag contents into the pan. Cook for 5 minutes, but DO NOT STIR. Place in the oven and bake 30–40 minutes or until set."
+    },
+    {
+      "title": "Lillian Hellman Pot Roast",
+      "description": "This recipe came from a book I read in 1983 titled “Heartburn” by Nora Ephron. Heartburn is an autobiographical novel about Nora’s marriage to and divorce from Carl Bernstein. As far as I know, Lillian Hellman is imaginary, so this is probably Nora Ephron’s recipe.",
+      "ingredients": [
+        "4 lb chuck or other good beef roast",
+        "1 can mushroom soup",
+        "1 envelope onion soup mix",
+        "1 large chopped onion",
+        "3 cloves chopped garlic",
+        "2 C red wine",
+        "2 C water",
+        "1 crushed bay leaf",
+        "1 tsp dried basil",
+        "1 tsp dried thyme"
+      ],
+      "instructions": "Preheat the oven to 350°F. Place meat in a roasting pan; mix remaining ingredients and pour over meat. Bake covered for about 3 1/2 hours (this would probably also work in a slow cooker, on high).",
+      "servings": null
+    },
+    {
+      "title": "Mom's Meatloaf",
+      "ingredients": [
+        "2 T butter",
+        "2 T olive oil",
+        "1 onion finely chopped",
+        "1 C finely chopped dark green tops from leeks—none of the bulb or lime green tops. Save the bulb and lime green tops for another use.",
+        "3 medium carrots, finely chopped",
+        "2 celery stalks, finely chopped (use only 1/2 of 1 stalk, and add 1/2 a large fennel bulb or 1 small fennel bulb, finely chopped)",
+        "1 lb. ground beef",
+        "1/2 lb. boneless pork chops, ground (or 1/2 lb ground pork)",
+        "3 cloves garlic, minced (low FODMAP - omit this and use garlic infused olive oil instead)",
+        "1 1/4 C fresh breadcrumbs (low FODMAP - use traditional sourdough bread)",
+        "salt and ground black pepper, to taste",
+        "1/4 tsp nutmeg",
+        "1/8 tsp cayenne pepper (I use a pinch)",
+        "1 1/2 tsp Worcestershire sauce",
+        "1/4 C tomato ketchup (low FODMAP - make sure the ketchup doesn’t contain high fructose corn syrup, and it’s a bonus if the ketchup doesn’t contain garlic or onions).",
+        "1/3 C water"
+      ],
+      "instructions": "Preheat the oven to 350°F. Melt butter (oil for Low FODMAP version) in a large skillet. Add the onion (leek tops), carrots, and celery (small bit of celery and the fennel) and cook over medium-low heat until tender, stirring often, about 5 minutes. Put the cooked vegetables in a large bowl. Mix in meats, garlic (omit if using garlic infused oil), breadcrumbs, salt, pepper, cayenne, Worcestershire, ketchup and water. Pat into an 11 . 7-inch oval shaped mound in a baking dish or on a heavy, rimmed sheet pan. Bake 45 to 50 minutes.",
+      "servings": null,
+      "description": "I usually double this recipe and make multiple meatloaves — it freezes well. For a low FODMAP version, please see my FODMAP ingredient modifications. Search the app for the garlic infused olive oil recipe!"
+    },
+    {
+      "title": "Pasta with Sausage Tomato Cream Sauce",
+      "description": "This recipe serves 6-8 people and is perfect for a hearty meal. The sausage tomato cream sauce is flavorful and pairs well with tube-shaped or ribbed pasta.",
+      "instructions": "Heat oil in a heavy large pot over medium-high heat. Add onions and garlic and saute until beginning to soften. Add the sausage and saute until no longer pink, breaking up with the back of a fork, about 5 minutes. Add cream and simmer for 5 minutes. Add tomatoes with their juices, sage and pepper. Simmer, stirring occasionally, for 15 minutes. Season with salt and pepper to taste. Meanwhile, cook pasta until al dente. Drain. Return pasta to pot, add sauce and toss. Serve with parmesan cheese, crusty bread and a nice Chianti!",
+      "ingredients": [
+        "2 T olive oil",
+        "1/2 C chopped onion",
+        "2 large garlic cloves, chopped",
+        "1 lb sweet Italian sausage",
+        "1 C whipping cream",
+        "2 14.5 oz cans DelMonte diced (not stewed) tomatoes with garlic, basil and oregano",
+        "1 T dried rubbed sage",
+        "1/4 tsp dried crushed red pepper",
+        "1 lb dried pasta such as cavatappi (or another tube-shaped or ribbed pasta that is good at holding sauce)"
+      ],
+      "servings": "6-8"
+    },
+    {
+      "title": "Pork Ribs with Sauerkraut and Apples",
+      "description": "",
+      "instructions": "Preheat oven to 350°F. Spread kraut in shallow pan, cover with everything except ribs and wine. Put ribs on top, pour wine over. Bake covered for 1 hour, then for 20 minutes uncovered.",
+      "ingredients": [
+        "4C drained sauerkraut",
+        "3 tart apples, peeled and sliced",
+        "1 onion cut into thin rings",
+        "2 bay leaves",
+        "1 tsp pepper",
+        "1C dry white wine",
+        "4lbs trimmed ribs"
+      ],
+      "servings": ""
+    },
+    {
+      "title": "Rib Roast with Horseradish Cream Sauce",
+      "description": "From Ina Garten. Also, search Mustard Horseradish Sauce in app for recipe.",
+      "instructions": "Two hours before roasting, remove the meat from the refrigerator and allow it to come to room temperature. Preheat the oven to 500°F (see Cook's Note). Place the oven rack on the second lowest position. Place the roast in a pan large enough to hold it comfortably, bone-side down, and spread the top thickly with the salt and pepper. Roast the meat for 45 minutes. Without removing the meat from the oven, reduce the oven temperature to 325°F and roast for another 30 minutes. Finally, increase the temperature to 450°F and roast for another 15 to 30 minutes, until the internal temperature of the meat is 125°F. (Be sure the thermometer is exactly in the center of the roast.) The total cooking time will be between 1 1/2 and 1 3/4 hours. Meanwhile, make the sauce. Remove the roast from the oven and transfer it to a cutting board. Cover it tightly with aluminum foil and allow the meat to rest for 20 minutes. Carve and serve with the sauce.",
+      "ingredients": [
+        "One 3-rib standing rib roast (7 to 8 pounds)",
+        "1 tablespoon kosher salt",
+        "1 1/2 teaspoons freshly ground black pepper"
+      ]
+    },
+    {
+      "title": "6-Layer Dinner Casserole",
+      "description": "",
+      "instructions": "Preheat the oven to 350°F. Crumble the ground beef into the bottom of 9 x 13 inch baking dish, then season with salt and pepper. Add a layer of sliced onions, and season with salt and pepper. Layer the drained can of green beans, season with salt and pepper (frozen green beans will also work). Then layer the diced tomatoes and season with salt and pepper. Next add a layer of sliced potatoes, season with salt and pepper. Finally, add a few strips of bacon, and season with salt and pepper. Bake covered for 1 1/2 hours.",
+      "ingredients": [
+        "1 1/2 lbs ground beef (or other ground meat)",
+        "Sliced onions",
+        "1 can green beans",
+        "1 16 oz can of diced tomatoes with Italian herbs",
+        "Sliced potatoes",
+        "Bacon slices"
+      ],
+      "servings": ""
+    },
+    {
+      "title": "Spinach Lasagna",
+      "description": "",
+      "instructions": "Preheat the oven to 350°F. Bring a large pot of lightly salted water to a boil. Add lasagna noodles and cook for 8 to 10 minutes or until al dente; drain. In a skillet over medium-high heat, cook mushrooms, onions, and garlic in olive oil until onions are tender. Drain excess liquid and cool. Boil spinach for 5 minutes. Drain, then squeeze out excess liquid. Chop spinach. Combine ricotta cheese, Romano cheese, spinach, salt, oregano, basil, pepper, and egg in a bowl. Add cooled mushroom mixture. Beat with an electric mixer on low speed for 1 minute. Spread a small amount of tomato sauce in the bottom of a 9 x 13 inch baking dish and then lay 5 lasagna noodles on top. Spread one third of the cheese/spinach mixture over noodles. Sprinkle 1 cup mozzarella cheese and 1/3 cup Parmesan cheese on top. Spread 1 cup tomato sauce over cheese. Repeat layering 2 times. Cover dish with aluminum foil and bake in a preheated oven for 1 hour. Cool 15 minutes before serving.",
+      "ingredients": [
+        "20 lasagna noodles",
+        "2 T olive oil",
+        "1 C chopped fresh mushrooms",
+        "1 C chopped onion",
+        "1 T minced garlic",
+        "2 C fresh spinach, chopped",
+        "3 C ricotta cheese",
+        "2/3 C grated Romano cheese",
+        "1 tsp salt",
+        "1 tsp dried oregano",
+        "1 tsp dried basil leaves",
+        "1/2 tsp ground black pepper",
+        "1 egg",
+        "3 C shredded mozzarella cheese",
+        "3 C tomato sauce",
+        "1 C grated Parmesan cheese"
+      ],
+      "servings": ""
+    },
+    {
+      "title": "Swiss Steak",
+      "description": "",
+      "instructions": "Preheat the oven to 325°F.\nPlace steak between 2 pieces of plastic wrap and pound with a meat mallet until 1/2\" thick. \nHeat 2 T vegetable oil in a medium dutch oven over medium high heat. Add onions and garlic and cook until softened and beginning to brown, about 5 minutes. Remove from the pot and set aside. \nSeason meat on both sides with salt and pepper and then dredge meat in flour. Add remaining 2 T oil to the pot and sear the steak until deeply golden on both sides.\nMeanwhile, in a medium bowl, mix together tomatoes, water, oregano, and Worcestershire, then season with salt and pepper. Pour over seared meat and sprinkle onion mixture on top. \nCover pot and bake for 2 to 2 1/2 hours, until the meat is falling apart.\nSprinkle with parsley and serve.\nServe with boiled potatoes and the tomato onion sauce.",
+      "ingredients": [
+        "2 lb. boneless lean chuck round steak",
+        "4 T vegetable oil, divided",
+        "2 medium onions, thinly sliced",
+        "4 cloves garlic, peeled and smashed",
+        "Kosher salt and freshly ground black pepper",
+        "1 C all-purpose flour",
+        "1 (28-oz.) can crushed tomatoes",
+        "1 C water",
+        "1 tsp dried oregano",
+        "1 T Worcestershire sauce"
+      ],
+      "servings": ""
+    },
+    {
+      "title": "Tater Tot Casserole",
+      "description": "Lucas’ favorite!",
+      "ingredients": [
+        "1 lb lean ground beef (the leaner the better)",
+        "1/2 onion, diced",
+        "1 T Worcestershire sauce",
+        "15 oz can green beans, drained (frozen green beans are ok too)",
+        "10.75 oz can condensed cream of mushroom soup",
+        "1 C shredded cheddar cheese (optional)",
+        "2 C frozen tater tots",
+        "salt and pepper to taste"
+      ],
+      "instructions": "Preheat the oven to 375°F. Lightly grease an 8 or 9-inch baking dish with cooking spray. Set aside. Brown the ground beef in a large skillet over medium-high heat. Drain excess fat. Add the onions to the skillet and sauté for 4 to 5 minutes until translucent. Stir in Worcestershire sauce and season with salt and pepper to taste. Transfer ground beef mixture to the prepared baking dish and spread evenly. Top with cream of mushroom soup, followed by green beans, followed by the cheddar cheese, if using. Make sure to season the green bean layer. Finally, top with tater tots. Bake for 35 to 40 minutes or until tater tots are golden brown and cheese is melted. Serve immediately.",
+      "servings": null
+    },
+    {
+      "title": "Thanksgiving Leftovers Casserole",
+      "description": "I’ve made this casserole at home after Thanksgiving a few times, but also made it one year after Christmas in Utah. It was a big hit in Utah! The recipe is flexible—feel free to clean out the fridge.",
+      "instructions": "Preheat the oven to 350°F and grease a large 9-10” pie pan or medium casserole dish. Layer the ingredients, in the order they're listed. If you’re using a pie pan, place it on a baking sheet to help catch drips. Bake until golden and bubbly (about 40 minutes). Let cool slightly then serve.",
+      "ingredients": [
+        "3 C stuffing",
+        "1 C whole cranberry sauce",
+        "Turkey chunks or slices",
+        "Glazed carrots or sweet potatoes",
+        "1 C gravy",
+        "3-4 C mashed potatoes",
+        "Top with more cranberry sauce"
+      ]
+    },
+    {
+      "title": "Tortellini with Gorgonzola Cream Sauce",
+      "description": "This dish is so rich, and it’s definitely a family favorite!",
+      "ingredients": [
+        "1/2 C dry white breadcrumbs",
+        "1 T grated Romano cheese",
+        "1 T olive oil",
+        "1/2 tsp dried crumbled oregano",
+        "1/2 tsp dried crumbled basil",
+        "1 3/4 C heavy cream",
+        "4 oz crumbled Gorgonzola Cheese (don’t substitute blue cheese)",
+        "1/4 tsp nutmeg",
+        "1 lb cheese tortellini"
+      ],
+      "servings": "4 as a main or 6 as a side",
+      "instructions": "Mix all topping ingredients and set aside. Simmer cream, Gorgonzola cheese, and nutmeg over medium heat until cheese melts. Cook until reduced to a thin sauce consistency, stirring frequently, about 10 minutes. Meanwhile, cook tortellini just until tender and drain. Preheat broiler. Add tortellini to sauce and transfer to a large shallow baking dish. Sprinkle topping over pasta. Broil until the top is lightly toasted. Serves four as the main dish, 6 as a side dish."
+    }
+  ],
+  "pie": [
+    {
+      "title": "Great Aunt Christine’s Crunchy Crust Peach Pie",
+      "description": "Aunt Christine was the youngest of the Raske siblings, and Grandma Hiller was the oldest. She lived on the Raske homestead until she was married and moved to her husband’s nearby farm. When she reached old age, she moved “to town” (Highmore, South Dakota), which was the nearest town to the Raske homestead. She drove her car, baked bread and delivered it to her “kids” once a week, and tended her own garden up until she was 103, when she fell while weeding that garden. She recovered but decided it was time to finally “retire” and move into a senior facility. Aunt Christine died in 2018 one month short of her 105th birthday. She was a gem!",
+      "instructions": "Preheat oven to 375°F. Mix the peeled and sliced peaches with the tapioca. Pour into a pastry-lined pie pan. Combine the topping ingredients and cover the peaches with the mixture. Bake until peaches are tender (about 40 minutes). When cool, serve with whipped cream. Note: Aunt Christine’s trick to preventing a soaked bottom crust was to brush the crust lightly with a beaten egg white before filling with peaches.",
+      "ingredients": [
+        "6 to 8 peeled and sliced peaches",
+        "2 T minute tapioca",
+        "3/4 C sugar",
+        "1/4 C brown sugar",
+        "1/2 C flour",
+        "1/4 C butter",
+        "1 tsp cinnamon",
+        "1/8 tsp nutmeg"
+      ]
+    },
+    {
+      "title": "Gooseberry Pie",
+      "description": "My Grandma (Irene) Hammer always baked in her old wood cook stove — she never caught the hang of baking in her gas range. She made a gooseberry pie for dessert the first time Dad ate at her house, and he’d never had it before. The gooseberry pie was Grandma’s way of testing Dad’s fit into the Hammer family. Dad ate all his pie, loved it, and as the matriarch of the Hammer family, Grandma gave Dad the official Hammer family stamp of approval. Grandma’s wood cook stove is now in Aunt Sherry’s house.",
+      "ingredients": [
+        "4 C. green gooseberries",
+        "2/3 to 1 C sugar, depending on how tart the berries are (the sugar is meant to complement their tartness, not mask it)",
+        "1/4 C flour",
+        "2 tsp quick-cooking tapioca"
+      ],
+      "instructions": "Preheat the oven to 450°F.\nCombine the sugar, flour, and tapioca and sprinkle over the berries. Let stand 15 minutes.\nPour fruit into a prepared pie crust, dot with butter and top with another crust. Cut a few vent slits in the top crust.\nBake at 450°F for 10 minutes, then reduce heat to 350°F and bake another 35–40 minutes until berries are bubbling and cooked."
+    },
+    {
+      "title": "Grandma Hiller's Best Ever Pie Crust",
+      "description": null,
+      "instructions": "Sift together flour and salt; add lard and cut until the mixture resembles corn meal. Combine egg, vinegar, and water and add to the flour mixture. Stir lightly with a fork until dough follows the fork in the bowl. Form into a ball and chill. \nBe careful not to roll the crust too much, as it will get tough.",
+      "ingredients": [
+        "3 C sifted flour",
+        "1 tsp salt",
+        "1 C lard",
+        "1 egg",
+        "1 T vinegar",
+        "1/3 C cold water"
+      ],
+      "servings": "MAKES TWO \n9\" DOUBLE \nCRUST PIES"
+    },
+    {
+      "title": "Grandma Ruthie’s Blueberry Pie",
+      "description": null,
+      "instructions": "Preheat the oven to 425°F. In a bowl, mix the sugar, flour and cinnamon. Add the blueberries and toss to coat, making sure the cinnamon is evenly distributed. Roll out the pie crust dough and line the bottom of a pie pan. Pour the berry mixture into the pie crust, making sure the sugar and flour are equally dispersed. Pour over the heavy cream.—eyeball the amount, but it usually takes about 1/2 a pint. The cream should be seen soaking into all the ingredients, but you don't want it to cover over the berries completely. Sprinkle a bit of extra cinnamon on the top of the pie, then bake for 30–40 minutes. The berries should be bubbling up. Put aluminum foil on the bottom of the oven because it can drip over the side. A messy pie is a good pie! Whipped cream is a must when serving.",
+      "ingredients": [
+        "Enough pie crust for a bottom crust only",
+        "1/2 C sugar",
+        "1/2 C flour",
+        "Sprinkle of cinnamon",
+        "1 quart blueberries",
+        "1/2 pint (1 C) heavy cream"
+      ],
+      "servings": null
+    },
+    {
+      "title": "Lemon Meringue Pie",
+      "ingredients": [
+        "1 1/2 C Sugar",
+        "1/3 C cornstarch",
+        "3 egg yolks, slightly beaten",
+        "1 1/2 C hot water",
+        "3 T butter",
+        "Juice and zest from 4 lemons",
+        "3 egg whites",
+        "1/4 tsp cream of tartar",
+        "6 T sugar"
+      ],
+      "instructions": "Preheat the oven to 400°F. Mix the sugar, cornstarch and egg yolks in a saucepan. Stir in the hot water gradually. Cook this mixture in a double boiler stirring constantly until mixture boils. Boil for 2 minutes and then remove from heat. Stir in the butter, lemon juice and zest. Pour into a baked pie crust or graham cracker crumb pie crust. For the meringue: Beat the egg whites with cream of tartar until frothy. Gradually beat in sugar, a little at a time. Continue beating until stiff and glossy. Pile onto filling, carefully sealing the edges. Bake 8–10 minutes or until peaks are golden brown. Set the pie to cool in a warm place so that the meringue doesn’t shrink."
+    },
+    {
+      "title": "Pecan Pie",
+      "description": null,
+      "instructions": "Preheat the oven to 400°F. Blend the ingredients and pour into an unbaked pie crust. Bake 10 minutes at 400°F, then lower the temp to 300°F and bake for another 30 minutes. Serve with whipped cream.",
+      "ingredients": [
+        "3 beaten eggs",
+        "1 C brown sugar",
+        "1 C dark Karo syrup",
+        "1 T flour",
+        "1 T melted butter",
+        "1 tsp vanilla",
+        "2/3 C pecans"
+      ],
+      "servings": null
+    },
+    {
+      "title": "Pumpkin Pie",
+      "description": "",
+      "instructions": "Preheat the oven to 400°F. Line a 9 inch pie pan with pie crust.Scald the milk then add to other ingredients which have been thoroughly mixed. Pour into the crust. Bake at 400°F for 10 minutes, then reduce heat to 350°F and bake until a sharp knife inserted in the center comes out clean.",
+      "ingredients": [
+        "1 C brown sugar",
+        "1/3 C white sugar",
+        "1 small can pumpkin puree",
+        "1 tsp cinnamon",
+        "1/2 tsp each of ginger, nutmeg, cloves",
+        "3 eggs",
+        "1 tsp vanilla",
+        "1 1/2 C rich milk (half milk, half cream) or 1 1/2 C half and half"
+      ]
+    },
+    {
+      "title": "Strawberry Rhubarb Pie",
+      "description": "",
+      "instructions": "Preheat the oven to 400°F. Combine the first 7 ingredients in a large bowl. Toss gently to blend. Roll out 1 pie dough disk on a floured work surface to make a 13-inch round. Transfer to a 9-inch-diameter glass pie dish. Trim excess dough, leaving 3/4-inch overhang. Roll out second dough disk on lightly floured surface to 13-inch round. Cut into fourteen 1/2-inch-wide strips. Spoon filling into crust. Arrange 7 dough strips on top of the filling, spacing evenly. Form lattice by placing remaining dough strips in the opposite direction on the filling. Trim ends of dough strips even with overhang of bottom crust. Fold strip ends and overhang under, pressing to seal. Crimp edges decoratively. Brush the glaze over the lattice crust and put the pie on a baking sheet. Bake for 20 minutes. Reduce oven temperature to 350°F. Bake pie until golden and filling thickens, about 1 hour 25 minutes. Transfer pie to rack and cool completely.",
+      "ingredients": [
+        "Enough pie crust dough for a two-crust pie",
+        "3 1/2 C half-inch-thick sliced rhubarb (about 1 1/2 pounds)",
+        "1 16 oz container strawberries, hulled, halved (about 3 1/2 C)",
+        "1/2 C (packed) light brown sugar",
+        "1/2 C sugar",
+        "1/4 C cornstarch",
+        "1 tsp ground cinnamon",
+        "1/4 tsp salt",
+        "1 large egg yolk beaten to blend with 1 tsp water (for pie crust glaze)",
+        "1 tsp water"
+      ],
+      "servings": ""
+    },
+    {
+      "title": "Swedish Apple Pie",
+      "description": null,
+      "instructions": "Preheat the oven to 350°F. Mash apples slightly; add flour, sugar, and salt. Beat eggs and vanilla, add to apple mixture. Beat sour cream until stiff and fold into apple mixture. Pour into the pie shell. Bake for 40 minutes. While the pie is baking, make the topping by rubbing the ingredients together like pastry dough. Set aside. After 40 minutes, remove the pie and sprinkle with topping. Return to the oven for 15 minutes. Let cool completely before serving.",
+      "ingredients": [
+        "2–3 C cooked apple slices, preferably Granny Smith or Golden Delicious (I slice about 8 apples and gently cook until soft, but still have a little shape)",
+        "2 T flour",
+        "3/4 C. sugar",
+        "Pinch of salt",
+        "1 egg",
+        "1 tsp vanilla",
+        "1 C regular (not lite) sour cream",
+        "1 unbaked pie shell (use a Pillsbury ready pie crust— or make your own)",
+        "Topping:",
+        "1/3 C sugar",
+        "1/3 C flour",
+        "1 tsp cinnamon",
+        "1/4 lb (1 stick) soft (not melted) butter"
+      ]
+    }
+  ],
+  "preserve": [
+    {
+      "title": "Gooseberry Jam",
+      "ingredients": [
+        "3 1/2 to 4 C green gooseberries",
+        "1/2 C water",
+        "2 C sugar"
+      ],
+      "instructions": "Cook berries in water until berries are soft. Slowly add the sugar and simmer until the sugar is dissolved. Bring to a rapid boil and boil until thick (7–9 minutes?), stirring frequently.\nLadle into hot canning jars and process for about 10 minutes.",
+      "servings": "4 pints"
+    },
+    {
+      "title": "Dill Pickles",
+      "description": "MAKES ABOUT 8 QUARTS OF PICKLES",
+      "ingredients": [
+        "8 lbs 3 to 4 inch long pickling cucumbers (you can find them at farmer’s markets in the heat of the Midwest summer)",
+        "4 C white vinegar",
+        "12 C water",
+        "2/3 C pickling salt",
+        "16 garlic cloves, peeled and halved",
+        "8 sprigs fresh dill weed",
+        "8 heads fresh dill"
+      ],
+      "instructions": "Wash the cucumbers and place in a sink, cooler, or the bathtub, with cold water and lots of ice. Soak the cucumbers for at least 2 hours but no more than 8 (this ensures the pickles will be firm after canning). \nIn a large pot over medium high heat, combine vinegar, water, and pickling salt. Bring the brine to a boil. In the meantime, sterilize 8 (1 quart) canning jars and lids in boiling water.\nIn each hot sterilized jar, place 2 half-cloves of garlic, one dill head, then enough cucumbers to fill the jar. Then add 2 more garlic halves and a sprig of dill. Fill the jars with hot brine. Clean the rims and put sterilized lids on the jars, followed by rims. Screw the rims on, barely tight. \nProcess sealed jars in a boiling water bath (see the tomato jam recipe). Boil the jars for 15 minutes.\nStore the pickles for at least 2 months before eating."
+    },
+    {
+      "title": "Grandma Hiller’s Apple Butter",
+      "description": "If you’d like some guidance, look here, as this is close to what I remember watching Grandma do: nchfp.uga.edu/how/can_02/apple_butter.html",
+      "instructions": "Combine the cooked apples with the sugar and cinnamon until thick and reddish, preferably in the oven. This will take several hours. Place in hot canning jars and process for 10 minutes.",
+      "ingredients": [
+        "12 pounds apples, cooked",
+        "4 pounds sugar",
+        "2 T cinnamon"
+      ],
+      "servings": null
+    },
+    {
+      "title": "Tomato Jam",
+      "description": "Mom's favorite!",
+      "instructions": "Combine tomatoes, sugar, lemon juice, ginger, red pepper flakes, salt cinnamon, and cumin in a large, heavy bottomed pot or dutch oven and bring to a boil over medium high heat, stirring frequently. Reduce heat and simmer until the mixture reaches a thick, jam-like consistency (about 2 1/2 hours). Stir frequently as it simmers because it burns easily. If you are going to preserve the jam, ladle the hot jam into hot, sterile half pint canning jars, leaving 1/4 inch headspace. Wipe rims of the jars, cover with sterilized canning lids, then screw canning rims on just until barely tight (do NOT tighten). In the meantime, put enough water to completely cover the canning jars in your canning kettle and bring it to a boil. Place jars on the canner’s canning rack and lower into the boiling water. Boil for 10 minutes. Remove jars and allow them to rest undisturbed for six hours or overnight. Tighten the jar lids and store.",
+      "ingredients": [
+        "4 pounds tomatoes, cored and chopped",
+        "2 2/3 C sugar",
+        "1/3 C fresh lemon juice",
+        "1 1/2 T fresh grated ginger",
+        "Pinch of red pepper flakes (or more, if you like spicy jam)",
+        "1 1/4 tsp salt",
+        "3/4 tsp cinnamon",
+        "1/4 tsp cumin, plus a pinch more"
+      ],
+      "servings": "8 PINTS"
+    }
+  ],
+  "sauce": [
+    {
+      "title": "Mustard Horseradish Sauce",
+      "ingredients": [
+        "1 1/2 cups good mayonnaise",
+        "3 tablespoons Dijon mustard",
+        "1 1/2 tablespoons whole-grain mustard",
+        "1 tablespoon prepared horseradish",
+        "1/3 cup sour cream",
+        "1/4 teaspoon kosher salt"
+      ],
+      "instructions": "Whisk together the mayonnaise, mustards, horseradish, sour cream, and salt in a small bowl."
+    },
+    {
+      "title": "Dad's BBQ Sauce",
+      "description": "A flavorful BBQ sauce recipe that makes a lot of sauce",
+      "instructions": "Bring 2 1/2 qts of water to a boil. Add the first three ingredients and simmer for 1 hour, then remove spices and onions. While the above is simmering prepare the rest of the ingredients. Add the simmered spiced water to the above mixture in a large (at least 6 qt) heavy pot or dutch oven and bring to a boil. Reduce heat and simmer for at least one hour at a low heat. If the sauce is too thick or spicy, dilute with water.",
+      "ingredients": [
+        "1/2 T Bay leaves (about 2 leaves, or 1/4 T powdered bay leaves)",
+        "1/4 T dry rosemary",
+        "1 large onion sliced",
+        "1/4 C bacon or ham drippings",
+        "1 qt ketchup",
+        "1 qt tomato paste",
+        "1 4 oz bottle of Liquid Smoke",
+        "1/2 C brown sugar",
+        "1/4 C lemon juice (juice of 1/2 a fresh lemon)",
+        "3/4 C Worcestershire sauce",
+        "1/4 C cider vinegar",
+        "1/4 C molasses",
+        "3/4 T ground black pepper",
+        "3/4 T salt",
+        "1/2 T powdered garlic",
+        "1/4 T ground thyme",
+        "1/4 T sweet basil",
+        "1/4 T red pepper",
+        "1/4 T ground cloves",
+        "1/4 T cinnamon",
+        "1/4 T ground cumin",
+        "1/8 T ground ginger"
+      ]
+    }
+  ],
+  "side": [
+    {
+      "title": "Mom's Baked Beans",
+      "description": "Mom used to make these with the optional ingredients listed, but the kids liked the simple version best when they were little.",
+      "instructions": "Preheat the oven to 350°F. Drain the liquid off the beans, stir in sugar and ketchup (and optional ingredients if using) into the drained beans. Put in a casserole dish and cover with bacon slices. Bake for about an hour, uncovered, or until the bacon is done. Watch them to make sure they don’t get too dry. If there are leftovers, they freeze well.",
+      "ingredients": [
+        "2 (28 oz) cans Bush Original baked beans",
+        "1/2 to 3/4 cup brown sugar",
+        "1/2 to 3/4 cup Hunts ketchup",
+        "Bacon slices (regular cut, not thick cut) - Optional",
+        "1/2 onion, chopped - Optional",
+        "1 T mustard - Optional",
+        "1 tsp Worchestershire sauce - Optional",
+        "1 tsp red wine vinegar - Optional",
+        "Pinch of salt - Optional"
+      ],
+      "servings": "About 8"
+    },
+    {
+      "title": "Broccoli Casserole",
+      "description": "Serves 6-8",
+      "instructions": "Preheat the oven to 350°F. Mix the broccoli, soup, eggs, cheese, mayo, and onion and pour into a casserole dish or other baking pan. Sprinkle with cracker crumbs and dot with butter. Bake at for about 30 minutes (until bubbly). Makes 6–8 servings",
+      "ingredients": [
+        "2 packages (boxes) of frozen chopped broccoli, cooked",
+        "1 can mushroom soup (or make your own version)",
+        "2 eggs",
+        "4 oz grated cheddar cheese",
+        "3/4 C mayo",
+        "1 chopped onion",
+        "1/2 C crushed Ritz crackers",
+        "Butter"
+      ]
+    },
+    {
+      "title": "Corn Pudding",
+      "description": "",
+      "instructions": "Preheat the oven to 350°F. Melt butter in a 9x13 inch pan. Mix the rest of the ingredients and pour into the pan. Bake for 35 minutes or until a knife comes out clean. Top with parmesan cheese 5 minutes before removing from the oven.",
+      "ingredients": [
+        "1 can whole corn, drained",
+        "1 can cream style corn",
+        "12 oz sour cream",
+        "1 package Jiffy Corn Muffin Mix",
+        "1 stick (1/2 C) butter or oleo",
+        "2 eggs, slightly beaten",
+        "1/4 C parmesan cheese, grated",
+        "Optional: 1/2 cup fresh green chilis (Mom doesn’t use these!)"
+      ],
+      "servings": "SERVES 6–8"
+    },
+    {
+      "title": "Easy Potato Bake",
+      "description": "",
+      "instructions": "Preheat the oven to 325°F. Heat half and half and butter, season with salt. Place thawed potatoes in a 9x13 baking dish, pour cream mixture over potatoes. Sprinkle with cheese and bake for 45 minutes.",
+      "ingredients": [
+        "3 C half and half",
+        "1/2 C (one stick) margarine or butter",
+        "2 12 oz packages frozen hash browns (not the shredded ones), thawed",
+        "1/2 C parmesan cheese"
+      ],
+      "servings": "8"
+    },
+    {
+      "title": "Potato Pancakes",
+      "description": "",
+      "instructions": "Peel potatoes and keep in cold water until ready to use. Batter must be made just before eaten or potatoes will go black due to oxidation. Grate potatoes and onion into a bowl and then drain in a strainer — you want to save the liquid — press out as much liquid as possible with your hands or a wooden spoon. Let the reserve liquid settle. Pour away the potato liquid but do not throw away the starchy sediment that has settled at the bottom of the bowl; this should be returned to the potato-onion mixture. Mix the potato-onion mixture with the eggs, flour, salt, and pepper. Heat oil/ fat in skillet, cast iron if you have it — don’t scrimp on the oil. Use about 1/4 cup of batter for each pancake. Cook until a deep golden brown on each side, then remove and drain the pancakes on a rack or paper towels. Serve with applesauce or sour cream.",
+      "ingredients": [
+        "7 to 8 medium size potatoes",
+        "1 large onion",
+        "Starch from potato water",
+        "2 eggs, slightly beaten",
+        "2 T flour",
+        "1 T salt",
+        "1 tsp pepper (white pepper, if you have it)",
+        "Shortening, oil, or lard for frying"
+      ],
+      "servings": "6"
+    },
+    {
+      "title": "Ramen Noodle Slaw",
+      "description": "This recipe serves a crowd, great for a party! If you can't find slaw mix, make your own with cabbage and carrots. The cheap ramen noodle packages are best for this slaw.",
+      "instructions": "Mix together all of the slaw ingredients. Make the dressing and combine with the slaw no earlier than one hour before serving.",
+      "ingredients": [
+        "1 small package of slaw mix",
+        "2 bunches of green onions",
+        "1 cup sunflower seeds (shelled, roasted)",
+        "1 cup almonds (slivered or sliced)",
+        "2 packages Ramen beef noodles",
+        "1/3 cup red wine vinegar",
+        "2 packets seasoning from the ramen noodles",
+        "5 small shakes of sesame oil",
+        "1 cup vegetable oil (canola, sunflower, or something else bland—coconut oil won’t work)",
+        "1/4 cup sugar"
+      ],
+      "servings": "20"
+    },
+    {
+      "title": "Roasted Apples & Sweet Potatoes in Honey-Bourbon Glaze",
+      "description": "Adapted from a 2008 Southern Living recipe. Side? Dessert? Either way, this is a great dish for fall.",
+      "servings": "6-8",
+      "ingredients": [
+        "5 large sweet potatoes (about 5 lb)",
+        "3 apples (such as golden delicious or honey crisp)",
+        "1/4 C fresh lemon juice",
+        "2/3 C firmly packed brown sugar",
+        "1/2 C honey",
+        "6 T unsalted butter",
+        "1/4 C bourbon",
+        "1 tsp ground cinnamon",
+        "1/2 tsp ground ginger",
+        "1/2 tsp salt",
+        "2/3 C coarsely chopped pecans"
+      ],
+      "instructions": "Wash sweet potatoes, and place on a baking sheet; prick with a fork. Bake at 400°F for 1 hour or until almost tender. Remove from the oven. Let stand 45 minutes or until cooled. Meanwhile, peel and core apples. Slice apples into 1/3' thick wedges; toss with some of the lemon juice in a bowl. Peel cooled sweet potatoes, and slice 1/3' thick. Arrange potatoes and apples alternately in a greased 13' x 9' baking dish. Pour remaining lemon juice over potatoes and apples. Combine brown sugar and the next 6 ingredients in a saucepan, stirring well. Bring to a boil over medium heat, stirring occasionally; boil 2 minutes or until slightly thickened. Pour glaze over potatoes and apples. Bake, uncovered, at 400°F for 30 minutes. Remove from the oven; baste with glaze from the bottom of the dish, and sprinkle nuts across top. Bake for 14 to 15 more minutes or until apples look roasted. Baste with glaze again just before serving."
+    },
+    {
+      "title": "Spätzle",
+      "description": "",
+      "instructions": "Mix flour and salt in a bowl. Add eggs and mix well. Gradually add just enough water to make a smooth, light, and firm dough. The amount will depend on how 'dry' your flour is. It’s best to mix for 10 minutes with a wooden spoon or dough hook. Let stand for 10 minutes. Meanwhile bring a large pot of salted water to boil. Push dough through the Spätzle maker with the scraper, directly into the boiling water. The spätzle will float when they are done (this will take a few minutes). Remove them with a slotted spoon. These are often served with 1) gravy, 2) buttered and browned breadcrumbs (Homer traditional way), 3) lightly sautéed diced bacon, 4) fried onions.",
+      "ingredients": [
+        "2 1/4 C flour, all-purpose",
+        "1 tsp salt",
+        "2 large eggs",
+        "About 1/2 – 1 C water"
+      ],
+      "servings": "4"
+    },
+    {
+      "title": "Sweet Potato and Apple Scallop",
+      "servings": "4",
+      "ingredients": [
+        "2 C thinly sliced boiled sweet potatoes (about 2 medium)",
+        "1 1/2 C peeled, thinly sliced tart apples (McIntosh, Johnathan, Granny Smith)",
+        "1/2 C brown sugar",
+        "4 T butter",
+        "Salt"
+      ],
+      "instructions": "To boil the sweet potatoes, scrub them but do not peel them or cut them up. Let them cool and then peel them. Alternatively, you can bake them, let them cool, and then peel them.\nPreheat the oven to 350°F. Butter a 1 1/2 quart baking dish. Put half the potatoes in the dish. Cover with half the apples, sprinkle with half the sugar, dot with half the butter, sprinkle with salt. Repeat layers.\nCover and bake for 30 minutes. Uncover and bake 30 minutes more or until apples are soft."
+    }
+  ],
+  "salad": [
+    {
+      "title": "24-hour Layered Salad",
+      "description": "Serves a lot of people.",
+      "instructions": "Put all ingredients in a large bowl in the order listed, ending with the mayo spread evenly across the top. Cover with plastic wrap and refrigerate for 24 hours.",
+      "ingredients": [
+        "1 1/2 Quart shredded lettuce, sprinkled with salt, pepper, and sugar",
+        "2 C chopped tomatoes",
+        "1 10 oz package frozen peas, thawed and drained",
+        "1 1/2 C shredded Swiss cheese",
+        "4 hard-cooked eggs, chopped",
+        "Chopped red onion",
+        "2 C Mayo"
+      ]
+    },
+    {
+      "title": "Dad’s Favorite Cucumber Salad",
+      "description": "",
+      "instructions": "Slice a large cucumber, sprinkle with pepper, and cover with vinegar. Refrigerate at least an hour before serving.",
+      "ingredients": ["1 large cucumber", "Pepper", "Vinegar"],
+      "servings": "N/A"
+    },
+
+    {
+      "title": "Hot German Potato Salad",
+      "description": "",
+      "instructions": "Fry the bacon, saving 1/3 C of the bacon grease. Brown the sliced onion for 2 minutes in the grease, then add the vinegar, water, flour, sugar, salt and pepper, celery seed, and parsley. Cook until thick, then add the cubed potatoes and heat through. Serve.",
+      "ingredients": [
+        "1 1/2 lbs potatoes, cooked until almost done, then cubed (no need to peel them if you use red or Yukon gold potatoes)",
+        "1 onion, sliced",
+        "6 strips bacon, chopped",
+        "1/3 C Vinegar",
+        "1/2 C water",
+        "2 tsp flour",
+        "3 tsp sugar",
+        "1 1/2 tsp salt",
+        "1/4 tsp pepper",
+        "1/2 tsp celery seed",
+        "Chopped parsley"
+      ],
+      "servings": ""
+    },
+    {
+      "title": "Mom’s Potato Salad",
+      "description": "",
+      "instructions": "Place the potatoes in a large pot and cover with water. Bring to a simmer and cook until tender (usually about 10 minutes, depending on how big the pieces are). Drain and place in a large mixing bowl. Sprinkle with the vinegar, folding together, then allow them to cool.\nAdd the onion, eggs, and celery to the bowl. Fold in the mayo, mustard, celery seed, salt and pepper to taste. Serve!\nIt should last for a couple of days in the fridge, if there are any leftovers.",
+      "ingredients": [
+        "2 lbs small red potatoes, scrubbed and cut into large bite-size pieces (don’t peel)",
+        "2 T apple cider vinegar",
+        "1 small (or 1/2 large) onion, chopped",
+        "3 large eggs, hard boiled and chopped",
+        "2 stalks celery, finely chopped",
+        "1 C mayo",
+        "1 T Dijon mustard",
+        "1/2 tsp celery seed",
+        "1/2 tsp kosher salt",
+        "Freshly ground pepper"
+      ],
+      "servings": "8"
+    },
+    {
+      "title": "Grandma Hiller’s Wilted Lettuce Salad",
+      "description": "Another Dad favorite!",
+      "servings": "N/A",
+      "ingredients": [
+        "4 C shredded leaf lettuce",
+        "4 slices bacon, diced and fried crisp (save the bacon grease for the dressing)",
+        "1/4 C vinegar",
+        "1/3 C chopped green onions",
+        "1/4 tsp salt",
+        "1/8 tsp pepper",
+        "2 tsp sugar"
+      ],
+      "instructions": "Add vinegar, salt, pepper, and sugar to bacon grease and heat. Pour the hot grease over the lettuce and onion, toss until wilted, and top with fried bacon."
+    }
+  ],
+  "miscellaneous": [
+    {
+      "title": "Garlic Infused Olive Oil",
+      "description": "In the US, you can opt to buy Colavita garlic olive oil (Costco often has it), Boyajian Garlic Oil (World Market, 8 oz for about $6), or La Tourangelle garlic infused sunflower oil (Amazon, and in stores in California, for about $6). Target has one under their Good and Tasty brand, but there is no way of knowing whether it’s truly “infused,” which is important).",
+      "instructions": "Sterilize a glass jar or container with boiling water, allow to air dry and set aside. You’ll use this to store the oil.\nPeel the garlic cloves and cut each clove in half.\nHeat the oil over low heat, until it is warm but not too hot to touch. You don’t want to overheat the oil as this will degrade the oil and change the flavor. Turn off the heat and add the garlic cloves. Allow the oil to infuse for 2 hours. Strain the oil into the clean jar. Make sure you remove all of the garlic pieces.\nUse within 3 days (to avoid risk of botulism) or freeze in 1 to 2 T servings in an ice cube tray and use within 3 months.",
+      "ingredients": [
+        "2 cups of cooking oil (e.g. olive oil, canola oil, grapeseed oil, sunflower oil)",
+        "8 cloves of garlic (peeled and cut in half)"
+      ]
+    },
+    {
+      "title": "Salt Dough Christmas Tree Ornaments",
+      "description": "This is the recipe we used for our homemade “cookie” tree ornaments.",
+      "instructions": "Preheat the oven to 275°F.\nIn a medium bowl, combine ingredients and knead until dough feels smooth and firm. Add more flour if dough feels too sticky or more water if dough feels too dry and crumbly. Keep dough covered until used.\nRoll out on lightly floured wax paper and cut. Punch hole in top to allow for an ornament hanger (the actual hanger is added after baking the dough). Bake for 1 hour or until the dough is hard. When dry, decorate with paints, markers, or just varnish. Let dry. \nOnce dry, add a yarn or twine ornament hanger.",
+      "ingredients": ["2 C flour", "1/2 C salt", "3/4 C hot tap water"]
+    },
+    {
+      "title": "Peanut Butter Dog Biscuits",
+      "ingredients": [
+        "2 C whole wheat flour",
+        "1 T baking powder",
+        "1 C natural peanut butter (no added sugar)",
+        "1 C skim milk"
+      ],
+      "instructions": "Mix, then roll out and cut. Bake at 375°F for 20 minutes."
+    },
+    {
+      "title": "Play Dough",
+      "description": "",
+      "ingredients": [
+        "1 C flour",
+        "1 C water",
+        "1/2 C salt",
+        "1 tsp salt",
+        "Food coloring"
+      ],
+      "instructions": "Combine all ingredients and cook over medium heat until mixture pulls away from the sides of the pan and becomes like play dough in consistency. Knead until cool. Keeps unrefrigerated for 3 months."
+    }
+  ]
+}

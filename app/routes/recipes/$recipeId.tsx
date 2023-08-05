@@ -18,6 +18,7 @@ import { useEffect, useRef } from "react";
 import invariant from "tiny-invariant";
 import BoundaryMessage from "~/components/boundary-message";
 import NoteItem from "~/components/note";
+import { Textarea } from "~/components/ui/textarea";
 import { badRequest } from "~/errors.server";
 import {
   createNote,
@@ -323,10 +324,9 @@ export default function Recipe() {
                   <label className="font-bold" htmlFor="content">
                     Add:{" "}
                   </label>
-                  <textarea
+                  <Textarea
                     ref={createNoteContentRef}
                     id="content"
-                    className="rounded-md border-2 border-solid border-gray-400"
                     name="content"
                     defaultValue={fetcher.data?.fields?.content}
                     aria-invalid={
@@ -346,7 +346,7 @@ export default function Recipe() {
                 </div>
                 <button
                   type="submit"
-                  className="ml-2 self-end rounded-md border-2  border-solid border-gray-400 py-1 px-2"
+                  className="ml-2 self-end rounded-md border-2  border-solid border-gray-400 px-2 py-1"
                   name="actionId"
                   value="addNote"
                 >
