@@ -6,6 +6,10 @@
   "compatibility_flags": ["nodejs_compat"],
   "main": "@tanstack/react-start/server-entry",
   "observability": { "enabled": true },
+  // Serves the site at the apex domain. Cloudflare manages the DNS record and
+  // certificate. It was first attached with the owner's wrangler login; the
+  // scoped agent token can redeploy with it in place.
+  "routes": [{ "pattern": "homerfamilycookbook.com", "custom_domain": true }],
   "d1_databases": [
     {
       "binding": "DB",
@@ -24,5 +28,4 @@
     }
   ]
   // Secrets (set with `wrangler secret put`, never committed): none yet.
-  // Custom domain is attached at cutover; until then the app is served on workers.dev.
 }
