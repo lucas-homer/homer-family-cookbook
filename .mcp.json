@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "cloudflare-hfc": {
+      "type": "http",
+      "url": "https://mcp.cloudflare.com/mcp",
+      "headers": { "Authorization": "Bearer ${HFC_CLOUDFLARE_API_TOKEN}" }
+    }
+  }
+}

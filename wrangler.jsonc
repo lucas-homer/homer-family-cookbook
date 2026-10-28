@@ -1,0 +1,28 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "homer-family-cookbook",
+  "account_id": "d7e6f52c128468fc605d09012d9ac8da",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "@tanstack/react-start/server-entry",
+  "observability": { "enabled": true },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "homer-family-cookbook",
+      "database_id": "a32854f1-55ff-4433-a511-71dceddae819",
+      "migrations_dir": "migrations"
+    }
+  ],
+  // Throttles login attempts before any bcrypt work, keyed per IP and per email.
+  // Limits are approximate and per Cloudflare location.
+  "ratelimits": [
+    {
+      "name": "LOGIN_LIMITER",
+      "namespace_id": "1001",
+      "simple": { "limit": 10, "period": 60 }
+    }
+  ]
+  // Secrets (set with `wrangler secret put`, never committed): none yet.
+  // Custom domain is attached at cutover; until then the app is served on workers.dev.
+}
