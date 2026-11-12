@@ -9,7 +9,7 @@ export const validateSortSearch = (search: Record<string, unknown>): { sort?: So
 
 // Shared body of /favorites and /favorites/$categoryId.
 export function FavoritesList({ recipes, sort }: { recipes: ReadonlyArray<FavoriteRecipe>; sort: SortDirection }) {
-  if (!recipes.length) return <p className="text-md my-6 text-zinc-500">No recipes in this category</p>;
+  if (!recipes.length) return <p className="text-md my-6 text-zinc-500">No favorites with this tag</p>;
   return (
     <>
       <Link to="." search={sort === "desc" ? {} : { sort: "desc" }} className="mb-2 flex max-w-xs items-center gap-1">

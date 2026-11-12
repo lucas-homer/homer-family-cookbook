@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { createCategory } from "~/server/categories-admin";
+import { createCategory, updateCategory } from "~/server/categories-admin";
 import { updateName } from "~/server/profile";
 import { createRecipe, deleteRecipe, readRecipeForEdit, updateRecipe } from "~/server/recipes/write";
 import { admin, alice, bob, query, run, runError, seed, validRecipe } from "./edit-fixtures";
@@ -24,6 +24,15 @@ describe("createRecipe", () => {
     expect(await categoriesOf(id)).toEqual(["cat-dessert", "cat-dinner"]);
   });
 
+  it("requires at least one Course tag", async () => {
+    expect(await runError(createRecipe(alice, { ...validRecipe, categoryIds: ["cat-xmas"] }))).toMatchObject({
+      _tag: "InvalidInput",
+      fieldErrors: { categoryIds: "Pick at least one Course tag" },
+    });
+    const { id } = await run(createRecipe(alice, { ...validRecipe, categoryIds: ["cat-dessert", "cat-xmas"] }));
+    expect(await categoriesOf(id)).toEqual(["cat-dessert", "cat-xmas"]);
+  });
+
   it("rejects bad input with field errors", async () => {
     const error = await runError(
       createRecipe(alice, { title: "  ", instructions: "x", categoryIds: [], ingredients: [{ name: "" }] }),
@@ -45,7 +54,7 @@ describe("createRecipe", () => {
     });
     expect(await runError(createRecipe(alice, { ...validRecipe, categoryIds: ["nope"] }))).toMatchObject({
       _tag: "InvalidInput",
-      fieldErrors: { categoryIds: "Unknown category" },
+      fieldErrors: { categoryIds: "Unknown tag" },
     });
     expect(await runError(createRecipe(alice, { ...validRecipe, title: "x".repeat(201) }))).toMatchObject({
       _tag: "InvalidInput",
@@ -129,11 +138,44 @@ describe("deleteRecipe", () => {
 });
 
 describe("admin categories and profile", () => {
-  it("only admins create categories, names are unique", async () => {
-    expect((await runError(createCategory(alice, { name: "Soup" })))._tag).toBe("Forbidden");
-    await run(createCategory(admin, { name: "Soup", description: "" }));
-    expect(await runError(createCategory(admin, { name: "soup" }))).toMatchObject({ _tag: "InvalidInput", fieldErrors: { name: expect.any(String) } });
-    expect((await runError(createCategory(admin, { name: " " })))._tag).toBe("InvalidInput");
+  it("only admins create tags, names are unique, groups are checked", async () => {
+    expect((await runError(createCategory(alice, { name: "Soup", tagGroup: "course" })))._tag).toBe("Forbidden");
+    const { id } = await run(createCategory(admin, { name: "Soup", description: "", tagGroup: "kind" }));
+    expect(await query<{ tagGroup: string }>`SELECT tag_group FROM categories WHERE id = ${id}`).toEqual([{ tagGroup: "kind" }]);
+    expect(await runError(createCategory(admin, { name: "soup", tagGroup: "course" }))).toMatchObject({ _tag: "InvalidInput", fieldErrors: { name: expect.any(String) } });
+    expect((await runError(createCategory(admin, { name: " ", tagGroup: "course" })))._tag).toBe("InvalidInput");
+    expect(await runError(createCategory(admin, { name: "Stew", tagGroup: "nonsense" }))).toMatchObject({ _tag: "InvalidInput", fieldErrors: { tagGroup: expect.any(String) } });
+  });
+
+  it("only admins rename or regroup tags, without name clashes", async () => {
+    const { id } = await run(createCategory(admin, { name: "Holiday", tagGroup: "course" }));
+    expect((await runError(updateCategory(alice, { categoryId: id, name: "Holidays", tagGroup: "occasion" })))._tag).toBe("Forbidden");
+    await run(updateCategory(admin, { categoryId: id, name: "Holidays", description: "", tagGroup: "occasion" }));
+    expect(await query<{ name: string; tagGroup: string }>`SELECT name, tag_group FROM categories WHERE id = ${id}`).toEqual([
+      { name: "Holidays", tagGroup: "occasion" },
+    ]);
+    // Same name with different case on the same tag is fine; another tag's name is not.
+    await run(updateCategory(admin, { categoryId: id, name: "holidays", tagGroup: "occasion" }));
+    expect(await runError(updateCategory(admin, { categoryId: id, name: "DESSERT", tagGroup: "occasion" }))).toMatchObject({
+      _tag: "InvalidInput",
+      fieldErrors: { name: expect.any(String) },
+    });
+    expect((await runError(updateCategory(admin, { categoryId: "missing", name: "X", tagGroup: "course" })))._tag).toBe("NotFound");
+  });
+
+  it("won't move a tag out of Course if a recipe would be left without one", async () => {
+    const { id: onlyCourse } = await run(createCategory(admin, { name: "Soups", tagGroup: "course" }));
+    const { id: other } = await run(createCategory(admin, { name: "Stews", tagGroup: "course" }));
+    const { id: recipeId } = await run(createRecipe(alice, { ...validRecipe, categoryIds: [onlyCourse] }));
+    expect(await runError(updateCategory(admin, { categoryId: onlyCourse, name: "Soups", tagGroup: "kind" }))).toMatchObject({
+      _tag: "InvalidInput",
+      fieldErrors: { tagGroup: expect.any(String) },
+    });
+    expect(await query<{ tagGroup: string }>`SELECT tag_group FROM categories WHERE id = ${onlyCourse}`).toEqual([{ tagGroup: "course" }]);
+    // Once the recipe has another Course tag, the move is allowed.
+    await run(updateRecipe(alice, { recipeId, ...validRecipe, categoryIds: [onlyCourse, other] }));
+    await run(updateCategory(admin, { categoryId: onlyCourse, name: "Soups", tagGroup: "kind" }));
+    expect(await query<{ tagGroup: string }>`SELECT tag_group FROM categories WHERE id = ${onlyCourse}`).toEqual([{ tagGroup: "kind" }]);
   });
 
   it("updates only the caller's own name", async () => {
