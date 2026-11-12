@@ -26,6 +26,40 @@ describe("FTS search", () => {
     expect((await search("blue pan")).map((r) => r.id)).toEqual(["search-1"]);
     expect(await search("blue tomato")).toEqual([]);
   });
+  it("matches tag names and keeps tag changes indexed", async () => {
+    await execute(
+      Effect.gen(function* () {
+        const sql = yield* SqlClient;
+        yield* sql`INSERT INTO categories (id, name, tag_group) VALUES ('search-tag', 'Grandma Hiller', 'family')`;
+        yield* sql`INSERT INTO recipe_categories (recipe_id, category_id) VALUES ('search-1', 'search-tag')`;
+      }),
+    );
+    expect((await search("hiller")).map((r) => r.id)).toEqual(["search-1"]);
+    await execute(
+      Effect.gen(function* () {
+        const sql = yield* SqlClient;
+        yield* sql`UPDATE categories SET name = 'Grandma Raske' WHERE id = 'search-tag'`;
+      }),
+    );
+    expect(await search("hiller")).toEqual([]);
+    expect((await search("raske")).map((r) => r.id)).toEqual(["search-1"]);
+    await execute(
+      Effect.gen(function* () {
+        const sql = yield* SqlClient;
+        yield* sql`DELETE FROM recipe_categories WHERE category_id = 'search-tag'`;
+      }),
+    );
+    expect(await search("raske")).toEqual([]);
+    await execute(
+      Effect.gen(function* () {
+        const sql = yield* SqlClient;
+        yield* sql`INSERT INTO recipe_categories (recipe_id, category_id) VALUES ('search-1', 'search-tag')`;
+        yield* sql`DELETE FROM categories WHERE id = 'search-tag'`;
+      }),
+    );
+    expect(await search("raske")).toEqual([]);
+    expect((await search("blueberry")).map((r) => r.id)).toEqual(["search-1"]);
+  });
   it("handles hostile MATCH input without throwing", async () => {
     for (const q of [
       '"',

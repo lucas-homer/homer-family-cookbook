@@ -42,7 +42,8 @@ export const readRecipe = (input: unknown) =>
     const categories = yield* sql<{
       id: string;
       name: string;
-    }>`SELECT c.id, c.name FROM categories c JOIN recipe_categories rc ON rc.category_id = c.id WHERE rc.recipe_id = ${recipeId} ORDER BY c.name COLLATE NOCASE, c.id`;
+      tagGroup: string;
+    }>`SELECT c.id, c.name, c.tag_group FROM categories c JOIN recipe_categories rc ON rc.category_id = c.id WHERE rc.recipe_id = ${recipeId} ORDER BY c.name COLLATE NOCASE, c.id`;
     return { ...recipe, ingredients, categories };
   });
 export const getRecipe = createServerFn({ method: "GET" })
@@ -71,7 +72,7 @@ export const searchRecipes = (input: unknown) =>
     const sql = yield* SqlClient;
     return yield* sql<
       RecipeSummaryData & { snippet: string }
-    >`SELECT r.id, r.title, u.first_name, u.last_name, snippet(recipe_search, -1, '', '', ' … ', 24) AS snippet FROM recipe_search JOIN recipes r ON r.id = recipe_search.recipe_id JOIN users u ON u.id = r.user_id WHERE recipe_search MATCH ${match} ORDER BY bm25(recipe_search, 0, 5, 2, 1, 1), r.title COLLATE NOCASE, r.id LIMIT 50`;
+    >`SELECT r.id, r.title, u.first_name, u.last_name, snippet(recipe_search, -1, '', '', ' … ', 24) AS snippet FROM recipe_search JOIN recipes r ON r.id = recipe_search.recipe_id JOIN users u ON u.id = r.user_id WHERE recipe_search MATCH ${match} ORDER BY bm25(recipe_search, 0, 5, 2, 1, 1, 3), r.title COLLATE NOCASE, r.id LIMIT 50`;
   });
 export const getSearchResults = createServerFn({ method: "GET" })
   .validator((input: { q: string }) => input)

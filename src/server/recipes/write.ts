@@ -23,9 +23,9 @@ const RecipeFields = {
   background: OptionalText(10_000),
   instructions: Text(3, 50_000, "At least three letters please :)"),
   categoryIds: Schema.Array(Id).check(
-    Schema.isMinLength(1, { message: "At least one category required" }),
-    Schema.isMaxLength(MAX_CATEGORIES, { message: `At most ${MAX_CATEGORIES} categories` }),
-    Schema.isUnique({ message: "Categories must be unique" }),
+    Schema.isMinLength(1, { message: "Pick at least one Course tag" }),
+    Schema.isMaxLength(MAX_CATEGORIES, { message: `At most ${MAX_CATEGORIES} tags` }),
+    Schema.isUnique({ message: "Tags must be unique" }),
   ),
   ingredients: Schema.Array(Ingredient).check(
     Schema.isMinLength(1, { message: "This recipe needs at least ONE ingredient" }),
@@ -42,9 +42,12 @@ export type RecipeInput = typeof RecipeInput.Encoded;
 const checkCategoriesExist = (categoryIds: ReadonlyArray<string>) =>
   Effect.gen(function* () {
     const sql = yield* D1Client.D1Client;
-    const rows = yield* sql<{ id: string }>`SELECT id FROM categories WHERE ${sql.in("id", categoryIds)}`;
+    const rows = yield* sql<{ id: string; tagGroup: string }>`SELECT id, tag_group FROM categories WHERE ${sql.in("id", categoryIds)}`;
     if (rows.length !== categoryIds.length) {
-      return yield* Effect.fail(new InvalidInput({ fieldErrors: { categoryIds: "Unknown category" } }));
+      return yield* Effect.fail(new InvalidInput({ fieldErrors: { categoryIds: "Unknown tag" } }));
+    }
+    if (!rows.some((row) => row.tagGroup === "course")) {
+      return yield* Effect.fail(new InvalidInput({ fieldErrors: { categoryIds: "Pick at least one Course tag" } }));
     }
   });
 
@@ -136,5 +139,6 @@ export const readRecipeForEdit = (user: SessionUser, input: unknown) =>
 
 export const listCategories = Effect.gen(function* () {
   const sql = yield* D1Client.D1Client;
-  return yield* sql<{ id: string; name: string }>`SELECT id, name FROM categories ORDER BY name COLLATE NOCASE, id`;
+  return yield* sql<{ id: string; name: string; tagGroup: string }>`
+    SELECT id, name, tag_group FROM categories ORDER BY name COLLATE NOCASE, id`;
 });
