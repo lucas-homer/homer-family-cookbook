@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { router } from "expo-router";
 import * as React from "react";
 import { FlatList, TextInput, View } from "react-native";
+import { SplitView, useRecipeOpener } from "@/components/split";
 import { Empty, LoadError, Loading, useTopInset } from "@/components/screen";
 import { Icon, RecipeRow, Text } from "@/components/ui";
 import { api, authorName } from "@/lib/api";
@@ -18,6 +18,7 @@ function useDebounced<T>(value: T, ms: number) {
 
 // Search matches titles, ingredients, instructions and tag names.
 export default function Search() {
+  const { split, selected, open } = useRecipeOpener();
   const top = useTopInset();
   const { colors } = useTheme();
   const [text, setText] = React.useState("");
@@ -25,6 +26,7 @@ export default function Search() {
   const q = useQuery({ queryKey: ["search", term], queryFn: ({ signal }) => api.search(term, signal), enabled: term.length > 0 });
 
   return (
+    <SplitView split={split} selected={selected}>
     <FlatList
       data={term ? (q.data?.results ?? []) : []}
       keyExtractor={(r) => r.id}
@@ -55,7 +57,8 @@ export default function Search() {
       ListEmptyComponent={
         !term ? undefined : q.isPending ? <Loading /> : q.isError ? <LoadError error={q.error} onRetry={() => q.refetch()} /> : <Empty title="No matches" message={`Nothing matches "${term}". Try another word.`} />
       }
-      renderItem={({ item }) => <RecipeRow title={item.title} meta={authorName(item)} onPress={() => router.push(`/recipe/${item.id}`)} />}
+      renderItem={({ item }) => <RecipeRow title={item.title} meta={authorName(item)} onPress={() => open(item.id)} />}
     />
+    </SplitView>
   );
 }

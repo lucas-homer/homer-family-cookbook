@@ -3,6 +3,7 @@ import { Effect } from "effect";
 import { SqlClient } from "effect/sql/SqlClient";
 import { beforeAll, describe, expect, it } from "vitest";
 import { handleApiRequest } from "~/server/api/handler";
+import { createInvite } from "~/server/auth/invites";
 import { runtime } from "~/server/runtime";
 
 const BASE = "https://cookbook.example/api/v1/";
@@ -146,5 +147,32 @@ describe("API favorites", () => {
     await call("recipes/api-1", { token: body!.token });
     const recent = await call("recently-viewed", { token: body!.token });
     expect(recent.body?.recipes.map((r: { id: string }) => r.id)).toEqual(["api-1"]);
+  });
+});
+
+describe("API invites", () => {
+  it("shows an open invite, joins with it, and then reports it used", async () => {
+    const invite = await runtime.runPromise(createInvite({ email: "new@example.test", role: "MEMBER", expiresInDays: 14, createdBy: "api-user" }));
+    const open = await call(`invites/${invite.token}`);
+    expect(open).toMatchObject({ status: 200, body: { invite: { email: "new@example.test", role: "MEMBER" } } });
+
+    const wrong = await call("auth/join", {
+      method: "POST",
+      body: JSON.stringify({ token: invite.token, email: "someone@example.test", firstName: "Cy", password: "long enough password" }),
+    });
+    expect(wrong.body?.fieldErrors).toHaveProperty("email");
+
+    const joined = await call("auth/join", {
+      method: "POST",
+      body: JSON.stringify({ token: invite.token, email: "new@example.test", firstName: "Cy", password: "long enough password" }),
+    });
+    expect(joined.status).toBe(201);
+    expect((await call("me", { token: joined.body!.token })).body?.user.firstName).toBe("Cy");
+
+    expect(await call(`invites/${invite.token}`)).toMatchObject({ status: 410, body: { reason: "used" } });
+  });
+
+  it("rejects an unknown invite token", async () => {
+    expect((await call(`invites/${"z".repeat(43)}`)).body?.reason).toBe("invalid");
   });
 });

@@ -3,11 +3,12 @@ import * as React from "react";
 import { useTheme } from "@/theme/use-theme";
 
 // System tab bar: Liquid Glass on iOS 26. Search is the system search tab,
-// which iOS draws as the separate round button the designs show.
+// which iOS draws as the separate round button the designs show. On iPad the
+// tab bar can become the sidebar from the designs.
 export default function TabsLayout() {
   const { colors } = useTheme();
   return (
-    <NativeTabs tintColor={colors.primary} minimizeBehavior="onScrollDown">
+    <NativeTabs tintColor={colors.primary} minimizeBehavior="onScrollDown" sidebarAdaptable>
       <NativeTabs.Trigger name="index">
         <NativeTabs.Trigger.Label>Library</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf={{ default: "book", selected: "book.fill" }} md="menu_book" />

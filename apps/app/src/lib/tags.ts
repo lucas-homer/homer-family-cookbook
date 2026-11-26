@@ -18,7 +18,8 @@ export const REQUIRED_GROUP: TagGroup = "course";
 /** Narrowing a tag page combines at most this many tags (AND). */
 export const MAX_COMBINED_TAGS = 8;
 
-export type Tag = { id: number; name: string; tagGroup: TagGroup | (string & {}); count?: number };
+export type TagId = string | number;
+export type Tag = { id: TagId; name: string; tagGroup: TagGroup | (string & {}); count?: number };
 
 const order = new Map<string, number>(TAG_GROUPS.map((g, i) => [g.id, i]));
 

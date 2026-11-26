@@ -2,7 +2,7 @@ import { router } from "expo-router";
 import * as React from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { Button, Group, ListRow, SheetSurface, Text, TextField } from "@/components/ui";
-import { ApiError, authorName } from "@/lib/api";
+import { ApiError, authorName, inviteTokenFrom } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 
 // Sign in (or, when signed in, the account sheet with Sign out). Signup is
@@ -13,6 +13,8 @@ export default function SignIn() {
   const [password, setPassword] = React.useState("");
   const [busy, setBusy] = React.useState(false);
   const [errors, setErrors] = React.useState<Record<string, string>>({});
+  const [invite, setInvite] = React.useState("");
+  const inviteToken = inviteTokenFrom(invite);
 
   const close = () => (router.canGoBack() ? router.back() : router.replace("/"));
 
@@ -88,6 +90,22 @@ export default function SignIn() {
             </Text>
           ) : null}
           <Button label="Sign in" block loading={busy} disabled={!email || !password} onPress={submit} />
+          <Text variant="footnote" className="pt-2 text-muted-foreground">
+            Forgot your password? Reset it on homerfamilycookbook.com for now.
+          </Text>
+          <Text variant="section" className="pt-5">
+            New to the cookbook?
+          </Text>
+          <TextField
+            label="Invite link"
+            value={invite}
+            onChangeText={setInvite}
+            autoCapitalize="none"
+            autoCorrect={false}
+            placeholder="Paste the link from your invite"
+            error={invite && !inviteToken ? "That doesn't look like an invite link." : undefined}
+          />
+          <Button label="Use invite" variant="secondary" block disabled={!inviteToken} onPress={() => inviteToken && router.replace(`/join/${inviteToken}`)} />
         </ScrollView>
       </KeyboardAvoidingView>
     </SheetSurface>

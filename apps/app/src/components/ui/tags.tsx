@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Pressable, TextInput, View } from "react-native";
-import { groupTags, hasRequiredTag, MAX_COMBINED_TAGS, type Tag } from "@/lib/tags";
+import { groupTags, hasRequiredTag, MAX_COMBINED_TAGS, type Tag, type TagId } from "@/lib/tags";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/theme/use-theme";
 import { Chip } from "./chip";
@@ -18,7 +18,7 @@ export function TagCloud({
   className,
 }: {
   tags: Tag[];
-  selected?: ReadonlySet<number>;
+  selected?: ReadonlySet<TagId>;
   onToggle?: (tag: Tag) => void;
   surface?: "glass" | "solid";
   showCounts?: boolean;
@@ -56,7 +56,7 @@ export function TagField({
   onRemove?: (tag: Tag) => void;
   label?: string;
   /** Imported recipes: tags we guessed, shown in butter to check. */
-  suggested?: ReadonlySet<number>;
+  suggested?: ReadonlySet<TagId>;
 }) {
   const needsCourse = !hasRequiredTag(tags);
   return (
@@ -139,7 +139,7 @@ export function TagPicker({
   courseLimit = 6,
 }: {
   tags: Tag[];
-  selected: ReadonlySet<number>;
+  selected: ReadonlySet<TagId>;
   onToggle: (tag: Tag) => void;
   /** Course rows shown before "All n". */
   courseLimit?: number;

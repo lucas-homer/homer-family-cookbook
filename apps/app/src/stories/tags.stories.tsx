@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-native-web-vite";
 import * as React from "react";
 import { ScrollView, View } from "react-native";
 import { Chip, NarrowRow, RecipeRow, SheetSurface, TagCloud, TagField, TagPicker, Text, Toolbar, IconButton } from "@/components/ui";
-import type { Tag } from "@/lib/tags";
+import type { Tag, TagId } from "@/lib/tags";
 import { Phone, Row, Stack } from "./frame";
 import { sampleTags, tagByName } from "./sample-tags";
 
@@ -11,7 +11,7 @@ export default meta;
 type Story = StoryObj;
 
 function useToggle(initial: string[]) {
-  const [sel, setSel] = React.useState<Set<number>>(() => new Set(initial.map((n) => tagByName(n).id)));
+  const [sel, setSel] = React.useState<Set<TagId>>(() => new Set(initial.map((n) => tagByName(n).id)));
   const toggle = (t: Tag) =>
     setSel((s) => {
       const next = new Set(s);

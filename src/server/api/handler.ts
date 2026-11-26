@@ -1,7 +1,9 @@
+import type { D1Client } from "@effect/sql-d1/D1Client";
 import { Cause, Effect, Schema } from "effect";
 import { SqlClient } from "effect/sql/SqlClient";
 import type { SqlError } from "effect/sql/SqlError";
-import { login } from "../auth/flows";
+import { inviteUnavailableMessage, join, login } from "../auth/flows";
+import { getOpenInvite } from "../auth/invites";
 import type { SessionUser } from "../auth/current-user";
 import { limitLoginAttempts } from "../auth/rate-limit";
 import { createSession, deleteSession, validateSession } from "../auth/session";
@@ -21,7 +23,7 @@ import { readRecipeViewerData } from "../recipes/viewer-data";
 // browser on another site can't ride a signed-in user's cookie into it, and it
 // sends no CORS headers.
 
-type Handler = Effect.Effect<Response, AppError | SqlError, SqlClient>;
+type Handler = Effect.Effect<Response, AppError | SqlError, SqlClient | D1Client>;
 
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), {
@@ -110,6 +112,30 @@ const routes: ReadonlyArray<{
         return new Response(null, { status: 204 });
       }),
   },
+  {
+    // An invite link opened in the app: who it's for, or why it can't be used.
+    method: "GET",
+    pattern: /^invites\/([^/]+)$/,
+    run: (_request, _url, [token]) =>
+      getOpenInvite(token ?? "").pipe(
+        Effect.map((invite) => json({ invite: { email: invite.email, role: invite.role, expiresAt: invite.expiresAt } })),
+        Effect.catchTag("InviteUnavailable", (error) =>
+          Effect.succeed(json({ error: "InviteUnavailable", reason: error.reason, message: inviteUnavailableMessage(error.reason) }, 410)),
+        ),
+      ),
+  },
+  {
+    // Redeem an invite: creates the account and signs it in, like the website's /join.
+    method: "POST",
+    pattern: /^auth\/join$/,
+    run: (request) =>
+      Effect.gen(function* () {
+        const body = yield* readJson(request);
+        const user = yield* join(body);
+        const session = yield* createSession(user.id);
+        return json({ token: session.token, expiresAt: session.expiresAt.toISOString(), user }, 201);
+      }),
+  },
   { method: "GET", pattern: /^me$/, run: (request) => Effect.map(requireUser(request), (user) => json({ user })) },
   { method: "GET", pattern: /^recipes$/, run: () => Effect.map(listLibrary, (recipes) => json({ recipes })) },
   {
@@ -193,7 +219,7 @@ const errorResponse = (error: AppError | SqlError): Response => {
 };
 
 /** Handles a request whose path starts with /api/v1/. Never fails: errors become JSON responses. */
-export const handleApiRequest = (request: Request): Effect.Effect<Response, never, SqlClient> => {
+export const handleApiRequest = (request: Request): Effect.Effect<Response, never, SqlClient | D1Client> => {
   const url = new URL(request.url);
   const path = url.pathname.replace(/^\/api\/v1\/?/, "").replace(/\/$/, "");
   const matches = routes.filter((route) => route.pattern.test(path));

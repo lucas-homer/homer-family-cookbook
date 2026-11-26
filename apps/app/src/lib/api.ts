@@ -86,9 +86,15 @@ export async function request<T>(path: string, { method = "GET", body, token, si
     throw new ApiError(0, "Offline");
   }
   if (res.status === 204) return undefined as T;
-  const data = (await res.json().catch(() => ({}))) as { error?: string; fieldErrors?: Record<string, string> };
-  if (!res.ok) throw new ApiError(res.status, data.error ?? "ServerError", data.fieldErrors);
+  const data = (await res.json().catch(() => ({}))) as { error?: string; message?: string; fieldErrors?: Record<string, string> };
+  if (!res.ok) throw new ApiError(res.status, data.error ?? "ServerError", data.fieldErrors ?? (data.message ? { form: data.message } : {}));
   return data as T;
+}
+
+/** The token from an invite link (https://…/join/<token>, familycookbook://join/<token>) or a bare token. */
+export function inviteTokenFrom(text: string): string | null {
+  const m = /(?:^|\/join\/)([A-Za-z0-9_-]{43})(?:[/?#]|$)/.exec(text.trim());
+  return m?.[1] ?? null;
 }
 
 /** Endpoints, by name. Each takes the token when the endpoint uses one. */
@@ -96,6 +102,10 @@ export const api = {
   signIn: (email: string, password: string) =>
     request<{ token: string; expiresAt: string; user: User }>("auth/token", { method: "POST", body: { email, password } }),
   signOut: (token: string) => request<void>("auth/token", { method: "DELETE", token }),
+  invite: (token: string) =>
+    request<{ invite: { email: string | null; role: Role; expiresAt: string } }>(`invites/${encodeURIComponent(token)}`),
+  join: (body: { token: string; email: string; firstName: string; lastName: string; password: string }) =>
+    request<{ token: string; expiresAt: string; user: User }>("auth/join", { method: "POST", body }),
   me: (token: string) => request<{ user: User }>("me", { token }),
   library: () => request<{ recipes: LibraryRecipe[] }>("recipes"),
   recipe: (id: string, token: string | null) => request<RecipeResponse>(`recipes/${encodeURIComponent(id)}`, { token }),
@@ -114,6 +124,7 @@ export const api = {
       `favorites${tag ? `?tag=${encodeURIComponent(tag)}` : ""}`,
       { token },
     ),
+  recentlyViewed: (token: string) => request<{ recipes: RecipeSummary[] }>("recently-viewed", { token }),
   setFavorite: (token: string, recipeId: string, favorite: boolean) =>
     request<{ recipeId: string; favorite: boolean }>(`favorites/${encodeURIComponent(recipeId)}`, { method: "PUT", token, body: { favorite } }),
 };
@@ -127,4 +138,9 @@ export function splitSteps(instructions: string): string[] {
     .split(/\r?\n+/)
     .map((line) => line.replace(/^\s*(?:step\s*)?\d+\s*[.):-]\s*/i, "").trim())
     .filter(Boolean);
+}
+
+/** An API tag as the design system's Tag (count = recipes with it). */
+export function toTag(t: ApiTag): import("./tags").Tag {
+  return { id: t.id, name: t.name, tagGroup: t.tagGroup, count: t.recipeCount };
 }
