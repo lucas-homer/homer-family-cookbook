@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Homer Family Cookbook design tokens (Round 6: Tomato & Butter, Apple-native glass).
+  Colors are RGB channels so Tailwind opacity modifiers work: bg-primary/15.
+  Keep this file and src/theme/tokens.ts in sync.
+*/
+@layer base {
+  :root {
+    --background: 251 246 238;      /* paper */
+    --grouped: 244 239 231;         /* grouped/form background */
+    --foreground: 29 26 23;         /* ink */
+    --card: 255 255 255;
+    --card-foreground: 29 26 23;
+    --muted: 236 228 216;           /* photo placeholder, quiet fills */
+    --muted-foreground: 110 103 96;
+    --placeholder: 179 170 160;
+    --primary: 210 59 34;           /* tomato */
+    --primary-foreground: 255 255 255;
+    --accent: 244 194 66;           /* butter: timers, highlights */
+    --accent-foreground: 29 26 23;
+    --accent-soft: 253 243 217;
+    --success: 52 199 89;
+    --success-foreground: 31 122 61;
+    --destructive: 224 48 30;
+    --border: 29 26 23;             /* used at low opacity: border-border/10 */
+    --glass: 255 255 255;           /* glass fill, used at /40-/90 */
+    --glass-edge: 255 255 255;
+    --ring: 210 59 34;
+  }
+
+  .dark:root {
+    --background: 22 17 14;
+    --grouped: 29 23 20;
+    --foreground: 245 236 224;
+    --card: 36 29 25;
+    --card-foreground: 245 236 224;
+    --muted: 52 44 38;
+    --muted-foreground: 184 170 152;
+    --placeholder: 128 117 104;
+    --primary: 255 106 77;
+    --primary-foreground: 29 26 23;
+    --accent: 255 210 94;
+    --accent-foreground: 29 26 23;
+    --accent-soft: 61 49 24;
+    --success: 74 222 128;
+    --success-foreground: 95 209 138;
+    --destructive: 255 99 84;
+    --border: 245 236 224;
+    --glass: 58 46 40;
+    --glass-edge: 255 255 255;
+    --ring: 255 106 77;
+  }
+}
