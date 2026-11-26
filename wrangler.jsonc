@@ -26,6 +26,10 @@
       "namespace_id": "1001",
       "simple": { "limit": 10, "period": 60 }
     }
-  ]
+  ],
+  // Cloudflare Email Service, for password reset emails (src/server/email.ts).
+  // homerfamilycookbook.com must be onboarded under Compute & AI > Email
+  // Service, and sending needs the Workers Paid plan.
+  "send_email": [{ "name": "EMAIL" }],
   // Secrets (set with `wrangler secret put`, never committed): none yet.
 }

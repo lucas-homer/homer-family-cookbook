@@ -1,4 +1,4 @@
-import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
+import { Link, createFileRoute, redirect, useRouter } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { getSessionUser, loginFn } from "~/server/auth/functions";
@@ -121,6 +121,11 @@ function LoginPage() {
           >
             {pending ? "Logging in…" : "Log in"}
           </button>
+          <p className="text-center text-sm">
+            <Link className="text-blue-500 underline" to="/forgot-password">
+              Forgot your password?
+            </Link>
+          </p>
           <p className="text-center text-sm text-gray-500">
             New here? Accounts are by invitation. Ask a family admin for an invite link.
           </p>

@@ -1,12 +1,14 @@
 import { createServerFn } from "@tanstack/react-start";
-import { getRequest } from "@tanstack/react-start/server";
+import { getRequest, getRequestUrl } from "@tanstack/react-start/server";
 import { Effect } from "effect";
 import { Forbidden } from "../errors";
 import { toFormResult } from "../input";
 import { runServer } from "../run";
 import { startSession } from "./cookies";
 import { isSameOriginRequest } from "./csrf";
-import { limitLoginAttempts } from "./rate-limit";
+import { limitLoginAttempts, limitResetRequests } from "./rate-limit";
+import { isResetTokenOpen, requestPasswordReset, resetPassword } from "./password-reset";
+import { sendEmail } from "../email";
 import { getOptionalUser, requireAdmin } from "./current-user";
 import { createInviteFor, inviteUnavailableMessage, join, login, revokeInviteById } from "./flows";
 import { getOpenInvite, listInvites, type Role } from "./invites";
@@ -117,6 +119,50 @@ export const revokeInviteFn = createServerFn({ method: "POST" })
         yield* requireSameOrigin;
         yield* requireAdmin;
         return yield* toFormResult(revokeInviteById(data));
+      }),
+    ),
+  );
+
+// Reset links always point at the live site, never at whatever Host the
+// request claimed; local dev (http://localhost) links to itself.
+const siteUrl = () => {
+  const url = getRequestUrl({ xForwardedProto: false });
+  return url.protocol === "http:" && ["localhost", "127.0.0.1"].includes(url.hostname) ? url.origin : "https://homerfamilycookbook.com";
+};
+
+export const requestPasswordResetFn = createServerFn({ method: "POST" })
+  .validator((data: { email: string }) => data)
+  .handler(({ data }) =>
+    runServer(
+      Effect.gen(function* () {
+        yield* requireSameOrigin;
+        return yield* toFormResult(
+          Effect.gen(function* () {
+            yield* limitResetRequests(getRequest(), String(data.email ?? ""));
+            yield* requestPasswordReset(data, { siteUrl: siteUrl(), send: sendEmail });
+          }),
+        );
+      }),
+    ),
+  );
+
+export const getResetTokenOpen = createServerFn({ method: "GET" })
+  .validator((data: { token: string }) => data)
+  .handler(({ data }) => runServer(isResetTokenOpen(String(data.token))));
+
+export const resetPasswordFn = createServerFn({ method: "POST" })
+  .validator((data: { token: string; password: string }) => data)
+  .handler(({ data }) =>
+    runServer(
+      Effect.gen(function* () {
+        yield* requireSameOrigin;
+        return yield* toFormResult(
+          Effect.gen(function* () {
+            const userId = yield* resetPassword(data);
+            yield* startSession(userId);
+            return { redirectTo: "/" };
+          }),
+        );
       }),
     ),
   );

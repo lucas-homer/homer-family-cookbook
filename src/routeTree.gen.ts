@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as FavoritesRouteImport } from './routes/favorites'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LogoutRouteImport } from './routes/logout'
 import { Route as ProfileRouteImport } from './routes/profile'
@@ -26,6 +27,8 @@ import { Route as FavoritesCategoryIdRouteImport } from './routes/favorites.$cat
 import { Route as JoinTokenRouteImport } from './routes/join.$token'
 import { Route as RecipesRecipeIdRouteImport } from './routes/recipes.$recipeId_'
 import { Route as RecipesNewRouteImport } from './routes/recipes.new'
+import { Route as ResetPasswordTokenRouteImport } from './routes/reset-password.$token'
+import { Route as ApiV1SplatRouteImport } from './routes/api.v1.$'
 import { Route as RecipesRecipeIdEditRouteImport } from './routes/recipes.$recipeId.edit'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +44,11 @@ const CategoriesRoute = CategoriesRouteImport.update({
 const FavoritesRoute = FavoritesRouteImport.update({
   id: '/favorites',
   path: '/favorites',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -113,6 +121,16 @@ const RecipesNewRoute = RecipesNewRouteImport.update({
   path: '/recipes/new',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordTokenRoute = ResetPasswordTokenRouteImport.update({
+  id: '/reset-password/$token',
+  path: '/reset-password/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1SplatRoute = ApiV1SplatRouteImport.update({
+  id: '/api/v1/$',
+  path: '/api/v1/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RecipesRecipeIdEditRoute = RecipesRecipeIdEditRouteImport.update({
   id: '/recipes/$recipeId/edit',
   path: '/recipes/$recipeId/edit',
@@ -123,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/categories': typeof CategoriesRouteWithChildren
   '/favorites': typeof FavoritesRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
   '/profile': typeof ProfileRoute
@@ -135,12 +154,15 @@ export interface FileRoutesByFullPath {
   '/join/$token': typeof JoinTokenRoute
   '/recipes/$recipeId': typeof RecipesRecipeIdRoute
   '/recipes/new': typeof RecipesNewRoute
+  '/reset-password/$token': typeof ResetPasswordTokenRoute
   '/categories/': typeof CategoriesIndexRoute
   '/favorites/': typeof FavoritesIndexRoute
+  '/api/v1/$': typeof ApiV1SplatRoute
   '/recipes/$recipeId/edit': typeof RecipesRecipeIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
   '/profile': typeof ProfileRoute
@@ -153,8 +175,10 @@ export interface FileRoutesByTo {
   '/join/$token': typeof JoinTokenRoute
   '/recipes/$recipeId': typeof RecipesRecipeIdRoute
   '/recipes/new': typeof RecipesNewRoute
+  '/reset-password/$token': typeof ResetPasswordTokenRoute
   '/categories': typeof CategoriesIndexRoute
   '/favorites': typeof FavoritesIndexRoute
+  '/api/v1/$': typeof ApiV1SplatRoute
   '/recipes/$recipeId/edit': typeof RecipesRecipeIdEditRoute
 }
 export interface FileRoutesById {
@@ -162,6 +186,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/categories': typeof CategoriesRouteWithChildren
   '/favorites': typeof FavoritesRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
   '/profile': typeof ProfileRoute
@@ -174,8 +199,10 @@ export interface FileRoutesById {
   '/join/$token': typeof JoinTokenRoute
   '/recipes/$recipeId_': typeof RecipesRecipeIdRoute
   '/recipes/new': typeof RecipesNewRoute
+  '/reset-password/$token': typeof ResetPasswordTokenRoute
   '/categories/': typeof CategoriesIndexRoute
   '/favorites/': typeof FavoritesIndexRoute
+  '/api/v1/$': typeof ApiV1SplatRoute
   '/recipes/$recipeId/edit': typeof RecipesRecipeIdEditRoute
 }
 export interface FileRouteTypes {
@@ -184,6 +211,7 @@ export interface FileRouteTypes {
     | '/'
     | '/categories'
     | '/favorites'
+    | '/forgot-password'
     | '/login'
     | '/logout'
     | '/profile'
@@ -196,12 +224,15 @@ export interface FileRouteTypes {
     | '/join/$token'
     | '/recipes/$recipeId'
     | '/recipes/new'
+    | '/reset-password/$token'
     | '/categories/'
     | '/favorites/'
+    | '/api/v1/$'
     | '/recipes/$recipeId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/forgot-password'
     | '/login'
     | '/logout'
     | '/profile'
@@ -214,14 +245,17 @@ export interface FileRouteTypes {
     | '/join/$token'
     | '/recipes/$recipeId'
     | '/recipes/new'
+    | '/reset-password/$token'
     | '/categories'
     | '/favorites'
+    | '/api/v1/$'
     | '/recipes/$recipeId/edit'
   id:
     | '__root__'
     | '/'
     | '/categories'
     | '/favorites'
+    | '/forgot-password'
     | '/login'
     | '/logout'
     | '/profile'
@@ -234,8 +268,10 @@ export interface FileRouteTypes {
     | '/join/$token'
     | '/recipes/$recipeId_'
     | '/recipes/new'
+    | '/reset-password/$token'
     | '/categories/'
     | '/favorites/'
+    | '/api/v1/$'
     | '/recipes/$recipeId/edit'
   fileRoutesById: FileRoutesById
 }
@@ -243,6 +279,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CategoriesRoute: typeof CategoriesRouteWithChildren
   FavoritesRoute: typeof FavoritesRouteWithChildren
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
   LogoutRoute: typeof LogoutRoute
   ProfileRoute: typeof ProfileRoute
@@ -253,6 +290,8 @@ export interface RootRouteChildren {
   JoinTokenRoute: typeof JoinTokenRoute
   RecipesRecipeIdRoute: typeof RecipesRecipeIdRoute
   RecipesNewRoute: typeof RecipesNewRoute
+  ResetPasswordTokenRoute: typeof ResetPasswordTokenRoute
+  ApiV1SplatRoute: typeof ApiV1SplatRoute
   RecipesRecipeIdEditRoute: typeof RecipesRecipeIdEditRoute
 }
 
@@ -277,6 +316,13 @@ declare module '@tanstack/react-router' {
       path: '/favorites'
       fullPath: '/favorites'
       preLoaderRoute: typeof FavoritesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -377,6 +423,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RecipesNewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password/$token': {
+      id: '/reset-password/$token'
+      path: '/reset-password/$token'
+      fullPath: '/reset-password/$token'
+      preLoaderRoute: typeof ResetPasswordTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/$': {
+      id: '/api/v1/$'
+      path: '/api/v1/$'
+      fullPath: '/api/v1/$'
+      preLoaderRoute: typeof ApiV1SplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/recipes/$recipeId/edit': {
       id: '/recipes/$recipeId/edit'
       path: '/recipes/$recipeId/edit'
@@ -419,6 +479,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CategoriesRoute: CategoriesRouteWithChildren,
   FavoritesRoute: FavoritesRouteWithChildren,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
   LogoutRoute: LogoutRoute,
   ProfileRoute: ProfileRoute,
@@ -429,6 +490,8 @@ const rootRouteChildren: RootRouteChildren = {
   JoinTokenRoute: JoinTokenRoute,
   RecipesRecipeIdRoute: RecipesRecipeIdRoute,
   RecipesNewRoute: RecipesNewRoute,
+  ResetPasswordTokenRoute: ResetPasswordTokenRoute,
+  ApiV1SplatRoute: ApiV1SplatRoute,
   RecipesRecipeIdEditRoute: RecipesRecipeIdEditRoute,
 }
 export const routeTree = rootRouteImport
