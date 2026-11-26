@@ -1,0 +1,8 @@
+# The site is the root package; the Expo app lives in apps/app.
+packages:
+  - "apps/*"
+
+# Dependencies allowed to run install scripts (pnpm blocks the rest).
+onlyBuiltDependencies:
+  - esbuild
+  - workerd

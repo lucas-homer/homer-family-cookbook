@@ -16,15 +16,15 @@ repo root; nothing here imports from the site or from `legacy/`.
 ## Commands
 
 ```bash
-npm install
-npx expo start          # app
-npm run storybook       # component workshop on http://localhost:6006
-npm run build-storybook # static build in storybook-static/
-npm run typecheck
-npx expo lint
+pnpm install            # once, at the repo root (pnpm workspace)
+pnpm expo start         # app
+pnpm storybook          # component workshop on http://localhost:6006
+pnpm build-storybook    # static build in storybook-static/
+pnpm typecheck
+pnpm expo lint
 ```
 
-Install Expo packages with `npx expo install <pkg>` so versions match the SDK.
+Install Expo packages with `pnpm expo install <pkg>` so versions match the SDK.
 
 ## App structure
 
@@ -41,9 +41,9 @@ Install Expo packages with `npx expo install <pkg>` so versions match the SDK.
 
 ```bash
 # repo root: local D1 + Worker on http://localhost:5173
-npm run db:migrate:local && npm run dev
+pnpm db:migrate:local && pnpm dev
 # apps/app
-EXPO_PUBLIC_API_URL=http://localhost:5173 npx expo start
+EXPO_PUBLIC_API_URL=http://localhost:5173 pnpm expo start
 ```
 
 Without `EXPO_PUBLIC_API_URL` the app uses `extra.apiUrl` in `app.json`
@@ -56,6 +56,6 @@ create the app in App Store Connect (bundle id `com.homerfamilycookbook.app`),
 add an App Store Connect API key to the Expo account, then:
 
 ```bash
-npx eas-cli build --platform ios --profile preview
-npx eas-cli submit --platform ios --profile preview --latest
+pnpm dlx eas-cli build --platform ios --profile preview
+pnpm dlx eas-cli submit --platform ios --profile preview --latest
 ```
