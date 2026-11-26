@@ -24,6 +24,9 @@
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
-    "scheme": "familycookbook"
+    "scheme": "familycookbook",
+    "plugins": [
+      "expo-font"
+    ]
   }
 }

@@ -15,7 +15,7 @@ export type RecipeSummary = {
 
 export type RecipeCardProps = RecipeSummary & { onPress?: () => void; photoHeight?: number };
 
-/** Grid card for Library and Favorites. Title in New York. */
+/** Grid card for Library and Favorites. Title in Newsreader. */
 export function RecipeCard({ title, meta, photo, favorite, onPress, photoHeight = 150 }: RecipeCardProps) {
   return (
     <Pressable accessibilityRole="link" accessibilityLabel={title} onPress={onPress} className="gap-1.5 active:opacity-80">

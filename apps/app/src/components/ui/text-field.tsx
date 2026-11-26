@@ -47,7 +47,7 @@ export function TextField({ label, tone = "default", hint, error, active, multil
           onBlur?.(e);
         }}
         className={cn(
-          "rounded-field border bg-card px-4 text-body text-foreground",
+          "rounded-field border bg-card px-4 font-sans text-body text-foreground",
           multiline ? "min-h-[76px] py-3" : "h-[52px]",
           tone === "default" && "border-border/10",
           tone === "heard" && "border-accent/60 bg-accent-soft",

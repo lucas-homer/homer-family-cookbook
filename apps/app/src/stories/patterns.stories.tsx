@@ -19,6 +19,7 @@ import {
   TalkPill,
   Text,
   TextAction,
+  TagField,
   TextField,
   TimerBar,
   Toolbar,
@@ -26,6 +27,7 @@ import {
   Avatar,
   Glass,
 } from "@/components/ui";
+import { tagByName } from "./sample-tags";
 import { Phone } from "./frame";
 
 const meta: Meta = { title: "Patterns", parameters: { layout: "centered", surface: "background" } };
@@ -62,15 +64,7 @@ export const TalkItThrough: Story = {
               <View className="gap-3">
                 <AddPhoto />
                 <TextField label="Title" defaultValue="Grandma's Buttermilk Biscuits" />
-                <View>
-                  <Text variant="label" className="mb-1.5">Categories</Text>
-                  <View className="flex-row flex-wrap gap-2">
-                    <Chip label="Breads" selected />
-                    <Chip label="Holidays" />
-                    <Chip label="Sides" />
-                    <Chip label="More" icon="plus" />
-                  </View>
-                </View>
+                <TagField tags={[tagByName("Breads"), tagByName("Christmas")]} />
                 <View className="flex-row gap-2.5">
                   <TextField className="flex-1" label="Makes" defaultValue="12" />
                   <TextField className="flex-1" label="Total time" defaultValue="25 min" />
@@ -104,7 +98,7 @@ export const TalkItThrough: Story = {
             <VoiceBar
               transcript={transcript}
               onMicPress={() => setOn(false)}
-              checklist={tab === "Basics" ? ["Title", "Category", "Makes", "Time", "Story"].map((label) => ({ label, done: true })) : undefined}
+              checklist={tab === "Basics" ? ["Title", "Course", "Makes", "Time", "Story"].map((label) => ({ label, done: true })) : undefined}
               summary={
                 tab === "Basics" ? undefined : (
                   <View className="flex-row items-center gap-2">
@@ -163,12 +157,12 @@ export const Library: Story = {
           <Toolbar left={<Avatar name="Lucas Homer" />} right={<IconButton icon="plus" label="New recipe" />} />
           <Text variant="largeTitle" className="mb-3.5 mt-3">Library</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8, paddingBottom: 16 }}>
-            {["All", "Breads", "Desserts", "Mains", "Holidays"].map((c) => (
+            {["All", "Mains", "Cookies & Bars", "Sides", "Desserts", "Breads"].map((c) => (
               <Chip key={c} label={c} selected={c === cat} onPress={() => setCat(c)} />
             ))}
           </ScrollView>
           <View className="flex-row flex-wrap justify-between gap-y-4">
-            {[["Grandma's Buttermilk Biscuits", "Breads"], ["Lemon Bars", "Desserts"], ["Sunday Pot Roast", "Mains"], ["Christmas Fudge", "Holidays"], ["Corn Pudding", "Sides"], ["Peach Cobbler", "Desserts"]].map(([t, m]) => (
+            {[["Grandma's Buttermilk Biscuits", "Breads"], ["Lemon Bars", "Desserts"], ["Sunday Pot Roast", "Mains"], ["Christmas Fudge", "Desserts · Christmas"], ["Corn Pudding", "Sides"], ["Peach Cobbler", "Desserts"]].map(([t, m]) => (
               <View key={t} style={{ width: 171 }}>
                 <RecipeCard title={t!} meta={m} />
               </View>

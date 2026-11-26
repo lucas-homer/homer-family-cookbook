@@ -75,11 +75,25 @@ export const radius = {
   pill: 999,
 } as const;
 
-/** Apple text styles. Titles use New York (serif); everything else SF Pro. */
+/** Font files, by role. Each weight is its own family on native. */
+export const fonts = {
+  sans: "InstrumentSans_400Regular",
+  sansMedium: "InstrumentSans_500Medium",
+  sansSemibold: "InstrumentSans_600SemiBold",
+  sansBold: "InstrumentSans_700Bold",
+  serif: "Newsreader_500Medium",
+  serifRegular: "Newsreader_400Regular",
+  serifSemibold: "Newsreader_600SemiBold",
+} as const;
+
+/**
+ * Text styles, sized like Apple's so they track Dynamic Type. Large titles,
+ * titles and the cook-mode step use Newsreader; everything else Instrument Sans.
+ */
 export const type = {
-  largeTitle: { size: 34, line: 41, weight: "700" },
-  title1: { size: 28, line: 34, weight: "700" },
-  title2: { size: 22, line: 28, weight: "700" },
+  largeTitle: { size: 34, line: 41, weight: "500", serif: true },
+  title1: { size: 28, line: 34, weight: "500", serif: true },
+  title2: { size: 22, line: 28, weight: "500", serif: true },
   title3: { size: 20, line: 25, weight: "600" },
   headline: { size: 17, line: 22, weight: "600" },
   body: { size: 17, line: 22, weight: "400" },
@@ -87,7 +101,7 @@ export const type = {
   subhead: { size: 15, line: 20, weight: "400" },
   footnote: { size: 13, line: 18, weight: "400" },
   caption: { size: 12, line: 16, weight: "600" },
-  step: { size: 30, line: 36, weight: "700" }, // cook mode, readable at arm's length
+  step: { size: 30, line: 36, weight: "500", serif: true }, // cook mode, readable at arm's length
   timer: { size: 34, line: 40, weight: "700" },
 } as const;
 

@@ -11,17 +11,28 @@ export type ChipProps = Omit<PressableProps, "children"> & {
   icon?: IconName;
   /** glass over the paper background, solid on white cards and sheets. */
   surface?: "glass" | "solid";
+  /** How many recipes have this tag (or match with it). */
+  count?: number;
+  /** Shows an ✕ and makes the whole chip remove the tag. */
+  removable?: boolean;
   className?: string;
 };
 
-/** Filter and category chip. Selected is solid tomato. */
-export function Chip({ label, selected, icon, surface = "glass", className, ...props }: ChipProps) {
+/** Tag and filter chip. Selected is solid tomato. */
+export function Chip({ label, selected, icon, surface = "glass", count, removable, className, ...props }: ChipProps) {
+  const fg = selected ? "primaryForeground" : "foreground";
   const body = (
     <>
-      {icon ? <Icon name={icon} size={15} color={selected ? "primaryForeground" : "foreground"} /> : null}
+      {icon ? <Icon name={icon} size={15} color={fg} /> : null}
       <Text variant="subhead" className={cn("font-semibold", selected && "text-primary-foreground")}>
         {label}
       </Text>
+      {count != null ? (
+        <Text variant="footnote" className={cn("font-medium", selected ? "text-primary-foreground/80" : "text-muted-foreground")}>
+          {count}
+        </Text>
+      ) : null}
+      {removable ? <Icon name="x" size={13} strokeWidth={2.6} color={fg} /> : null}
     </>
   );
   const base = "h-9 flex-row items-center gap-1.5 rounded-full px-3.5";
@@ -29,6 +40,7 @@ export function Chip({ label, selected, icon, surface = "glass", className, ...p
     <Pressable
       accessibilityRole="button"
       accessibilityState={{ selected: !!selected }}
+      accessibilityLabel={`${removable ? "Remove " : ""}${label}${count != null ? `, ${count} recipes` : ""}`}
       className="active:opacity-80"
       {...props}
     >

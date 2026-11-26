@@ -13,7 +13,7 @@ const meta: Meta<typeof VoiceBar> = {
     listening: true,
     checklist: [
       { label: "Title", done: true },
-      { label: "Category", done: true },
+      { label: "Course", done: true },
       { label: "Makes", done: true },
       { label: "Time", done: false },
       { label: "Story", done: false },
@@ -29,7 +29,7 @@ export const Bar: Story = {};
 export const Start: Story = {
   args: {
     transcript: "Just talk. Try “Grandma's biscuits, makes a dozen, about 25 minutes.”",
-    checklist: ["Title", "Category", "Makes", "Time", "Story"].map((label) => ({ label, done: false })),
+    checklist: ["Title", "Course", "Makes", "Time", "Story"].map((label) => ({ label, done: false })),
   },
 };
 

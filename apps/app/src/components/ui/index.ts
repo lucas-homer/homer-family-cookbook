@@ -14,3 +14,4 @@ export * from "./text";
 export * from "./text-field";
 export * from "./timer";
 export * from "./voice";
+export * from "./tags";

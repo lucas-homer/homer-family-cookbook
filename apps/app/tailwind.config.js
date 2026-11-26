@@ -1,11 +1,16 @@
 const { platformSelect } = require("nativewind/theme");
 
+// Native gets the loaded font's name; web adds the Google Fonts family as a fallback.
+const fam = (native, web) => platformSelect({ ios: native, android: native, default: `${native}, ${web}` });
+
 const c = (name) => `rgb(var(--${name}) / <alpha-value>)`;
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: "class",
   content: ["./App.tsx", "./src/**/*.{ts,tsx}", "./.storybook/**/*.{ts,tsx}"],
+  // <Text> builds these from the weight class at runtime.
+  safelist: ["font-sans", "font-sans-medium", "font-sans-semibold", "font-sans-bold", "font-serif", "font-serif-regular", "font-serif-semibold"],
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
@@ -24,11 +29,17 @@ module.exports = {
         glass: c("glass"),
         ring: c("ring"),
       },
+      // Instrument Sans for the interface, Newsreader for recipe names, titles
+      // and the cook-mode step. On native each weight is its own font file, so
+      // <Text> swaps font-sans-semibold etc. in from the weight class.
       fontFamily: {
-        // SF Pro on Apple platforms, the system UI font elsewhere.
-        sans: platformSelect({ ios: "System", android: "sans-serif", default: "-apple-system, 'SF Pro Text', system-ui, sans-serif" }),
-        // New York on Apple platforms.
-        serif: platformSelect({ ios: "ui-serif", android: "serif", default: "ui-serif, 'New York', Georgia, serif" }),
+        sans: fam("InstrumentSans_400Regular", "'Instrument Sans', system-ui, sans-serif"),
+        "sans-medium": fam("InstrumentSans_500Medium", "'Instrument Sans', system-ui, sans-serif"),
+        "sans-semibold": fam("InstrumentSans_600SemiBold", "'Instrument Sans', system-ui, sans-serif"),
+        "sans-bold": fam("InstrumentSans_700Bold", "'Instrument Sans', system-ui, sans-serif"),
+        serif: fam("Newsreader_500Medium", "Newsreader, Georgia, serif"),
+        "serif-regular": fam("Newsreader_400Regular", "Newsreader, Georgia, serif"),
+        "serif-semibold": fam("Newsreader_600SemiBold", "Newsreader, Georgia, serif"),
       },
       // Apple text styles (size / line height). Names follow the HIG.
       fontSize: {

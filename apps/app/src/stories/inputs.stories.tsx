@@ -25,10 +25,10 @@ export const TextFields: Story = {
 export const Chips: Story = {
   render: function Render() {
     const [sel, setSel] = React.useState<string[]>(["Breads"]);
-    const all = ["Breads", "Holidays", "Sides", "Desserts"];
+    const all = ["Breads", "Mains", "Sides", "Desserts"];
     return (
       <Stack>
-        <Text variant="label">Categories</Text>
+        <Text variant="label">Course</Text>
         <Row className="gap-2">
           {all.map((c) => (
             <Chip key={c} label={c} selected={sel.includes(c)} onPress={() => setSel((s) => (s.includes(c) ? s.filter((x) => x !== c) : [...s, c]))} />
@@ -54,7 +54,7 @@ export const VoiceChecklist: Story = {
     <Stack>
       <Row className="gap-[5px]">
         <CheckTick label="Title" done />
-        <CheckTick label="Category" done />
+        <CheckTick label="Course" done />
         <CheckTick label="Makes" done />
         <CheckTick label="Time" />
         <CheckTick label="Story" />

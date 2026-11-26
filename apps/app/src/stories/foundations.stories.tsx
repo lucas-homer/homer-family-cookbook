@@ -66,9 +66,9 @@ export const Colors: Story = {
 };
 
 const typeRows: { v: React.ComponentProps<typeof Text>["variant"]; key: keyof typeof typeScale | "label" | "section"; sample: string; serif?: boolean }[] = [
-  { v: "largeTitle", key: "largeTitle", sample: "Library" },
+  { v: "largeTitle", key: "largeTitle", sample: "Library", serif: true },
   { v: "title1", key: "title1", sample: "Grandma's Buttermilk Biscuits", serif: true },
-  { v: "title2", key: "title2", sample: "Ingredients" },
+  { v: "title2", key: "title2", sample: "Ingredients", serif: true },
   { v: "title3", key: "title3", sample: "Sunday Pot Roast", serif: true },
   { v: "headline", key: "headline", sample: "New recipe" },
   { v: "body", key: "body", sample: "Cut in the cold butter until crumbly." },
@@ -78,7 +78,7 @@ const typeRows: { v: React.ComponentProps<typeof Text>["variant"]; key: keyof ty
   { v: "caption", key: "caption", sample: "4 INGREDIENTS" },
   { v: "label", key: "label", sample: "Total time" },
   { v: "section", key: "section", sample: "Timers" },
-  { v: "step", key: "step", sample: "Pat out, fold twice, cut." },
+  { v: "step", key: "step", sample: "Pat out, fold twice, cut.", serif: true },
 ];
 
 export const Typography: Story = {
@@ -86,7 +86,7 @@ export const Typography: Story = {
     <Stack className="gap-5">
       <Text variant="largeTitle">Typography</Text>
       <Text variant="callout" className="max-w-[640px] text-muted-foreground">
-        SF Pro for the interface, New York for recipe names. Sizes follow Apple’s text styles, so they scale with Dynamic Type.
+        Instrument Sans for the interface, Newsreader for titles, recipe names and the cook-mode step. Sizes follow Apple’s text styles, so they scale with Dynamic Type.
         Step is a large size for reading cook mode from across the counter.
       </Text>
       {typeRows.map((r) => {

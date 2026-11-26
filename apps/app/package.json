@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "main": "index.ts",
   "dependencies": {
+    "@expo-google-fonts/instrument-sans": "^0.4.2",
+    "@expo-google-fonts/newsreader": "^0.4.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "expo": "~58.0.26",
     "expo-blur": "~58.0.6",
+    "expo-font": "~58.0.12",
     "expo-glass-effect": "~58.0.5",
     "expo-status-bar": "~58.0.5",
     "nativewind": "^4.2.7",
