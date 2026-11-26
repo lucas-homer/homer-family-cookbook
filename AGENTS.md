@@ -14,9 +14,10 @@ Family recipe site on Cloudflare Workers + D1. Being ported from the old Remix/F
 - Validate all user input on the server with Effect `Schema`.
 
 ## Commands
-- `npm run dev`, `npm test` (vitest inside workerd with a fresh migrated D1), `npm run typecheck`, `npm run build`.
+- pnpm workspace: the site is the root package and the Expo app is `apps/app`. Run `pnpm install` once at the repo root (installs both; one `pnpm-lock.yaml`). Don't use npm or yarn.
+- `pnpm dev`, `pnpm test` (vitest inside workerd with a fresh migrated D1), `pnpm typecheck`, `pnpm build`. vitest stays on 5.0.x: 5.1 breaks `@cloudflare/vitest-plugin` here ("Invalid regular expression flags").
 - Schema changes are new files in `migrations/` (`NNNN_name.sql`). Never edit an applied migration.
-- `npm run db:migrate:local`. Remote migrations and `npm run deploy` use the scoped `HFC_CLOUDFLARE_API_TOKEN`. Agents don't run them unless the task says so.
+- `pnpm db:migrate:local`. Remote migrations (`pnpm db:migrate:remote`) and `pnpm run deploy` (not `pnpm deploy`, which is a pnpm built-in) use the scoped `HFC_CLOUDFLARE_API_TOKEN`. Agents don't run them unless the task says so.
 
 ## Rules
 - Reading recipes is public. Every write checks that the signed-in user owns the row (or is an admin). Signup is invite-only.
