@@ -36,6 +36,7 @@ export const seed = () =>
         { id: "cat-dinner", name: "Dinner" },
         { id: "cat-side", name: "Side" },
       ])}`;
+      yield* sql`INSERT INTO categories (id, name, tag_group) VALUES ('cat-xmas', 'Christmas', 'occasion')`;
     }),
   );
 

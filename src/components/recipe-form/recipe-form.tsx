@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { groupTags } from "~/lib/tag-groups";
 import type { FormResult } from "~/server/input";
 import type { RecipeInput } from "~/server/recipes/write";
 
@@ -34,7 +35,7 @@ export function RecipeForm({
   onSubmit,
   onCancel,
 }: {
-  categories: ReadonlyArray<{ id: string; name: string }>;
+  categories: ReadonlyArray<{ id: string; name: string; tagGroup: string }>;
   initial?: RecipeFormValues;
   onSubmit: (values: RecipeInput) => Promise<FormResult<{ id: string }>>;
   onCancel: () => void;
@@ -115,23 +116,29 @@ export function RecipeForm({
         </div>
 
         <fieldset>
-          <legend className={labelClass}>Categories</legend>
-          <ul className="grid grid-flow-row grid-cols-2 rounded-lg bg-zinc-50 px-4 py-2">
-            {categories.map((category) => (
-              <li key={category.id} className="flex flex-nowrap items-center gap-2 py-2">
-                <input
-                  id={`category-${category.id}`}
-                  type="checkbox"
-                  name="categoryIds"
-                  value={category.id}
-                  defaultChecked={initial?.categoryIds.includes(category.id)}
-                />
-                <label className="capitalize" htmlFor={`category-${category.id}`}>
-                  {category.name}
-                </label>
-              </li>
+          <legend className={labelClass}>Tags</legend>
+          <p className="mb-2 text-sm text-zinc-500">Pick at least one Course.</p>
+          <div className="flex flex-col gap-4 rounded-lg bg-zinc-50 px-4 py-3">
+            {groupTags(categories).map((group) => (
+              <div key={group.id}>
+                <p className="mb-1 text-sm font-bold uppercase text-zinc-500">{group.label}</p>
+                <ul className="grid grid-flow-row grid-cols-2 md:grid-cols-3">
+                  {group.tags.map((category) => (
+                    <li key={category.id} className="flex flex-nowrap items-center gap-2 py-1">
+                      <input
+                        id={`category-${category.id}`}
+                        type="checkbox"
+                        name="categoryIds"
+                        value={category.id}
+                        defaultChecked={initial?.categoryIds.includes(category.id)}
+                      />
+                      <label htmlFor={`category-${category.id}`}>{category.name}</label>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </div>
           {errorText("categoryIds")}
         </fieldset>
 
