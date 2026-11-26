@@ -33,6 +33,7 @@ export const setFavorite = (user: SessionUser, input: unknown) =>
     return { recipeId, favorite };
   });
 
+// Favorites are split by Course only; other tag groups would crowd the tabs.
 export const listFavoriteCategories = (user: SessionUser) =>
   Effect.gen(function* () {
     const sql = yield* SqlClient;
@@ -40,7 +41,7 @@ export const listFavoriteCategories = (user: SessionUser) =>
       SELECT DISTINCT c.id, c.name FROM categories c
       JOIN recipe_categories rc ON rc.category_id = c.id
       JOIN favorites f ON f.recipe_id = rc.recipe_id
-      WHERE f.user_id = ${user.id}
+      WHERE f.user_id = ${user.id} AND c.tag_group = 'course'
       ORDER BY c.name COLLATE NOCASE, c.id`;
   });
 

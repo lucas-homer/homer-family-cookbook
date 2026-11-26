@@ -12,8 +12,9 @@ beforeAll(async () => {
       const sql = yield* SqlClient;
       yield* sql`INSERT INTO users (id, email, first_name) VALUES ('read-user', 'read@example.test', 'Reader')`;
       yield* sql`INSERT INTO categories (id, name) VALUES ('read-z', 'Zebra'), ('read-a', 'Apple'), ('read-empty', 'Empty')`;
+      yield* sql`INSERT INTO categories (id, name, tag_group) VALUES ('read-quick', 'Quick', 'practical'), ('read-xmas', 'Christmas', 'occasion')`;
       yield* sql`INSERT INTO recipes (id, title, instructions, user_id) VALUES ('read-1', 'Zucchini', 'Cook', 'read-user'), ('read-2', 'apple pie', 'Bake', 'read-user')`;
-      yield* sql`INSERT INTO recipe_categories (recipe_id, category_id) VALUES ('read-1', 'read-a'), ('read-2', 'read-a')`;
+      yield* sql`INSERT INTO recipe_categories (recipe_id, category_id) VALUES ('read-1', 'read-a'), ('read-2', 'read-a'), ('read-1', 'read-quick'), ('read-2', 'read-quick'), ('read-2', 'read-xmas')`;
       yield* sql`INSERT INTO ingredients (id, recipe_id, position, name) VALUES ('read-i2', 'read-1', 2, 'Second'), ('read-i0', 'read-1', 0, 'First'), ('read-i1', 'read-1', 1, 'Middle')`;
     }),
   );
@@ -27,12 +28,21 @@ describe("public reads", () => {
       "Second",
     ]);
     expect(recipe.firstName).toBe("Reader");
-    expect(recipe.categories).toEqual([{ id: "read-a", name: "Apple" }]);
+    expect(recipe.categories).toEqual([
+      { id: "read-a", name: "Apple", tagGroup: "course" },
+      { id: "read-quick", name: "Quick", tagGroup: "practical" },
+    ]);
   });
   it("lists categories alphabetically and sorts category recipes both ways", async () => {
     expect(
-      (await runtime.runPromise(readCategories)).map((c) => c.name),
-    ).toEqual(["Apple", "Empty", "Zebra"]);
+      (await runtime.runPromise(readCategories)).map((c) => [c.name, c.tagGroup, c.recipeCount]),
+    ).toEqual([
+      ["Apple", "course", 2],
+      ["Christmas", "occasion", 1],
+      ["Empty", "course", 0],
+      ["Quick", "practical", 2],
+      ["Zebra", "course", 0],
+    ]);
     const asc = await runtime.runPromise(
       readCategory({ categoryId: "read-a", sort: "asc" }),
     );
@@ -48,6 +58,22 @@ describe("public reads", () => {
         )
       ).recipes,
     ).toEqual([]);
+  });
+  it("narrows a tag's recipes to those with every extra tag and lists related tags", async () => {
+    const all = await runtime.runPromise(readCategory({ categoryId: "read-a", sort: "asc" }));
+    expect(all.selected).toEqual([]);
+    expect(all.related.map((t) => [t.id, t.recipeCount])).toEqual([
+      ["read-xmas", 1],
+      ["read-quick", 2],
+    ]);
+    const narrowed = await runtime.runPromise(
+      readCategory({ categoryId: "read-a", sort: "asc", with: ["read-xmas", "read-quick", "read-xmas", "missing", "read-a"] }),
+    );
+    expect(narrowed.selected.map((t) => t.id).sort()).toEqual(["read-quick", "read-xmas"]);
+    expect(narrowed.recipes.map((r) => r.id)).toEqual(["read-2"]);
+    expect(narrowed.related).toEqual([]);
+    const none = await runtime.runPromise(readCategory({ categoryId: "read-empty", sort: "asc", with: ["read-a"] }));
+    expect(none.recipes).toEqual([]);
   });
   it("maps a missing recipe to router NotFound", async () => {
     await expect(

@@ -15,7 +15,7 @@ function Menu({
   const items = [
     ["/", "Home", "⌂"],
     ["/search", "Search (⌘ K)", "⌕"],
-    ["/categories", "Categories", "◇"],
+    ["/categories", "Browse by tag", "◇"],
     ...(user
       ? [
           ["/favorites", "Favorites", "♡"],
@@ -27,7 +27,7 @@ function Menu({
     ...(user?.role === "ADMIN"
       ? [
           ["/admin/invites", "Invites", "✉"],
-          ["/admin/categories", "Manage Categories", "◇"],
+          ["/admin/categories", "Manage Tags", "◇"],
         ]
       : []),
   ];

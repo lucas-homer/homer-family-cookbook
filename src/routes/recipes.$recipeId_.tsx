@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { compareTags } from "~/lib/tag-groups";
 import { getRecipe } from "~/server/recipes/read";
 import { getRecipeViewerData } from "~/server/recipes/viewer";
 import { FavoriteButton } from "~/components/recipe-actions/favorite-button";
@@ -72,17 +73,17 @@ function Recipe() {
         <p className="mb-8 max-w-lg whitespace-pre-line text-lg leading-relaxed">
           {recipe.instructions}
         </p>
-        <h2 className="mb-2 font-bold uppercase">Categories</h2>
-        <ul className="mb-8 flex flex-wrap gap-8">
-          {recipe.categories.map((category) => (
-            <li key={category.id}>
+        <h2 className="mb-2 font-bold uppercase">Tags</h2>
+        <ul className="mb-8 flex flex-wrap gap-2">
+          {[...recipe.categories].sort(compareTags).map((tag) => (
+            <li key={tag.id}>
               <Link
                 to="/categories/$categoryId"
-                params={{ categoryId: category.id }}
+                params={{ categoryId: tag.id }}
                 search={{ sort: "asc" }}
-                className="text-lg underline underline-offset-4"
+                className="inline-block rounded-full bg-zinc-100 px-3 py-1 text-zinc-700 hover:bg-zinc-200"
               >
-                {category.name}
+                {tag.name}
               </Link>
             </li>
           ))}
