@@ -8,7 +8,10 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.homerfamilycookbook.app"
+      "bundleIdentifier": "com.homerfamilycookbook.app",
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -22,11 +25,20 @@
     },
     "web": {
       "favicon": "./assets/favicon.png",
-      "bundler": "metro"
+      "bundler": "metro",
+      "output": "single"
     },
     "scheme": "familycookbook",
     "plugins": [
-      "expo-font"
-    ]
+      "expo-font",
+      "expo-router",
+      "expo-secure-store"
+    ],
+    "extra": {
+      "apiUrl": "https://homerfamilycookbook.com"
+    },
+    "experiments": {
+      "typedRoutes": true
+    }
   }
 }

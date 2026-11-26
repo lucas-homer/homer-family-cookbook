@@ -26,6 +26,7 @@ import { Route as FavoritesCategoryIdRouteImport } from './routes/favorites.$cat
 import { Route as JoinTokenRouteImport } from './routes/join.$token'
 import { Route as RecipesRecipeIdRouteImport } from './routes/recipes.$recipeId_'
 import { Route as RecipesNewRouteImport } from './routes/recipes.new'
+import { Route as ApiV1SplatRouteImport } from './routes/api.v1.$'
 import { Route as RecipesRecipeIdEditRouteImport } from './routes/recipes.$recipeId.edit'
 
 const IndexRoute = IndexRouteImport.update({
@@ -113,6 +114,11 @@ const RecipesNewRoute = RecipesNewRouteImport.update({
   path: '/recipes/new',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiV1SplatRoute = ApiV1SplatRouteImport.update({
+  id: '/api/v1/$',
+  path: '/api/v1/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RecipesRecipeIdEditRoute = RecipesRecipeIdEditRouteImport.update({
   id: '/recipes/$recipeId/edit',
   path: '/recipes/$recipeId/edit',
@@ -137,6 +143,7 @@ export interface FileRoutesByFullPath {
   '/recipes/new': typeof RecipesNewRoute
   '/categories/': typeof CategoriesIndexRoute
   '/favorites/': typeof FavoritesIndexRoute
+  '/api/v1/$': typeof ApiV1SplatRoute
   '/recipes/$recipeId/edit': typeof RecipesRecipeIdEditRoute
 }
 export interface FileRoutesByTo {
@@ -155,6 +162,7 @@ export interface FileRoutesByTo {
   '/recipes/new': typeof RecipesNewRoute
   '/categories': typeof CategoriesIndexRoute
   '/favorites': typeof FavoritesIndexRoute
+  '/api/v1/$': typeof ApiV1SplatRoute
   '/recipes/$recipeId/edit': typeof RecipesRecipeIdEditRoute
 }
 export interface FileRoutesById {
@@ -176,6 +184,7 @@ export interface FileRoutesById {
   '/recipes/new': typeof RecipesNewRoute
   '/categories/': typeof CategoriesIndexRoute
   '/favorites/': typeof FavoritesIndexRoute
+  '/api/v1/$': typeof ApiV1SplatRoute
   '/recipes/$recipeId/edit': typeof RecipesRecipeIdEditRoute
 }
 export interface FileRouteTypes {
@@ -198,6 +207,7 @@ export interface FileRouteTypes {
     | '/recipes/new'
     | '/categories/'
     | '/favorites/'
+    | '/api/v1/$'
     | '/recipes/$recipeId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -216,6 +226,7 @@ export interface FileRouteTypes {
     | '/recipes/new'
     | '/categories'
     | '/favorites'
+    | '/api/v1/$'
     | '/recipes/$recipeId/edit'
   id:
     | '__root__'
@@ -236,6 +247,7 @@ export interface FileRouteTypes {
     | '/recipes/new'
     | '/categories/'
     | '/favorites/'
+    | '/api/v1/$'
     | '/recipes/$recipeId/edit'
   fileRoutesById: FileRoutesById
 }
@@ -253,6 +265,7 @@ export interface RootRouteChildren {
   JoinTokenRoute: typeof JoinTokenRoute
   RecipesRecipeIdRoute: typeof RecipesRecipeIdRoute
   RecipesNewRoute: typeof RecipesNewRoute
+  ApiV1SplatRoute: typeof ApiV1SplatRoute
   RecipesRecipeIdEditRoute: typeof RecipesRecipeIdEditRoute
 }
 
@@ -377,6 +390,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RecipesNewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/v1/$': {
+      id: '/api/v1/$'
+      path: '/api/v1/$'
+      fullPath: '/api/v1/$'
+      preLoaderRoute: typeof ApiV1SplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/recipes/$recipeId/edit': {
       id: '/recipes/$recipeId/edit'
       path: '/recipes/$recipeId/edit'
@@ -429,6 +449,7 @@ const rootRouteChildren: RootRouteChildren = {
   JoinTokenRoute: JoinTokenRoute,
   RecipesRecipeIdRoute: RecipesRecipeIdRoute,
   RecipesNewRoute: RecipesNewRoute,
+  ApiV1SplatRoute: ApiV1SplatRoute,
   RecipesRecipeIdEditRoute: RecipesRecipeIdEditRoute,
 }
 export const routeTree = rootRouteImport

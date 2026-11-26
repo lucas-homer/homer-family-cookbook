@@ -1,14 +1,15 @@
-const { platformSelect } = require("nativewind/theme");
-
-// Native gets the loaded font's name; web adds the Google Fonts family as a fallback.
-const fam = (native, web) => platformSelect({ ios: native, android: native, default: `${native}, ${web}` });
+// A family list: native uses the first name (the loaded font file, see
+// react-native-css-interop parseFontFamily); web falls back to the Google
+// Fonts family, which is what Storybook loads. platformSelect() isn't used
+// here because it ends up as raw text in the web CSS.
+const fam = (native, web) => [native, ...web.split(",").map((f) => f.trim().replace(/'/g, ""))];
 
 const c = (name) => `rgb(var(--${name}) / <alpha-value>)`;
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: "class",
-  content: ["./App.tsx", "./src/**/*.{ts,tsx}", "./.storybook/**/*.{ts,tsx}"],
+  content: ["./src/**/*.{ts,tsx}", "./.storybook/**/*.{ts,tsx}"],
   // <Text> builds these from the weight class at runtime.
   safelist: ["font-sans", "font-sans-medium", "font-sans-semibold", "font-sans-bold", "font-serif", "font-serif-regular", "font-serif-semibold"],
   presets: [require("nativewind/preset")],
