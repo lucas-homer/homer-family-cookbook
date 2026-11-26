@@ -106,6 +106,7 @@ export const api = {
     request<{ invite: { email: string | null; role: Role; expiresAt: string } }>(`invites/${encodeURIComponent(token)}`),
   join: (body: { token: string; email: string; firstName: string; lastName: string; password: string }) =>
     request<{ token: string; expiresAt: string; user: User }>("auth/join", { method: "POST", body }),
+  requestPasswordReset: (email: string) => request<{ ok: true }>("auth/password-reset", { method: "POST", body: { email } }),
   me: (token: string) => request<{ user: User }>("me", { token }),
   library: () => request<{ recipes: LibraryRecipe[] }>("recipes"),
   recipe: (id: string, token: string | null) => request<RecipeResponse>(`recipes/${encodeURIComponent(id)}`, { token }),

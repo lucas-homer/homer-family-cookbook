@@ -176,3 +176,13 @@ describe("API invites", () => {
     expect((await call(`invites/${"z".repeat(43)}`)).body?.reason).toBe("invalid");
   });
 });
+
+describe("API password reset", () => {
+  it("accepts a request with 202 whether or not the email has an account", async () => {
+    for (const email of ["api@example.test", "nobody@example.test"]) {
+      const res = await call("auth/password-reset", { method: "POST", body: JSON.stringify({ email }) });
+      expect(res).toMatchObject({ status: 202, body: { ok: true } });
+    }
+    expect((await call("auth/password-reset", { method: "POST", body: JSON.stringify({ email: "nope" }) })).status).toBe(400);
+  });
+});

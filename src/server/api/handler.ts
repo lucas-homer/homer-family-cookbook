@@ -5,7 +5,9 @@ import type { SqlError } from "effect/sql/SqlError";
 import { inviteUnavailableMessage, join, login } from "../auth/flows";
 import { getOpenInvite } from "../auth/invites";
 import type { SessionUser } from "../auth/current-user";
-import { limitLoginAttempts } from "../auth/rate-limit";
+import { requestPasswordReset } from "../auth/password-reset";
+import { limitLoginAttempts, limitResetRequests } from "../auth/rate-limit";
+import { sendEmail } from "../email";
 import { createSession, deleteSession, validateSession } from "../auth/session";
 import { readCategories, readCategory } from "../categories/read";
 import { type AppError, Unauthenticated } from "../errors";
@@ -110,6 +112,20 @@ const routes: ReadonlyArray<{
         const token = bearerToken(request);
         if (token) yield* deleteSession(token);
         return new Response(null, { status: 204 });
+      }),
+  },
+  {
+    // Forgot password from the app: emails a link to the website's reset page.
+    // Always 202, whether or not the email has an account.
+    method: "POST",
+    pattern: /^auth\/password-reset$/,
+    run: (request, url) =>
+      Effect.gen(function* () {
+        const body = yield* readJson(request);
+        yield* limitResetRequests(request, String(body.email ?? ""));
+        const local = url.protocol === "http:" && ["localhost", "127.0.0.1"].includes(url.hostname);
+        yield* requestPasswordReset(body, { siteUrl: local ? url.origin : "https://homerfamilycookbook.com", send: sendEmail });
+        return json({ ok: true }, 202);
       }),
   },
   {

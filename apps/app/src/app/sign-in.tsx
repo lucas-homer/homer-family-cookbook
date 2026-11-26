@@ -2,7 +2,7 @@ import { router } from "expo-router";
 import * as React from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { Button, Group, ListRow, SheetSurface, Text, TextField } from "@/components/ui";
-import { ApiError, authorName, inviteTokenFrom } from "@/lib/api";
+import { api, ApiError, authorName, inviteTokenFrom } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 
 // Sign in (or, when signed in, the account sheet with Sign out). Signup is
@@ -15,6 +15,20 @@ export default function SignIn() {
   const [errors, setErrors] = React.useState<Record<string, string>>({});
   const [invite, setInvite] = React.useState("");
   const inviteToken = inviteTokenFrom(invite);
+  const [resetSent, setResetSent] = React.useState(false);
+
+  const forgot = async () => {
+    if (!email.trim()) return setErrors({ email: "Enter your email, then tap Forgot password again." });
+    setErrors({});
+    try {
+      await api.requestPasswordReset(email.trim());
+      setResetSent(true);
+    } catch (e) {
+      if (e instanceof ApiError && e.status === 0) setErrors({ form: "You're offline. Check your connection and try again." });
+      else if (e instanceof ApiError && Object.keys(e.fieldErrors).length) setErrors(e.fieldErrors);
+      else setErrors({ form: "Couldn't send the reset email. Try again." });
+    }
+  };
 
   const close = () => (router.canGoBack() ? router.back() : router.replace("/"));
 
@@ -90,9 +104,13 @@ export default function SignIn() {
             </Text>
           ) : null}
           <Button label="Sign in" block loading={busy} disabled={!email || !password} onPress={submit} />
-          <Text variant="footnote" className="pt-2 text-muted-foreground">
-            Forgot your password? Reset it on homerfamilycookbook.com for now.
-          </Text>
+          {resetSent ? (
+            <Text variant="footnote" className="pt-2 text-muted-foreground">
+              If {email.trim()} has an account, we sent it a link to choose a new password. It works for 1 hour.
+            </Text>
+          ) : (
+            <Button label="Forgot password?" variant="text" size="sm" onPress={forgot} />
+          )}
           <Text variant="section" className="pt-5">
             New to the cookbook?
           </Text>
