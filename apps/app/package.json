@@ -27,6 +27,7 @@
     "expo-secure-store": "~58.0.3",
     "expo-status-bar": "~58.0.5",
     "expo-video": "~58.0.14",
+    "expo-widgets": "~58.0.30",
     "nativewind": "^4.2.7",
     "react": "19.3.0",
     "react-dom": "19.3.0",
@@ -54,8 +55,8 @@
   },
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "ios:device": "expo run:ios --device",
     "build:ios:local": "eas build --platform ios --profile production --local",
     "web": "expo start --web",

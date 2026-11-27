@@ -48,7 +48,14 @@
           "microphonePermission": "Record sound with videos for your recipes."
         }
       ],
-      "expo-notifications"
+      "expo-notifications",
+      [
+        "expo-widgets",
+        {
+          "bundleIdentifier": "com.homerfamilycookbook.app.widgets",
+          "groupIdentifier": "group.com.homerfamilycookbook.app"
+        }
+      ]
     ],
     "extra": {
       "apiUrl": "https://homerfamilycookbook.com",
