@@ -10,7 +10,7 @@ export default function Cooking() {
   const top = useTopInset();
   const { session, finish } = useCooking();
   return (
-    <ScrollView contentContainerStyle={{ paddingTop: top + 44, paddingHorizontal: 18, paddingBottom: 120 }} contentInsetAdjustmentBehavior="automatic">
+    <ScrollView contentContainerStyle={{ paddingTop: top, paddingHorizontal: 18, paddingBottom: 120 }}>
       <Text variant="largeTitle" className="mb-3.5 mt-3">
         Cooking
       </Text>

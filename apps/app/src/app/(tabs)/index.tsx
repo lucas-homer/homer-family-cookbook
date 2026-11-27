@@ -72,7 +72,7 @@ export default function Library() {
       keyExtractor={(r) => r.id}
       ListHeaderComponent={header}
       contentContainerStyle={{ paddingHorizontal: 18, paddingBottom: 120 }}
-      contentInsetAdjustmentBehavior="automatic"
+     
       refreshControl={<RefreshControl refreshing={q.isRefetching} onRefresh={() => void q.refetch()} />}
       ListEmptyComponent={
         q.isPending ? <Loading /> : q.isError ? <LoadError error={q.error} onRetry={() => q.refetch()} /> : <Empty title="No recipes yet" message="Recipes the family adds show up here." />

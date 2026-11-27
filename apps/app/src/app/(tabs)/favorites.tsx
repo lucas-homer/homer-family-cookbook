@@ -17,7 +17,7 @@ export default function Favorites() {
   const q = useQuery({ queryKey: ["favorites", user?.id, tag], queryFn: () => api.favorites(token!, tag), enabled: !!token });
 
   const header = (
-    <View style={{ paddingTop: top + 44 }}>
+    <View style={{ paddingTop: top }}>
       <Text variant="largeTitle" className="mb-3.5 mt-3">
         Favorites
       </Text>
@@ -54,7 +54,7 @@ export default function Favorites() {
       ListHeaderComponent={header}
       ListEmptyComponent={empty}
       contentContainerStyle={{ paddingHorizontal: 18, paddingBottom: 120 }}
-      contentInsetAdjustmentBehavior="automatic"
+     
       refreshControl={token ? <RefreshControl refreshing={q.isRefetching} onRefresh={() => void q.refetch()} /> : undefined}
       renderItem={({ item }) => <RecipeRow title={item.title} photo={coverOf(item)} meta={authorName(item)} onPress={() => open(item.id)} />}
     />

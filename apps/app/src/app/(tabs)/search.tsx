@@ -32,9 +32,9 @@ export default function Search() {
       keyExtractor={(r) => r.id}
       keyboardShouldPersistTaps="handled"
       contentContainerStyle={{ paddingHorizontal: 18, paddingBottom: 120 }}
-      contentInsetAdjustmentBehavior="automatic"
+     
       ListHeaderComponent={
-        <View style={{ paddingTop: top + 44 }}>
+        <View style={{ paddingTop: top }}>
           <Text variant="largeTitle" className="mb-3.5 mt-3">
             Search
           </Text>
