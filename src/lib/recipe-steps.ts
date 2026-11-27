@@ -1,5 +1,15 @@
-// Finds the times in a recipe step ("bake 25 minutes", "simmer 1 1/2 hours",
-// "10 to 12 min") so cook mode can offer a timer for each one.
+// A recipe's steps and the timers each one offers.
+//
+// Instructions are one block of text; a step is each non-empty line, with any
+// "1." or "Step 1:" numbering taken off. Timers come from one of two places:
+//
+// - Saved: the author reviewed them in the edit form, and `recipes.step_timers`
+//   holds one list of seconds per step.
+// - Found: for a recipe nobody has saved since timers existed, findTimers()
+//   reads each step's text with the rules below.
+//
+// Plain TypeScript with no imports, so the Worker (API) and the browser (the
+// edit form's live preview) run the same code.
 
 export type FoundTimer = { label: string; seconds: number };
 
@@ -90,4 +100,48 @@ export function findTimers(text: string): FoundTimer[] {
     last = { end: match.index! + match[0]!.length, unit, timer };
   }
   return found;
+}
+
+export function splitSteps(instructions: string): string[] {
+  return instructions
+    .split(/\r?\n+/)
+    .map((line) => line.replace(/^\s*(?:step\s*)?\d+\s*[.):-]\s*/i, "").trim())
+    .filter(Boolean);
+}
+
+export const MAX_TIMERS_PER_STEP = 5;
+export const MIN_TIMER_SECONDS = 10;
+export const MAX_TIMER_SECONDS = 86_400;
+
+/** Saved timers as stored in recipes.step_timers: one list of seconds per step, or null. */
+export function parseStepTimers(json: string | null | undefined): number[][] | null {
+  if (!json) return null;
+  try {
+    const value: unknown = JSON.parse(json);
+    if (!Array.isArray(value)) return null;
+    return value.map((step) => (Array.isArray(step) ? step.filter((s): s is number => Number.isInteger(s)) : []));
+  } catch {
+    return null;
+  }
+}
+
+export interface RecipeStep {
+  readonly text: string;
+  readonly timers: ReadonlyArray<FoundTimer>;
+  /** true when the author saved this step's timers; false when they were found in the text. */
+  readonly reviewed: boolean;
+}
+
+/**
+ * The steps with their timers. Saved timers are used when they line up with
+ * the steps (same count); otherwise each step's text is read.
+ */
+export function recipeSteps(instructions: string, saved: number[][] | null): RecipeStep[] {
+  const steps = splitSteps(instructions);
+  const usable = saved && saved.length === steps.length ? saved : null;
+  return steps.map((text, i) => ({
+    text,
+    timers: usable ? usable[i]!.map((seconds) => ({ seconds, label: durationLabel(seconds) })) : findTimers(text),
+    reviewed: usable !== null,
+  }));
 }

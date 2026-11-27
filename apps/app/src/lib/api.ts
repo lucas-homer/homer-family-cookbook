@@ -41,8 +41,20 @@ export interface ApiTag {
   recipeCount?: number;
   description?: string | null;
 }
+export interface StepTimer {
+  seconds: number;
+  label: string;
+}
+export interface RecipeStep {
+  text: string;
+  timers: StepTimer[];
+  /** true when the author saved this step's timers; false when the server found them in the text. */
+  reviewed: boolean;
+}
 export interface Recipe extends RecipeSummary {
   instructions: string;
+  /** Older cached copies don't have this; use recipeStepsOf(). */
+  steps?: RecipeStep[];
   servings: string | null;
   background: string | null;
   ingredients: { id: string; name: string; quantity: string | null; position: number }[];
@@ -161,6 +173,11 @@ export function splitSteps(instructions: string): string[] {
     .split(/\r?\n+/)
     .map((line) => line.replace(/^\s*(?:step\s*)?\d+\s*[.):-]\s*/i, "").trim())
     .filter(Boolean);
+}
+
+/** The recipe's steps with timers, from the API. A copy cached before steps existed gets steps with no timers. */
+export function recipeStepsOf(recipe: Recipe): RecipeStep[] {
+  return recipe.steps ?? splitSteps(recipe.instructions).map((text) => ({ text, timers: [], reviewed: false }));
 }
 
 /** An API tag as the design system's Tag (count = recipes with it). */

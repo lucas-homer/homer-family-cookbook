@@ -7,9 +7,8 @@ import { useRecipe } from "@/components/recipe-detail";
 import { LoadError, Loading, useTopInset } from "@/components/screen";
 import { sortTimers, TimersList } from "@/components/timers-list";
 import { Button, Glass, IconButton, IngredientRow, StepProgress, SwipePager, Text, TimerBar, TimerChip, Toolbar } from "@/components/ui";
-import { splitSteps } from "@/lib/api";
+import { recipeStepsOf } from "@/lib/api";
 import { useCooking } from "@/lib/cooking";
-import { findTimers } from "@/lib/durations";
 import { secondsLeft, useNow, useTimers } from "@/lib/timers";
 
 // Cook mode: one step at a time in big type, swipe or tap Next. The screen
@@ -35,7 +34,7 @@ export default function Cook() {
   }, [data, id, session?.recipeId, start]);
 
   const close = () => (router.canGoBack() ? router.back() : router.replace(`/recipe/${id}`));
-  const steps = data ? splitSteps(data.recipe.instructions) : [];
+  const steps = data ? recipeStepsOf(data.recipe) : [];
   const ours = session?.recipeId === id ? session : null;
   const step = Math.min(ours?.step ?? 0, Math.max(0, steps.length - 1));
   const checked = new Set(ours?.checked ?? []);
@@ -116,11 +115,11 @@ export default function Cook() {
               Step {step + 1} of {steps.length}
             </Text>
             <Text variant="step" className="mt-2">
-              {steps[step]}
+              {steps[step]?.text}
             </Text>
-            {findTimers(steps[step] ?? "").length ? (
+            {steps[step]?.timers.length ? (
               <View className="mt-5 flex-row flex-wrap gap-2">
-                {findTimers(steps[step] ?? "").map((t) => (
+                {steps[step]!.timers.map((t) => (
                   <TimerChip
                     key={t.seconds}
                     label={t.label}

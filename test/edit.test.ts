@@ -1,6 +1,7 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import { createCategory, updateCategory } from "~/server/categories-admin";
 import { updateName } from "~/server/profile";
+import { readRecipe } from "~/server/recipes/read";
 import { createRecipe, deleteRecipe, readRecipeForEdit, updateRecipe } from "~/server/recipes/write";
 import { admin, alice, bob, query, run, runError, seed, validRecipe } from "./edit-fixtures";
 
@@ -186,5 +187,46 @@ describe("admin categories and profile", () => {
       { id: "bob", firstName: "Robert", lastName: null },
     ]);
     expect((await runError(updateName(bob, { firstName: "" })))._tag).toBe("InvalidInput");
+  });
+});
+
+describe("step timers", () => {
+  const instructions = "Mix.\nAfter 40 minutes, remove the pie.\nCool 1 hour.";
+  const stepsOf = async (recipeId: string) => (await run(readRecipe({ recipeId }))).steps.map((s) => [s.timers.map((t) => t.seconds), s.reviewed]);
+
+  it("finds timers in the text until the author saves some", async () => {
+    const { id } = await run(createRecipe(alice, { ...validRecipe, instructions }));
+    expect(await stepsOf(id)).toEqual([
+      [[], false],
+      [[], false],
+      [[3600], false],
+    ]);
+    expect((await run(readRecipeForEdit(alice, { recipeId: id }))).stepTimers).toBeNull();
+  });
+
+  it("stores the author's timers and returns them", async () => {
+    const { id } = await run(createRecipe(alice, { ...validRecipe, instructions, stepTimers: [[], [2400], [3600, 600]] }));
+    expect(await stepsOf(id)).toEqual([
+      [[], true],
+      [[2400], true],
+      [[3600, 600], true],
+    ]);
+    await run(updateRecipe(alice, { ...validRecipe, recipeId: id, instructions, stepTimers: [[], [], []] }));
+    expect(await stepsOf(id)).toEqual([
+      [[], true],
+      [[], true],
+      [[], true],
+    ]);
+    expect((await run(readRecipeForEdit(alice, { recipeId: id }))).stepTimers).toEqual([[], [], []]);
+  });
+
+  it("rejects timers that don't match the steps or are out of range", async () => {
+    expect(await runError(createRecipe(alice, { ...validRecipe, instructions, stepTimers: [[60]] }))).toMatchObject({
+      _tag: "InvalidInput",
+      fieldErrors: { stepTimers: expect.any(String) },
+    });
+    for (const bad of [[[], [5], []], [[], [90_000], []], [[], [1.5], []], [[], [60, 60, 60, 60, 60, 60], []]]) {
+      expect((await runError(createRecipe(alice, { ...validRecipe, instructions, stepTimers: bad }))) ._tag).toBe("InvalidInput");
+    }
   });
 });
