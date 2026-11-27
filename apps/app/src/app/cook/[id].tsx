@@ -5,12 +5,16 @@ import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRecipe } from "@/components/recipe-detail";
 import { LoadError, Loading, useTopInset } from "@/components/screen";
-import { Button, Glass, IconButton, IngredientRow, StepProgress, SwipePager, Text, Toolbar } from "@/components/ui";
+import { sortTimers, TimersList } from "@/components/timers-list";
+import { Button, Glass, IconButton, IngredientRow, StepProgress, SwipePager, Text, TimerBar, TimerChip, Toolbar } from "@/components/ui";
 import { splitSteps } from "@/lib/api";
 import { useCooking } from "@/lib/cooking";
+import { findTimers } from "@/lib/durations";
+import { secondsLeft, useNow, useTimers } from "@/lib/timers";
 
 // Cook mode: one step at a time in big type, swipe or tap Next. The screen
-// stays on while it's open. Timers come next (they need the native build).
+// stays on while it's open. Times in a step become timer chips; running
+// timers sit above the Back / Next buttons and go off as notifications.
 export default function Cook() {
   useKeepAwake();
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -18,7 +22,11 @@ export default function Cook() {
   const bottom = useSafeAreaInsets().bottom;
   const { q } = useRecipe(id);
   const { session, start, update, finish } = useCooking();
-  const [showIngredients, setShowIngredients] = React.useState(false);
+  const [panel, setPanel] = React.useState<"steps" | "ingredients" | "timers">("steps");
+  const showIngredients = panel === "ingredients";
+  const timers = useTimers();
+  const now = useNow(timers.timers.length > 0);
+  const soonest = sortTimers(timers.timers, now)[0];
 
   const data = q.data;
   // Opened from a link with no session yet: start one.
@@ -58,7 +66,7 @@ export default function Cook() {
               <IconButton
                 icon={showIngredients ? "pot" : "book"}
                 label={showIngredients ? "Show steps" : "Show ingredients"}
-                onPress={() => setShowIngredients((v) => !v)}
+                onPress={() => setPanel(showIngredients ? "steps" : "ingredients")}
               />
             ) : null
           }
@@ -69,7 +77,21 @@ export default function Cook() {
         <Loading />
       ) : q.isError && !data ? (
         <LoadError error={q.error} onRetry={() => q.refetch()} />
-      ) : !data ? null : showIngredients ? (
+      ) : !data ? null : panel === "timers" ? (
+        <ScrollView contentContainerStyle={{ paddingHorizontal: 18, paddingTop: 16, paddingBottom: 200 + bottom }}>
+          <Text variant="title2" className="mb-3">
+            Timers
+          </Text>
+          {timers.timers.length ? (
+            <TimersList />
+          ) : (
+            <Text variant="callout" className="text-muted-foreground">
+              No timers running.
+            </Text>
+          )}
+          <Button label="Back to the steps" variant="text" size="sm" className="mt-3" onPress={() => setPanel("steps")} />
+        </ScrollView>
+      ) : showIngredients ? (
         <ScrollView contentContainerStyle={{ paddingHorizontal: 18, paddingTop: 16, paddingBottom: 200 + bottom }}>
           <Text variant="title2" className="mb-3">
             Ingredients
@@ -96,6 +118,19 @@ export default function Cook() {
             <Text variant="step" className="mt-2">
               {steps[step]}
             </Text>
+            {findTimers(steps[step] ?? "").length ? (
+              <View className="mt-5 flex-row flex-wrap gap-2">
+                {findTimers(steps[step] ?? "").map((t) => (
+                  <TimerChip
+                    key={t.seconds}
+                    label={t.label}
+                    onPress={() =>
+                      void timers.start({ label: `Step ${step + 1} · ${t.label}`, seconds: t.seconds, recipeId: id, recipeTitle: data.recipe.title })
+                    }
+                  />
+                ))}
+              </View>
+            ) : null}
           </ScrollView>
         </SwipePager>
       ) : (
@@ -106,8 +141,16 @@ export default function Cook() {
         </View>
       )}
 
-      {data && steps.length && !showIngredients ? (
-        <Glass className="absolute left-2.5 right-2.5 flex-row gap-2.5 rounded-[40px] px-5 pb-[18px] pt-4" style={{ bottom: Math.max(bottom, 12) }}>
+      {data && steps.length && panel === "steps" ? (
+        <Glass className="absolute left-2.5 right-2.5 gap-3 rounded-[40px] px-5 pb-[18px] pt-4" style={{ bottom: Math.max(bottom, 12) }}>
+          {soonest ? (
+            <TimerBar
+              label={timers.timers.length > 1 ? `${soonest.label} · +${timers.timers.length - 1} more` : soonest.label}
+              seconds={secondsLeft(soonest, now)}
+              onPress={() => setPanel("timers")}
+            />
+          ) : null}
+          <View className="flex-row gap-2.5">
           <View className="flex-1">
             <Button label="Back" variant="secondary" block disabled={step === 0} onPress={() => go(step - 1)} />
           </View>
@@ -122,6 +165,7 @@ export default function Cook() {
                 close();
               }}
             />
+          </View>
           </View>
         </Glass>
       ) : null}
