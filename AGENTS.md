@@ -18,6 +18,7 @@ Family recipe site on Cloudflare Workers + D1. Being ported from the old Remix/F
 - `pnpm dev`, `pnpm test` (vitest inside workerd with a fresh migrated D1), `pnpm typecheck`, `pnpm build`. vitest stays on 5.0.x: 5.1 breaks `@cloudflare/vitest-plugin` here ("Invalid regular expression flags").
 - Schema changes are new files in `migrations/` (`NNNN_name.sql`). Never edit an applied migration.
 - `pnpm db:migrate:local`. Remote migrations (`pnpm db:migrate:remote`) and `pnpm run deploy` (not `pnpm deploy`, which is a pnpm built-in) use the scoped `HFC_CLOUDFLARE_API_TOKEN`. Agents don't run them unless the task says so.
+- Merging to `main` ships automatically (`.github/workflows/deploy.yml`): check, then `db:migrate:remote` if `migrations/` changed, then `deploy` if site files changed (not for `apps/`, `legacy/`, tests or docs alone). It uses the `CLOUDFLARE_API_TOKEN` repo secret. Pull requests run `check.yml` (typecheck, test, build).
 
 ## Rules
 - Reading recipes is public. Every write checks that the signed-in user owns the row (or is an admin). Signup is invite-only.
