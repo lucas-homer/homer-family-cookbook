@@ -128,7 +128,7 @@ export function QuickTimerButton({ listening, onPress, className }: QuickTimerBu
       accessibilityLabel={listening ? "Listening for a timer" : "Quick timer"}
       accessibilityHint="Say how long, for example twelve minutes for the biscuits"
       onPress={onPress}
-      className={cn("active:opacity-80", className)}
+      className={cn(listening && "active:opacity-80", className)}
     >
       {listening ? (
         <View

@@ -18,6 +18,7 @@ import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { AuthProvider } from "@/lib/auth";
+import { CookingProvider } from "@/lib/cooking";
 import { useTheme } from "@/theme/use-theme";
 
 // Recipes and lists you have opened are saved on the device, so they still
@@ -69,13 +70,16 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <PersistQueryClientProvider client={queryClient} persistOptions={persistOptions}>
         <AuthProvider>
+          <CookingProvider>
           <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }}>
             <Stack.Screen name="(tabs)" />
             <Stack.Screen name="recipe/[id]" />
             <Stack.Screen name="sign-in" options={{ presentation: "modal", contentStyle: { backgroundColor: colors.grouped } }} />
             <Stack.Screen name="join/[token]" options={{ presentation: "modal", contentStyle: { backgroundColor: colors.grouped } }} />
+            <Stack.Screen name="cook/[id]" options={{ presentation: "fullScreenModal", gestureEnabled: false }} />
           </Stack>
           <StatusBar style="auto" />
+          </CookingProvider>
         </AuthProvider>
       </PersistQueryClientProvider>
     </SafeAreaProvider>

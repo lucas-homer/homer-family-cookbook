@@ -41,7 +41,8 @@ export function Chip({ label, selected, icon, surface = "glass", count, removabl
       accessibilityRole="button"
       accessibilityState={{ selected: !!selected }}
       accessibilityLabel={`${removable ? "Remove " : ""}${label}${count != null ? `, ${count} recipes` : ""}`}
-      className="active:opacity-80"
+      // No press opacity over glass: iOS stops drawing Liquid Glass under it.
+      className={surface === "glass" && !selected ? undefined : "active:opacity-80"}
       {...props}
     >
       {selected ? (
