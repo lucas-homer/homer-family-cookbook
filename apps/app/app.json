@@ -32,7 +32,16 @@
     "plugins": [
       "expo-font",
       "expo-router",
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-video",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Choose photos and videos to add to your recipes.",
+          "cameraPermission": "Take photos and videos for your recipes.",
+          "microphonePermission": "Record sound with videos for your recipes."
+        }
+      ]
     ],
     "extra": {
       "apiUrl": "https://homerfamilycookbook.com"

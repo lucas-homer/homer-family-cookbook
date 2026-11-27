@@ -5,7 +5,7 @@ import { FlatList, Pressable, RefreshControl, ScrollView, View } from "react-nat
 import { SplitView, useRecipeOpener } from "@/components/split";
 import { Empty, LoadError, Loading, useTopInset } from "@/components/screen";
 import { Avatar, Chip, IconButton, RecipeCard, RecipeRow, Text, Toolbar } from "@/components/ui";
-import { api, authorName, type LibraryRecipe } from "@/lib/api";
+import { api, authorName, coverOf, type LibraryRecipe } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 
 // Library: every recipe A to Z, filtered by Course.
@@ -48,7 +48,7 @@ export default function Library() {
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 12 }}>
             {recent.data.recipes.slice(0, 8).map((r) => (
               <View key={r.id} style={{ width: 150 }}>
-                <RecipeCard title={r.title} meta={authorName(r)} photoHeight={110} onPress={() => open(r.id)} />
+                <RecipeCard title={r.title} photo={coverOf(r)} meta={authorName(r)} photoHeight={110} onPress={() => open(r.id)} />
               </View>
             ))}
           </ScrollView>
@@ -78,7 +78,7 @@ export default function Library() {
         q.isPending ? <Loading /> : q.isError ? <LoadError error={q.error} onRetry={() => q.refetch()} /> : <Empty title="No recipes yet" message="Recipes the family adds show up here." />
       }
       renderItem={({ item }) => (
-        <RecipeRow title={item.title} meta={[item.courses.join(", "), authorName(item)].filter(Boolean).join(" · ")} onPress={() => open(item.id)} />
+        <RecipeRow title={item.title} photo={coverOf(item)} meta={[item.courses.join(", "), authorName(item)].filter(Boolean).join(" · ")} onPress={() => open(item.id)} />
       )}
     />
     </SplitView>

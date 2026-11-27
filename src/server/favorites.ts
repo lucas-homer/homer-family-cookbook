@@ -11,6 +11,8 @@ export interface FavoriteRecipe {
   readonly title: string;
   readonly firstName: string;
   readonly lastName: string | null;
+  /** First photo, if the recipe has any (GET /api/v1/media/:id). */
+  readonly coverMediaId?: string | null;
 }
 
 const SetFavoriteInput = Schema.Struct({ recipeId: Id, favorite: Schema.Boolean });
@@ -64,13 +66,13 @@ export const listFavorites = (user: SessionUser, input: unknown) =>
     const recipes =
       sort === "desc"
         ? yield* sql<FavoriteRecipe>`
-            SELECT r.id, r.title, u.first_name, u.last_name
+            SELECT r.id, r.title, u.first_name, u.last_name, (SELECT m.id FROM recipe_media m WHERE m.recipe_id = r.id AND m.kind = 'photo' ORDER BY m.position, m.id LIMIT 1) AS cover_media_id
             FROM favorites f JOIN recipes r ON r.id = f.recipe_id JOIN users u ON u.id = r.user_id
             WHERE f.user_id = ${user.id}
               AND (${filter} IS NULL OR EXISTS (SELECT 1 FROM recipe_categories rc WHERE rc.recipe_id = r.id AND rc.category_id = ${filter}))
             ORDER BY r.title COLLATE NOCASE DESC, r.id`
         : yield* sql<FavoriteRecipe>`
-            SELECT r.id, r.title, u.first_name, u.last_name
+            SELECT r.id, r.title, u.first_name, u.last_name, (SELECT m.id FROM recipe_media m WHERE m.recipe_id = r.id AND m.kind = 'photo' ORDER BY m.position, m.id LIMIT 1) AS cover_media_id
             FROM favorites f JOIN recipes r ON r.id = f.recipe_id JOIN users u ON u.id = r.user_id
             WHERE f.user_id = ${user.id}
               AND (${filter} IS NULL OR EXISTS (SELECT 1 FROM recipe_categories rc WHERE rc.recipe_id = r.id AND rc.category_id = ${filter}))

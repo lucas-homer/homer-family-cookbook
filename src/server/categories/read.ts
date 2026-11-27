@@ -64,8 +64,8 @@ export const readCategory = (input: unknown) =>
       GROUP BY recipe_id HAVING count(DISTINCT category_id) = ${ids.length}`;
     const recipes =
       sort === "desc"
-        ? yield* sql<RecipeSummaryData>`SELECT r.id, r.title, u.first_name, u.last_name FROM recipes r JOIN users u ON u.id = r.user_id WHERE r.id IN (${matching}) ORDER BY r.title COLLATE NOCASE DESC, r.id`
-        : yield* sql<RecipeSummaryData>`SELECT r.id, r.title, u.first_name, u.last_name FROM recipes r JOIN users u ON u.id = r.user_id WHERE r.id IN (${matching}) ORDER BY r.title COLLATE NOCASE ASC, r.id`;
+        ? yield* sql<RecipeSummaryData>`SELECT r.id, r.title, u.first_name, u.last_name, (SELECT m.id FROM recipe_media m WHERE m.recipe_id = r.id AND m.kind = 'photo' ORDER BY m.position, m.id LIMIT 1) AS cover_media_id FROM recipes r JOIN users u ON u.id = r.user_id WHERE r.id IN (${matching}) ORDER BY r.title COLLATE NOCASE DESC, r.id`
+        : yield* sql<RecipeSummaryData>`SELECT r.id, r.title, u.first_name, u.last_name, (SELECT m.id FROM recipe_media m WHERE m.recipe_id = r.id AND m.kind = 'photo' ORDER BY m.position, m.id LIMIT 1) AS cover_media_id FROM recipes r JOIN users u ON u.id = r.user_id WHERE r.id IN (${matching}) ORDER BY r.title COLLATE NOCASE ASC, r.id`;
     const related = yield* sql<TagData & { recipeCount: number }>`
       SELECT c.id, c.name, c.tag_group, count(*) AS recipe_count
       FROM recipe_categories rc JOIN categories c ON c.id = rc.category_id

@@ -2,16 +2,16 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { router } from "expo-router";
 import * as React from "react";
 import { ScrollView, View } from "react-native";
+import { RecipeMediaGallery } from "@/components/recipe-media";
 import { LoadError, Loading, useTopInset } from "@/components/screen";
-import { Chip, IconButton, IngredientRow, Photo, StepRow, Text, Toolbar } from "@/components/ui";
+import { Button, Chip, IconButton, IngredientRow, StepRow, Text, Toolbar } from "@/components/ui";
 import { api, authorName, splitSteps, type RecipeResponse } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
+import { useCooking } from "@/lib/cooking";
 import { compareTags } from "@/lib/tags";
 
-// One recipe: its own screen on iPhone, the right-hand pane on iPad.
-// `onBack` is left out in the iPad pane, which has no Back button.
-export function RecipeDetail({ id, onBack }: { id: string; onBack?: () => void }) {
-  const top = useTopInset();
+/** One recipe from the API, cached on the device. Shared by the recipe and cook screens. */
+export function useRecipe(id: string) {
   const { token, ready, user } = useAuth();
   const client = useQueryClient();
   // Keyed by user id, never the token: the cache is saved to plain device storage.
@@ -28,6 +28,17 @@ export function RecipeDetail({ id, onBack }: { id: string; onBack?: () => void }
     // offline, finds this person's cached copy).
     enabled: ready,
   });
+  return { q, key };
+}
+
+// One recipe: its own screen on iPhone, the right-hand pane on iPad.
+// `onBack` is left out in the iPad pane, which has no Back button.
+export function RecipeDetail({ id, onBack }: { id: string; onBack?: () => void }) {
+  const top = useTopInset();
+  const { token } = useAuth();
+  const client = useQueryClient();
+  const { q, key } = useRecipe(id);
+  const cooking = useCooking();
   const [checked, setChecked] = React.useState<Set<string>>(new Set());
 
   const favorite = useMutation({
@@ -41,6 +52,12 @@ export function RecipeDetail({ id, onBack }: { id: string; onBack?: () => void }
 
   const data = q.data;
   const isFavorite = data?.viewer.isFavorite ?? false;
+  const steps = data ? splitSteps(data.recipe.instructions) : [];
+
+  const startCooking = (title: string) => {
+    cooking.start(id, title);
+    router.push(`/cook/${id}`);
+  };
 
   return (
     <View className="flex-1 bg-background">
@@ -64,13 +81,21 @@ export function RecipeDetail({ id, onBack }: { id: string; onBack?: () => void }
           <LoadError error={q.error} onRetry={() => q.refetch()} />
         ) : data ? (
           <View className="gap-4 pt-3">
-            <Photo alt={`Photo of ${data.recipe.title}`} height={220} rounded="card" />
+            <RecipeMediaGallery recipeId={id} title={data.recipe.title} media={data.recipe.media ?? []} canEdit={data.viewer.canEditRecipe} />
             <View className="gap-1">
               <Text variant="title1">{data.recipe.title}</Text>
               <Text variant="subhead" className="text-muted-foreground">
                 {[authorName(data.recipe), data.recipe.servings && `Makes ${data.recipe.servings}`].filter(Boolean).join(" · ")}
               </Text>
             </View>
+            {steps.length ? (
+              <Button
+                label={cooking.session?.recipeId === id ? `Keep cooking · step ${cooking.session.step + 1}` : "Start cooking"}
+                icon="pot"
+                block
+                onPress={() => startCooking(data.recipe.title)}
+              />
+            ) : null}
             {data.recipe.categories.length ? (
               <View className="flex-row flex-wrap gap-2">
                 {[...data.recipe.categories].sort(compareTags).map((t) => (
@@ -110,7 +135,7 @@ export function RecipeDetail({ id, onBack }: { id: string; onBack?: () => void }
               Steps
             </Text>
             <View className="gap-3">
-              {splitSteps(data.recipe.instructions).map((step, i) => (
+              {steps.map((step, i) => (
                 <StepRow key={i} number={i + 1} text={step} />
               ))}
             </View>

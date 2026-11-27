@@ -3,6 +3,7 @@ import { Effect, Schema } from "effect";
 import type { Statement } from "effect/sql/Statement";
 import type { SessionUser } from "../auth/current-user";
 import { InvalidInput, NotFound } from "../errors";
+import { deleteRecipeMediaFiles } from "../media";
 import { adminFlag, decodeInput, emptyToNull, failNoAccess, Id, isAdmin, OptionalText, Text } from "../input";
 
 // Creating, editing and deleting recipes. Authors change their own recipes;
@@ -112,11 +113,13 @@ export const deleteRecipe = (user: SessionUser, input: unknown) =>
   Effect.gen(function* () {
     const { recipeId } = yield* decodeInput(RecipeIdInput)(input);
     const sql = yield* D1Client.D1Client;
-    // Ingredients, categories, notes, favorites and reads cascade.
+    const media = yield* sql<{ id: string }>`SELECT id FROM recipe_media WHERE recipe_id = ${recipeId}`;
+    // Ingredients, categories, notes, favorites, reads and media rows cascade.
     const rows = yield* sql<{ id: string }>`
       DELETE FROM recipes WHERE id = ${recipeId} AND (user_id = ${user.id} OR ${adminFlag(user)} = 1)
       RETURNING id`;
     if (rows.length === 0) return yield* failNoAccess("Recipe", recipeId);
+    yield* deleteRecipeMediaFiles(recipeId, media.map((m) => m.id));
     return { id: recipeId };
   });
 

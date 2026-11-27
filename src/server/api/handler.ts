@@ -15,6 +15,7 @@ import { listFavoriteCategories, listFavorites, setFavorite } from "../favorites
 import { listRecentlyViewed } from "../reads";
 import { readRecipe, searchRecipes } from "../recipes/read";
 import { readRecipeViewerData } from "../recipes/viewer-data";
+import { deleteRecipeMedia, listRecipeMedia, serveRecipeMedia, uploadRecipeMedia } from "../media";
 
 // JSON API for the iOS app, served at /api/v1/*. It reuses the same Effect
 // modules as the website.
@@ -67,6 +68,8 @@ export interface LibraryRecipe {
   readonly title: string;
   readonly firstName: string;
   readonly lastName: string | null;
+  /** First photo, if the recipe has any (GET /api/v1/media/:id). */
+  readonly coverMediaId?: string | null;
   // Course tag names, comma separated by the query and split here.
   readonly courses: readonly string[];
 }
@@ -75,7 +78,7 @@ export interface LibraryRecipe {
 export const listLibrary = Effect.gen(function* () {
   const sql = yield* SqlClient;
   const rows = yield* sql<Omit<LibraryRecipe, "courses"> & { courses: string | null }>`
-    SELECT r.id, r.title, u.first_name, u.last_name,
+    SELECT r.id, r.title, u.first_name, u.last_name, (SELECT m.id FROM recipe_media m WHERE m.recipe_id = r.id AND m.kind = 'photo' ORDER BY m.position, m.id LIMIT 1) AS cover_media_id,
       (SELECT group_concat(name, char(31)) FROM (
         SELECT c.name FROM recipe_categories rc JOIN categories c ON c.id = rc.category_id
         WHERE rc.recipe_id = r.id AND c.tag_group = 'course' ORDER BY c.name COLLATE NOCASE)) AS courses
@@ -162,9 +165,43 @@ const routes: ReadonlyArray<{
         const recipe = yield* readRecipe({ recipeId });
         const user = yield* optionalUser(request);
         const viewer = yield* readRecipeViewerData(user, { recipeId });
-        return json({ recipe, viewer: { isFavorite: viewer.isFavorite, canEditRecipe: viewer.canEditRecipe, notes: viewer.notes } });
+        const media = yield* listRecipeMedia(recipe.id);
+        return json({ recipe: { ...recipe, media }, viewer: { isFavorite: viewer.isFavorite, canEditRecipe: viewer.canEditRecipe, notes: viewer.notes } });
       }),
   },
+  {
+    // Add a photo or video. The body is the file itself (not a form), with its
+    // real Content-Type and Content-Length. ?width=&height= are optional.
+    method: "POST",
+    pattern: /^recipes\/([^/]+)\/media$/,
+    run: (request, url, [recipeId]) =>
+      Effect.gen(function* () {
+        const user = yield* requireUser(request);
+        const dimension = (name: string) => {
+          const value = url.searchParams.get(name);
+          return value === null || value === "" ? null : Number(value);
+        };
+        const media = yield* uploadRecipeMedia(user, {
+          recipeId: recipeId ?? "",
+          contentType: (request.headers.get("Content-Type") ?? "").split(";")[0]!.trim().toLowerCase(),
+          contentLength: Number(request.headers.get("Content-Length") ?? "0"),
+          width: dimension("width"),
+          height: dimension("height"),
+          body: request.body,
+        });
+        return json({ media }, 201);
+      }),
+  },
+  {
+    method: "DELETE",
+    pattern: /^recipes\/([^/]+)\/media\/([^/]+)$/,
+    run: (request, _url, [recipeId, mediaId]) =>
+      Effect.gen(function* () {
+        const user = yield* requireUser(request);
+        return json(yield* deleteRecipeMedia(user, { recipeId, mediaId }));
+      }),
+  },
+  { method: "GET", pattern: /^media\/([^/]+)$/, run: (request, _url, [mediaId]) => serveRecipeMedia(request, mediaId ?? "") },
   { method: "GET", pattern: /^tags$/, run: () => Effect.map(readCategories, (tags) => json({ tags })) },
   {
     method: "GET",

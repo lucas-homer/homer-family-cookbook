@@ -19,6 +19,8 @@ export interface RecentlyViewedItem {
   readonly title: string;
   readonly firstName: string;
   readonly lastName: string | null;
+  /** First photo, if the recipe has any (GET /api/v1/media/:id). */
+  readonly coverMediaId?: string | null;
   readonly viewedAt: string;
 }
 
@@ -30,11 +32,11 @@ export const listRecentlyViewed = (user: SessionUser, input: unknown) =>
     const sql = yield* SqlClient;
     return sort === "oldest"
       ? yield* sql<RecentlyViewedItem>`
-          SELECT r.id, r.title, u.first_name, u.last_name, rr.updated_at AS viewed_at
+          SELECT r.id, r.title, u.first_name, u.last_name, (SELECT m.id FROM recipe_media m WHERE m.recipe_id = r.id AND m.kind = 'photo' ORDER BY m.position, m.id LIMIT 1) AS cover_media_id, rr.updated_at AS viewed_at
           FROM recipe_reads rr JOIN recipes r ON r.id = rr.recipe_id JOIN users u ON u.id = r.user_id
           WHERE rr.user_id = ${user.id} ORDER BY rr.updated_at ASC, r.id LIMIT 200`
       : yield* sql<RecentlyViewedItem>`
-          SELECT r.id, r.title, u.first_name, u.last_name, rr.updated_at AS viewed_at
+          SELECT r.id, r.title, u.first_name, u.last_name, (SELECT m.id FROM recipe_media m WHERE m.recipe_id = r.id AND m.kind = 'photo' ORDER BY m.position, m.id LIMIT 1) AS cover_media_id, rr.updated_at AS viewed_at
           FROM recipe_reads rr JOIN recipes r ON r.id = rr.recipe_id JOIN users u ON u.id = r.user_id
           WHERE rr.user_id = ${user.id} ORDER BY rr.updated_at DESC, r.id LIMIT 200`;
   });

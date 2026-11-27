@@ -21,6 +21,15 @@ export interface RecipeSummary {
   title: string;
   firstName: string;
   lastName: string | null;
+  /** The recipe's first photo, if it has one. */
+  coverMediaId?: string | null;
+}
+export interface RecipeMedia {
+  id: string;
+  kind: "photo" | "video";
+  contentType: string;
+  width: number | null;
+  height: number | null;
 }
 export interface LibraryRecipe extends RecipeSummary {
   courses: string[];
@@ -38,6 +47,7 @@ export interface Recipe extends RecipeSummary {
   background: string | null;
   ingredients: { id: string; name: string; quantity: string | null; position: number }[];
   categories: ApiTag[];
+  media: RecipeMedia[];
 }
 export interface RecipeNote {
   id: string;
@@ -97,6 +107,16 @@ export function inviteTokenFrom(text: string): string | null {
   return m?.[1] ?? null;
 }
 
+/** Where a photo or video is served from. Public, like the recipe. */
+export function mediaUrl(id: string) {
+  return `${API_URL}/api/v1/media/${encodeURIComponent(id)}`;
+}
+
+/** A list row's thumbnail: the recipe's first photo, or nothing. */
+export function coverOf(r: Pick<RecipeSummary, "coverMediaId">) {
+  return r.coverMediaId ? { uri: mediaUrl(r.coverMediaId) } : undefined;
+}
+
 /** Endpoints, by name. Each takes the token when the endpoint uses one. */
 export const api = {
   signIn: (email: string, password: string) =>
@@ -126,6 +146,8 @@ export const api = {
       { token },
     ),
   recentlyViewed: (token: string) => request<{ recipes: RecipeSummary[] }>("recently-viewed", { token }),
+  deleteMedia: (token: string, recipeId: string, mediaId: string) =>
+    request<{ id: string }>(`recipes/${encodeURIComponent(recipeId)}/media/${encodeURIComponent(mediaId)}`, { method: "DELETE", token }),
   setFavorite: (token: string, recipeId: string, favorite: boolean) =>
     request<{ recipeId: string; favorite: boolean }>(`favorites/${encodeURIComponent(recipeId)}`, { method: "PUT", token, body: { favorite } }),
 };

@@ -9,6 +9,8 @@ export interface RecipeSummaryData {
   readonly title: string;
   readonly firstName: string;
   readonly lastName: string | null;
+  /** First photo, if the recipe has any (GET /api/v1/media/:id). */
+  readonly coverMediaId?: string | null;
 }
 interface RecipeRow extends RecipeSummaryData {
   readonly instructions: string;
@@ -72,7 +74,7 @@ export const searchRecipes = (input: unknown) =>
     const sql = yield* SqlClient;
     return yield* sql<
       RecipeSummaryData & { snippet: string }
-    >`SELECT r.id, r.title, u.first_name, u.last_name, snippet(recipe_search, -1, '', '', ' … ', 24) AS snippet FROM recipe_search JOIN recipes r ON r.id = recipe_search.recipe_id JOIN users u ON u.id = r.user_id WHERE recipe_search MATCH ${match} ORDER BY bm25(recipe_search, 0, 5, 2, 1, 1, 3), r.title COLLATE NOCASE, r.id LIMIT 50`;
+    >`SELECT r.id, r.title, u.first_name, u.last_name, (SELECT m.id FROM recipe_media m WHERE m.recipe_id = r.id AND m.kind = 'photo' ORDER BY m.position, m.id LIMIT 1) AS cover_media_id, snippet(recipe_search, -1, '', '', ' … ', 24) AS snippet FROM recipe_search JOIN recipes r ON r.id = recipe_search.recipe_id JOIN users u ON u.id = r.user_id WHERE recipe_search MATCH ${match} ORDER BY bm25(recipe_search, 0, 5, 2, 1, 1, 3), r.title COLLATE NOCASE, r.id LIMIT 50`;
   });
 export const getSearchResults = createServerFn({ method: "GET" })
   .validator((input: { q: string }) => input)

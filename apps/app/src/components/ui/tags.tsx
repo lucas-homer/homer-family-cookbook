@@ -210,8 +210,8 @@ export function NarrowRow({ extra, onRemove, onNarrow }: { extra: Tag[]; onRemov
         <Chip key={t.id} label={t.name} selected removable onPress={onRemove ? () => onRemove(t) : undefined} />
       ))}
       {full ? null : (
-        <Pressable accessibilityRole="button" onPress={onNarrow} className="active:opacity-80">
-          <Glass className="h-9 flex-row items-center gap-1.5 rounded-full px-3.5">
+        <Pressable accessibilityRole="button" onPress={onNarrow}>
+          <Glass interactive className="h-9 flex-row items-center gap-1.5 rounded-full px-3.5">
             <View className="flex-row items-center gap-1.5">
               <Icon name="plus" size={15} strokeWidth={2.4} color="primary" />
               <Text variant="subhead" className="font-semibold text-primary">

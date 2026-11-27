@@ -63,6 +63,7 @@ const iconColor: Record<Variant, string> = {
 export function Button({ label, icon, variant = "primary", size = "lg", block, loading, disabled, className, style, ...props }: ButtonProps) {
   const v = variant ?? "primary";
   const { colors } = useTheme();
+  const dim = disabled || loading;
   const inner = (
     <>
       {loading ? (
@@ -79,13 +80,15 @@ export function Button({ label, icon, variant = "primary", size = "lg", block, l
       accessibilityLabel={label}
       accessibilityState={{ disabled: !!disabled, busy: !!loading }}
       disabled={disabled || loading}
-      className={cn(block ? "w-full" : "self-start", (disabled || loading) && "opacity-50", "active:opacity-80")}
+      // iOS draws nothing for Liquid Glass under a parent with opacity below 1,
+      // so a glass button dims its content instead of the whole button.
+      className={cn(block ? "w-full" : "self-start", v !== "secondary" && dim && "opacity-50", v !== "secondary" && "active:opacity-80")}
       style={style}
       {...props}
     >
       {v === "secondary" ? (
         <Glass interactive className={cn(buttonVariants({ variant: v, size, block }), className)}>
-          <View className="flex-row items-center justify-center gap-2">{inner}</View>
+          <View className={cn("flex-row items-center justify-center gap-2", dim && "opacity-50")}>{inner}</View>
         </Glass>
       ) : (
         <View
@@ -113,7 +116,7 @@ export function IconButton({ icon, label, size = 44, variant = "glass", classNam
   const dims = { width: size, height: size };
   const glyph = Math.round(size * 0.45);
   return (
-    <Pressable accessibilityRole="button" accessibilityLabel={label} hitSlop={8} className="active:opacity-80" {...props}>
+    <Pressable accessibilityRole="button" accessibilityLabel={label} hitSlop={8} className={variant === "glass" ? undefined : "active:opacity-80"} {...props}>
       {variant === "glass" ? (
         <Glass interactive className={cn("items-center justify-center rounded-full", className)} style={dims}>
           <Icon name={icon} size={glyph} />

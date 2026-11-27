@@ -4,7 +4,7 @@ import { FlatList, TextInput, View } from "react-native";
 import { SplitView, useRecipeOpener } from "@/components/split";
 import { Empty, LoadError, Loading, useTopInset } from "@/components/screen";
 import { Icon, RecipeRow, Text } from "@/components/ui";
-import { api, authorName } from "@/lib/api";
+import { api, authorName, coverOf } from "@/lib/api";
 import { useTheme } from "@/theme/use-theme";
 
 function useDebounced<T>(value: T, ms: number) {
@@ -57,7 +57,7 @@ export default function Search() {
       ListEmptyComponent={
         !term ? undefined : q.isPending ? <Loading /> : q.isError ? <LoadError error={q.error} onRetry={() => q.refetch()} /> : <Empty title="No matches" message={`Nothing matches "${term}". Try another word.`} />
       }
-      renderItem={({ item }) => <RecipeRow title={item.title} meta={authorName(item)} onPress={() => open(item.id)} />}
+      renderItem={({ item }) => <RecipeRow title={item.title} photo={coverOf(item)} meta={authorName(item)} onPress={() => open(item.id)} />}
     />
     </SplitView>
   );

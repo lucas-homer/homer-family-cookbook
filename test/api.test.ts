@@ -78,8 +78,8 @@ describe("API reads", () => {
     expect(res.status).toBe(200);
     expect(res.headers.get("Cache-Control")).toBe("no-store");
     expect(res.body?.recipes).toEqual([
-      { id: "api-2", title: "apple cake", firstName: "Ben", lastName: null, courses: ["Breads", "Desserts"] },
-      { id: "api-1", title: "Buttermilk Biscuits", firstName: "Ada", lastName: "Homer", courses: ["Breads"] },
+      { id: "api-2", title: "apple cake", firstName: "Ben", lastName: null, coverMediaId: null, courses: ["Breads", "Desserts"] },
+      { id: "api-1", title: "Buttermilk Biscuits", firstName: "Ada", lastName: "Homer", coverMediaId: null, courses: ["Breads"] },
     ]);
   });
 
