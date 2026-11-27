@@ -4,6 +4,7 @@ import * as React from "react";
 import { FlatList, RefreshControl, View } from "react-native";
 import { SplitView, useRecipeOpener } from "@/components/split";
 import { Empty, LoadError, Loading, useTopInset, TabScreen } from "@/components/screen";
+import { useTimerRoom } from "@/components/timers-list";
 import { Button, Chip, EdgeScroll, RecipeRow, Text } from "@/components/ui";
 import { api, authorName, coverOf, type RecipeSummary } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
@@ -12,6 +13,7 @@ import { useAuth } from "@/lib/auth";
 export default function Favorites() {
   const { split, selected, open } = useRecipeOpener();
   const top = useTopInset();
+  const timerRoom = useTimerRoom();
   const { token, ready, user } = useAuth();
   const [tag, setTag] = React.useState<string | null>(null);
   const q = useQuery({ queryKey: ["favorites", user?.id, tag], queryFn: () => api.favorites(token!, tag), enabled: !!token });
@@ -54,7 +56,7 @@ export default function Favorites() {
       keyExtractor={(r) => r.id}
       ListHeaderComponent={header}
       ListEmptyComponent={empty}
-      contentContainerStyle={{ paddingHorizontal: 18, paddingBottom: 120 }}
+      contentContainerStyle={{ paddingHorizontal: 18, paddingBottom: 120 + timerRoom }}
      
       refreshControl={token ? <RefreshControl refreshing={q.isRefetching} onRefresh={() => void q.refetch()} /> : undefined}
       renderItem={({ item }) => <RecipeRow title={item.title} photo={coverOf(item)} meta={authorName(item)} onPress={() => open(item.id)} />}

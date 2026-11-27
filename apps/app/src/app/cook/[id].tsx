@@ -5,11 +5,11 @@ import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRecipe } from "@/components/recipe-detail";
 import { LoadError, Loading, useTopInset } from "@/components/screen";
-import { sortTimers, TimersList } from "@/components/timers-list";
-import { Button, Glass, IconButton, IngredientRow, StepProgress, SwipePager, Text, TimerBar, TimerChip, Toolbar } from "@/components/ui";
+import { STACK_MAX, TimersList, TimerStack } from "@/components/timers-list";
+import { Button, Glass, IconButton, IngredientRow, StepProgress, SwipePager, Text, TimerChip, Toolbar } from "@/components/ui";
 import { recipeStepsOf } from "@/lib/api";
 import { useCooking } from "@/lib/cooking";
-import { secondsLeft, useNow, useTimers } from "@/lib/timers";
+import { useTimers } from "@/lib/timers";
 
 // Cook mode: one step at a time in big type, swipe or tap Next. The screen
 // stays on while it's open. Times in a step become timer chips; running
@@ -24,8 +24,8 @@ export default function Cook() {
   const [panel, setPanel] = React.useState<"steps" | "ingredients" | "timers">("steps");
   const showIngredients = panel === "ingredients";
   const timers = useTimers();
-  const now = useNow(timers.timers.length > 0);
-  const soonest = sortTimers(timers.timers, now)[0];
+  // The control panel grows by one bar per stacked timer; leave room above it.
+  const stackRoom = Math.min(timers.timers.length, STACK_MAX) * 58 + (timers.timers.length > STACK_MAX ? 36 : 0);
 
   const data = q.data;
   // Opened from a link with no session yet: start one.
@@ -77,7 +77,7 @@ export default function Cook() {
       ) : q.isError && !data ? (
         <LoadError error={q.error} onRetry={() => q.refetch()} />
       ) : !data ? null : panel === "timers" ? (
-        <ScrollView contentContainerStyle={{ paddingHorizontal: 18, paddingTop: 16, paddingBottom: 200 + bottom }}>
+        <ScrollView contentContainerStyle={{ paddingHorizontal: 18, paddingTop: 16, paddingBottom: 140 + stackRoom + bottom }}>
           <Text variant="title2" className="mb-3">
             Timers
           </Text>
@@ -91,7 +91,7 @@ export default function Cook() {
           <Button label="Back to the steps" variant="text" size="sm" className="mt-3" onPress={() => setPanel("steps")} />
         </ScrollView>
       ) : showIngredients ? (
-        <ScrollView contentContainerStyle={{ paddingHorizontal: 18, paddingTop: 16, paddingBottom: 200 + bottom }}>
+        <ScrollView contentContainerStyle={{ paddingHorizontal: 18, paddingTop: 16, paddingBottom: 140 + stackRoom + bottom }}>
           <Text variant="title2" className="mb-3">
             Ingredients
           </Text>
@@ -109,7 +109,7 @@ export default function Cook() {
         </ScrollView>
       ) : steps.length ? (
         <SwipePager index={step} count={steps.length} onChange={go} className="flex-1">
-          <ScrollView contentContainerStyle={{ paddingHorizontal: 22, paddingTop: 16, paddingBottom: 200 + bottom }}>
+          <ScrollView contentContainerStyle={{ paddingHorizontal: 22, paddingTop: 16, paddingBottom: 140 + stackRoom + bottom }}>
             <StepProgress total={steps.length} current={step + 1} />
             <Text className="mt-6 text-subhead font-semibold text-primary">
               Step {step + 1} of {steps.length}
@@ -142,13 +142,7 @@ export default function Cook() {
 
       {data && steps.length && panel === "steps" ? (
         <Glass className="absolute left-2.5 right-2.5 gap-3 rounded-[40px] px-5 pb-[18px] pt-4" style={{ bottom: Math.max(bottom, 12) }}>
-          {soonest ? (
-            <TimerBar
-              label={timers.timers.length > 1 ? `${soonest.label} · +${timers.timers.length - 1} more` : soonest.label}
-              seconds={secondsLeft(soonest, now)}
-              onPress={() => setPanel("timers")}
-            />
-          ) : null}
+          <TimerStack recipeId={id} onShowAll={() => setPanel("timers")} />
           <View className="flex-row gap-2.5">
           <View className="flex-1">
             <Button label="Back" variant="secondary" block disabled={step === 0} onPress={() => go(step - 1)} />

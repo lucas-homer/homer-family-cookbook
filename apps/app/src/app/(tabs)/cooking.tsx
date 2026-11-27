@@ -5,16 +5,17 @@ import { Empty, useTopInset, TabScreen } from "@/components/screen";
 import { Button, Text } from "@/components/ui";
 import { useCooking } from "@/lib/cooking";
 import { useTimers } from "@/lib/timers";
-import { TimersList } from "@/components/timers-list";
+import { TimersList, useTimerRoom } from "@/components/timers-list";
 
 // Cooking: running timers and the recipe you're cooking now.
 export default function Cooking() {
   const top = useTopInset();
+  const timerRoom = useTimerRoom();
   const { session, finish } = useCooking();
   const timers = useTimers();
   return (
     <TabScreen>
-    <ScrollView contentContainerStyle={{ paddingTop: top, paddingHorizontal: 18, paddingBottom: 120 }}>
+    <ScrollView contentContainerStyle={{ paddingTop: top, paddingHorizontal: 18, paddingBottom: 120 + timerRoom }}>
       <Text variant="largeTitle" className="mb-3.5 mt-3">
         Cooking
       </Text>

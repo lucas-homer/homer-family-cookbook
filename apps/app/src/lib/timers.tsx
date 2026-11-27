@@ -3,13 +3,17 @@ import * as Notifications from "expo-notifications";
 import * as React from "react";
 import { Platform } from "react-native";
 
+import { timerActivities, type LiveActivity, type TimerActivityProps } from "./timer-activity";
+
 // Cook-mode timers. Several can run at once, across recipes. Each running
 // timer has a local notification scheduled for when it ends, so it goes off
 // on the lock screen (and on an Apple Watch, which mirrors the phone's
 // notifications) even when the app is closed. The list is saved on the
-// device, so timers survive the app being quit.
+// device, so timers survive the app being quit. On iOS each running timer
+// also has a Live Activity: a countdown on the lock screen and in the Dynamic
+// Island (see timer-activity.tsx).
 //
-// Later, in a native build: AlarmKit countdowns and a Live Activity.
+// Later: AlarmKit countdowns.
 
 export type Timer = {
   id: string;
@@ -23,6 +27,8 @@ export type Timer = {
   /** Seconds left while paused. */
   remaining: number;
   notificationId?: string;
+  /** The timer's Live Activity, on iOS. */
+  activityId?: string;
 };
 
 type TimersState = {
@@ -81,6 +87,66 @@ function unschedule(t: Timer) {
   if (native && t.notificationId) void Notifications.cancelScheduledNotificationAsync(t.notificationId).catch(() => {});
 }
 
+// Live Activities by timer id, for this run of the app.
+const live = new Map<string, LiveActivity<TimerActivityProps>>();
+
+function clock(seconds: number) {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = seconds % 60;
+  const mm = h ? String(m).padStart(2, "0") : String(m);
+  return `${h ? `${h}:` : ""}${mm}:${String(s).padStart(2, "0")}`;
+}
+
+function activityProps(t: Timer): TimerActivityProps {
+  const now = Date.now();
+  if (t.endsAt === null) return { label: t.label, recipe: t.recipeTitle, from: now, to: now + t.remaining * 1000, paused: clock(t.remaining) };
+  return { label: t.label, recipe: t.recipeTitle, from: t.endsAt - t.total * 1000, to: t.endsAt };
+}
+
+/** Starts the timer's Live Activity and returns its id. */
+function startActivity(t: Timer) {
+  const activities = timerActivities();
+  if (!activities || t.endsAt === null) return undefined;
+  try {
+    // Past its stale date (the end), the activity shows "Done" by itself.
+    const activity = activities.start(activityProps(t), t.recipeId ? `familycookbook://recipe/${t.recipeId}` : "familycookbook://cooking", new Date(t.endsAt));
+    live.set(t.id, activity);
+    return activity.getId();
+  } catch {
+    // Live Activities are turned off for the app, or too many are running.
+    return undefined;
+  }
+}
+
+function updateActivity(t: Timer) {
+  const activity = live.get(t.id);
+  if (!activity) return;
+  void activity.update(activityProps(t), t.endsAt === null ? undefined : new Date(t.endsAt)).catch(() => {});
+}
+
+function endActivity(t: Timer) {
+  const activity = live.get(t.id);
+  live.delete(t.id);
+  if (activity) void activity.end("immediate").catch(() => {});
+}
+
+/** After a relaunch: reconnect saved timers to their Live Activities, and end any left over. */
+function reconnectActivities(timers: Timer[]) {
+  const activities = timerActivities();
+  if (!activities) return;
+  try {
+    const byActivity = new Map(timers.filter((t) => t.activityId).map((t) => [t.activityId, t]));
+    for (const activity of activities.getInstances()) {
+      const t = byActivity.get(activity.getId());
+      if (t) live.set(t.id, activity);
+      else void activity.end("immediate").catch(() => {});
+    }
+  } catch {
+    // Nothing to reconnect.
+  }
+}
+
 export function TimersProvider({ children }: { children: React.ReactNode }) {
   const [timers, setTimers] = React.useState<Timer[]>([]);
   const ref = React.useRef(timers);
@@ -92,6 +158,7 @@ export function TimersProvider({ children }: { children: React.ReactNode }) {
         const saved = JSON.parse(value) as Timer[];
         // Drop timers that ended more than an hour ago.
         const fresh = saved.filter((t) => t.endsAt === null || t.endsAt > Date.now() - 60 * 60 * 1000);
+        reconnectActivities(fresh);
         ref.current = fresh;
         setTimers(fresh);
       })
@@ -122,6 +189,7 @@ export function TimersProvider({ children }: { children: React.ReactNode }) {
           endsAt: Date.now() + seconds * 1000,
           remaining: seconds,
         };
+        t.activityId = startActivity(t);
         save([...ref.current, t]);
         const notificationId = await schedule(t, seconds);
         if (notificationId) patch(t.id, (x) => ({ ...x, notificationId }));
@@ -129,12 +197,18 @@ export function TimersProvider({ children }: { children: React.ReactNode }) {
       pause: (id) =>
         patch(id, (t) => {
           unschedule(t);
-          return { ...t, remaining: secondsLeft(t, Date.now()), endsAt: null, notificationId: undefined };
+          const next: Timer = { ...t, remaining: secondsLeft(t, Date.now()), endsAt: null, notificationId: undefined };
+          updateActivity(next);
+          return next;
         }),
       resume: (id) => {
         const t = ref.current.find((x) => x.id === id);
         if (!t || t.endsAt !== null) return;
-        patch(id, (x) => ({ ...x, endsAt: Date.now() + x.remaining * 1000 }));
+        const next: Timer = { ...t, endsAt: Date.now() + t.remaining * 1000 };
+        // A timer restored from before the app had Live Activities gets one now.
+        const activityId = live.has(id) ? t.activityId : startActivity(next);
+        updateActivity(next);
+        patch(id, (x) => ({ ...x, endsAt: next.endsAt, activityId }));
         void schedule(t, t.remaining).then((notificationId) => notificationId && patch(id, (x) => ({ ...x, notificationId })));
       },
       addMinute: (id) => {
@@ -148,11 +222,15 @@ export function TimersProvider({ children }: { children: React.ReactNode }) {
             ? { ...t, remaining: left, total: t.total + 60, notificationId: undefined }
             : { ...t, endsAt: now + left * 1000, total: t.total + 60, notificationId: undefined };
         patch(id, () => next);
+        updateActivity(next);
         if (next.endsAt !== null) void schedule(next, left).then((notificationId) => notificationId && patch(id, (x) => ({ ...x, notificationId })));
       },
       end: (id) => {
         const t = ref.current.find((x) => x.id === id);
-        if (t) unschedule(t);
+        if (t) {
+          unschedule(t);
+          endActivity(t);
+        }
         save(ref.current.filter((x) => x.id !== id));
       },
     }),
