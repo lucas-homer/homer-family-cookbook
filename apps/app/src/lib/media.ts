@@ -1,4 +1,5 @@
 import * as FileSystem from "expo-file-system/legacy";
+import { ImageManipulator, SaveFormat } from "expo-image-manipulator";
 import * as ImagePicker from "expo-image-picker";
 import { Platform } from "react-native";
 import { API_URL, ApiError, type RecipeMedia } from "./api";
@@ -13,7 +14,8 @@ export type Source = "library" | "camera";
 
 const options: ImagePicker.ImagePickerOptions = {
   mediaTypes: ["images", "videos"],
-  quality: 0.8,
+  // Full quality here: photos are resized and compressed once, in shrinkPhoto.
+  quality: 1,
   // HEIC photos become JPEG, so they show everywhere, the website included.
   preferredAssetRepresentationMode: ImagePicker.UIImagePickerPreferredAssetRepresentationMode.Compatible,
   // Keep videos small enough to upload: 720p, up to two minutes.
@@ -38,7 +40,26 @@ const typeFor = (asset: ImagePicker.ImagePickerAsset) => {
   return asset.uri.toLowerCase().endsWith(".png") ? "image/png" : "image/jpeg";
 };
 
-export async function uploadMedia(token: string, recipeId: string, asset: ImagePicker.ImagePickerAsset): Promise<RecipeMedia> {
+// Long edge for uploaded photos. Plenty for a phone or iPad screen, and a
+// few hundred KB instead of a 4–5 MB camera original.
+export const PHOTO_MAX_EDGE = 2000;
+
+/** Resizes a photo to PHOTO_MAX_EDGE on its long edge and re-saves it as JPEG. Videos pass through. */
+export async function shrinkPhoto(asset: ImagePicker.ImagePickerAsset): Promise<ImagePicker.ImagePickerAsset> {
+  if (asset.type === "video" || !asset.width || !asset.height) return asset;
+  const long = Math.max(asset.width, asset.height);
+  const scale = Math.min(1, PHOTO_MAX_EDGE / long);
+  const context = ImageManipulator.manipulate(asset.uri);
+  if (scale < 1) {
+    context.resize(asset.width >= asset.height ? { width: Math.round(asset.width * scale) } : { height: Math.round(asset.height * scale) });
+  }
+  const image = await context.renderAsync();
+  const saved = await image.saveAsync({ compress: 0.8, format: SaveFormat.JPEG });
+  return { ...asset, uri: saved.uri, width: saved.width, height: saved.height, mimeType: "image/jpeg", fileSize: undefined };
+}
+
+export async function uploadMedia(token: string, recipeId: string, picked: ImagePicker.ImagePickerAsset): Promise<RecipeMedia> {
+  const asset = await shrinkPhoto(picked);
   const video = asset.type === "video";
   const max = video ? MAX_VIDEO_BYTES : MAX_PHOTO_BYTES;
   if (asset.fileSize && asset.fileSize > max) {

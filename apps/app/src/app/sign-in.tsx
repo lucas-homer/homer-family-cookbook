@@ -34,7 +34,7 @@ export default function SignIn() {
 
   if (user) {
     return (
-      <SheetSurface title="Account" confirm={{ label: "Done", onPress: close }} className="flex-1">
+      <SheetSurface title="Account" confirm={{ label: "Done", onPress: close }} fill>
         <View className="gap-2 px-4 pt-2">
           <Text variant="title2">{authorName(user)}</Text>
           <Text variant="subhead" className="text-muted-foreground">
@@ -72,7 +72,7 @@ export default function SignIn() {
   };
 
   return (
-    <SheetSurface title="Sign in" cancel={{ label: "Cancel", onPress: close }} className="flex-1">
+    <SheetSurface title="Sign in" cancel={{ label: "Cancel", onPress: close }} fill>
       <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : undefined} className="flex-1">
         <ScrollView contentContainerClassName="gap-3 px-4 pt-2" keyboardShouldPersistTaps="handled">
           <Text variant="callout" className="text-muted-foreground">

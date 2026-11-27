@@ -1,4 +1,5 @@
 import { D1Client } from "@effect/sql-d1";
+import { MAX_TIMER_SECONDS, MAX_TIMERS_PER_STEP, MIN_TIMER_SECONDS, parseStepTimers, splitSteps } from "~/lib/recipe-steps";
 import { Effect, Schema } from "effect";
 import type { Statement } from "effect/sql/Statement";
 import type { SessionUser } from "../auth/current-user";
@@ -33,8 +34,32 @@ const RecipeFields = {
     Schema.isMaxLength(MAX_INGREDIENTS, { message: `At most ${MAX_INGREDIENTS} ingredients` }),
   ),
 };
-export const RecipeInput = Schema.Struct(RecipeFields);
-const UpdateRecipeInput = Schema.Struct({ recipeId: Id, ...RecipeFields });
+// Timers the author reviewed: one list of seconds per step. Optional, so
+// clients that don't send it leave the recipe on found timers (NULL).
+const TimerSeconds = Schema.Number.check(
+  Schema.isInt(),
+  Schema.isBetween({ minimum: MIN_TIMER_SECONDS, maximum: MAX_TIMER_SECONDS }, { message: "Timers can be 10 seconds to 24 hours" }),
+);
+const StepTimers = Schema.optional(
+  Schema.NullOr(
+    Schema.Array(
+      Schema.Array(TimerSeconds).check(Schema.isMaxLength(MAX_TIMERS_PER_STEP, { message: `At most ${MAX_TIMERS_PER_STEP} timers per step` })),
+    ).check(Schema.isMaxLength(1000)),
+  ),
+);
+
+export const RecipeInput = Schema.Struct({ ...RecipeFields, stepTimers: StepTimers });
+const UpdateRecipeInput = Schema.Struct({ recipeId: Id, ...RecipeFields, stepTimers: StepTimers });
+
+// The saved timers as stored, after checking they line up with the steps.
+const stepTimersJson = (instructions: string, stepTimers: ReadonlyArray<ReadonlyArray<number>> | null | undefined) =>
+  Effect.gen(function* () {
+    if (stepTimers == null) return null;
+    if (stepTimers.length !== splitSteps(instructions).length) {
+      return yield* Effect.fail(new InvalidInput({ fieldErrors: { stepTimers: "The timers don't match the steps. Check them and save again." } }));
+    }
+    return JSON.stringify(stepTimers.map((step) => [...step]));
+  });
 const RecipeIdInput = Schema.Struct({ recipeId: Id });
 
 export type RecipeInput = typeof RecipeInput.Encoded;
@@ -56,11 +81,12 @@ export const createRecipe = (user: SessionUser, input: unknown) =>
   Effect.gen(function* () {
     const recipe = yield* decodeInput(RecipeInput)(input);
     yield* checkCategoriesExist(recipe.categoryIds);
+    const timers = yield* stepTimersJson(recipe.instructions, recipe.stepTimers);
     const sql = yield* D1Client.D1Client;
     const id = crypto.randomUUID();
     const statements: Array<Statement<unknown>> = [
-      sql`INSERT INTO recipes (id, title, instructions, servings, background, user_id)
-          VALUES (${id}, ${recipe.title}, ${recipe.instructions}, ${emptyToNull(recipe.servings)},
+      sql`INSERT INTO recipes (id, title, instructions, step_timers, servings, background, user_id)
+          VALUES (${id}, ${recipe.title}, ${recipe.instructions}, ${timers}, ${emptyToNull(recipe.servings)},
                   ${emptyToNull(recipe.background)}, ${user.id})`,
       ...recipe.ingredients.map(
         (ingredient, position) =>
@@ -79,6 +105,7 @@ export const updateRecipe = (user: SessionUser, input: unknown) =>
   Effect.gen(function* () {
     const { recipeId, ...recipe } = yield* decodeInput(UpdateRecipeInput)(input);
     yield* checkCategoriesExist(recipe.categoryIds);
+    const timers = yield* stepTimersJson(recipe.instructions, recipe.stepTimers);
     const sql = yield* D1Client.D1Client;
     const admin = adminFlag(user);
     // True only when the caller owns the recipe (or is an admin). Repeated in
@@ -86,7 +113,7 @@ export const updateRecipe = (user: SessionUser, input: unknown) =>
     const owned = () =>
       sql`EXISTS (SELECT 1 FROM recipes WHERE id = ${recipeId} AND (user_id = ${user.id} OR ${admin} = 1))`;
     const statements: Array<Statement<unknown>> = [
-      sql`UPDATE recipes SET title = ${recipe.title}, instructions = ${recipe.instructions},
+      sql`UPDATE recipes SET title = ${recipe.title}, instructions = ${recipe.instructions}, step_timers = ${timers},
             servings = ${emptyToNull(recipe.servings)}, background = ${emptyToNull(recipe.background)},
             updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
           WHERE id = ${recipeId} AND (user_id = ${user.id} OR ${admin} = 1)
@@ -128,9 +155,10 @@ export const readRecipeForEdit = (user: SessionUser, input: unknown) =>
   Effect.gen(function* () {
     const { recipeId } = yield* decodeInput(RecipeIdInput)(input);
     const sql = yield* D1Client.D1Client;
-    const rows = yield* sql<{ id: string; title: string; instructions: string; servings: string | null; background: string | null; userId: string }>`
-      SELECT id, title, instructions, servings, background, user_id FROM recipes WHERE id = ${recipeId}`;
-    const recipe = rows[0];
+    const rows = yield* sql<{ id: string; title: string; instructions: string; stepTimers: string | null; servings: string | null; background: string | null; userId: string }>`
+      SELECT id, title, instructions, step_timers, servings, background, user_id FROM recipes WHERE id = ${recipeId}`;
+    const row = rows[0];
+    const recipe = row ? { ...row, stepTimers: parseStepTimers(row.stepTimers) } : undefined;
     if (!recipe) return yield* Effect.fail(new NotFound({ entity: "Recipe", id: recipeId }));
     if (recipe.userId !== user.id && !isAdmin(user)) return yield* failNoAccess("Recipe", recipeId);
     const ingredients = yield* sql<{ name: string; quantity: string | null }>`

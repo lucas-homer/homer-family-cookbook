@@ -16,3 +16,4 @@ export * from "./timer";
 export * from "./voice";
 export * from "./tags";
 export * from "./swipe";
+export * from "./edge-scroll";

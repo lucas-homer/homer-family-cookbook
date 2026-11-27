@@ -5,9 +5,10 @@ import { ScrollView, View } from "react-native";
 import { RecipeMediaGallery } from "@/components/recipe-media";
 import { LoadError, Loading, useTopInset } from "@/components/screen";
 import { Button, Chip, IconButton, IngredientRow, StepRow, Text, Toolbar } from "@/components/ui";
-import { api, authorName, splitSteps, type RecipeResponse } from "@/lib/api";
+import { api, authorName, recipeStepsOf, type RecipeResponse } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { useCooking } from "@/lib/cooking";
+import { useTimers } from "@/lib/timers";
 import { compareTags } from "@/lib/tags";
 
 /** One recipe from the API, cached on the device. Shared by the recipe and cook screens. */
@@ -39,6 +40,7 @@ export function RecipeDetail({ id, onBack }: { id: string; onBack?: () => void }
   const client = useQueryClient();
   const { q, key } = useRecipe(id);
   const cooking = useCooking();
+  const timers = useTimers();
   const [checked, setChecked] = React.useState<Set<string>>(new Set());
 
   const favorite = useMutation({
@@ -52,7 +54,7 @@ export function RecipeDetail({ id, onBack }: { id: string; onBack?: () => void }
 
   const data = q.data;
   const isFavorite = data?.viewer.isFavorite ?? false;
-  const steps = data ? splitSteps(data.recipe.instructions) : [];
+  const steps = data ? recipeStepsOf(data.recipe) : [];
 
   const startCooking = (title: string) => {
     cooking.start(id, title);
@@ -136,7 +138,16 @@ export function RecipeDetail({ id, onBack }: { id: string; onBack?: () => void }
             </Text>
             <View className="gap-3">
               {steps.map((step, i) => (
-                <StepRow key={i} number={i + 1} text={step} />
+                <StepRow
+                  key={i}
+                  number={i + 1}
+                  text={step.text}
+                  timer={step.timers[0]?.label}
+                  onTimerPress={() => {
+                    const t = step.timers[0];
+                    if (t) void timers.start({ label: `Step ${i + 1} · ${t.label}`, seconds: t.seconds, recipeId: id, recipeTitle: data.recipe.title });
+                  }}
+                />
               ))}
             </View>
           </View>

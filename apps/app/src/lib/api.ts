@@ -1,4 +1,5 @@
 import Constants from "expo-constants";
+import { recipeSteps } from "@shared/recipe-steps";
 
 // Client for the Worker's JSON API (src/server/api/handler.ts in the site).
 // Shapes mirror what the handler returns; keep them in step with it.
@@ -41,8 +42,20 @@ export interface ApiTag {
   recipeCount?: number;
   description?: string | null;
 }
+export interface StepTimer {
+  seconds: number;
+  label: string;
+}
+export interface RecipeStep {
+  text: string;
+  timers: StepTimer[];
+  /** true when the author saved this step's timers; false when the server found them in the text. */
+  reviewed: boolean;
+}
 export interface Recipe extends RecipeSummary {
   instructions: string;
+  /** Older cached copies don't have this; use recipeStepsOf(). */
+  steps?: RecipeStep[];
   servings: string | null;
   background: string | null;
   ingredients: { id: string; name: string; quantity: string | null; position: number }[];
@@ -161,6 +174,15 @@ export function splitSteps(instructions: string): string[] {
     .split(/\r?\n+/)
     .map((line) => line.replace(/^\s*(?:step\s*)?\d+\s*[.):-]\s*/i, "").trim())
     .filter(Boolean);
+}
+
+/**
+ * The recipe's steps with timers, from the API. When the server is older (or
+ * the copy was cached before steps existed), the same rules the server uses
+ * find the timers here instead.
+ */
+export function recipeStepsOf(recipe: Recipe): RecipeStep[] {
+  return recipe.steps ?? recipeSteps(recipe.instructions, null).map((s) => ({ ...s, timers: [...s.timers] }));
 }
 
 /** An API tag as the design system's Tag (count = recipes with it). */

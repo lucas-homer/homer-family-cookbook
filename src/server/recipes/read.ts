@@ -1,3 +1,4 @@
+import { parseStepTimers, recipeSteps } from "~/lib/recipe-steps";
 import { createServerFn } from "@tanstack/react-start";
 import { Effect, Schema } from "effect";
 import { SqlClient } from "effect/sql/SqlClient";
@@ -14,6 +15,7 @@ export interface RecipeSummaryData {
 }
 interface RecipeRow extends RecipeSummaryData {
   readonly instructions: string;
+  readonly stepTimers: string | null;
   readonly servings: string | null;
   readonly background: string | null;
 }
@@ -29,7 +31,7 @@ export const readRecipe = (input: unknown) =>
     );
     const sql = yield* SqlClient;
     const rows =
-      yield* sql<RecipeRow>`SELECT r.id, r.title, r.instructions, r.servings, r.background, u.first_name, u.last_name FROM recipes r JOIN users u ON u.id = r.user_id WHERE r.id = ${recipeId}`;
+      yield* sql<RecipeRow>`SELECT r.id, r.title, r.instructions, r.step_timers, r.servings, r.background, u.first_name, u.last_name FROM recipes r JOIN users u ON u.id = r.user_id WHERE r.id = ${recipeId}`;
     const recipe = rows[0];
     if (!recipe)
       return yield* Effect.fail(
@@ -46,7 +48,8 @@ export const readRecipe = (input: unknown) =>
       name: string;
       tagGroup: string;
     }>`SELECT c.id, c.name, c.tag_group FROM categories c JOIN recipe_categories rc ON rc.category_id = c.id WHERE rc.recipe_id = ${recipeId} ORDER BY c.name COLLATE NOCASE, c.id`;
-    return { ...recipe, ingredients, categories };
+    const { stepTimers, ...fields } = recipe;
+    return { ...fields, steps: recipeSteps(recipe.instructions, parseStepTimers(stepTimers)), ingredients, categories };
   });
 export const getRecipe = createServerFn({ method: "GET" })
   .validator((input: { recipeId: string }) => input)

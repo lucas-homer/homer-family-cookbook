@@ -24,7 +24,7 @@ export function IngredientRow({ quantity, name, note, fresh, checked, onToggle }
       accessibilityState={checkable ? { checked: !!checked } : undefined}
       disabled={!onToggle}
       onPress={onToggle}
-      className={cn("min-h-[50px] flex-row items-center gap-2.5 px-3", fresh && "bg-accent/20")}
+      className={cn("min-h-[50px] flex-row items-start gap-2.5 px-3 py-3.5", fresh && "bg-accent/20")}
     >
       {checkable ? (
         <View

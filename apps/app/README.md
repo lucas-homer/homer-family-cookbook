@@ -49,6 +49,26 @@ EXPO_PUBLIC_API_URL=http://localhost:5173 pnpm expo start
 Without `EXPO_PUBLIC_API_URL` the app uses `extra.apiUrl` in `app.json`
 (https://homerfamilycookbook.com).
 
+## Development build on your iPhone
+
+Expo Go can't run native features (AlarmKit timers, Live Activities, the
+time-sensitive notification entitlement), so those need a development build:
+the app with `expo-dev-client`, installed on registered devices.
+
+```bash
+cd apps/app
+pnpm dlx eas-cli@latest login          # the Expo account that owns the app
+pnpm dlx eas-cli@latest init           # once: links the project, adds extra.eas.projectId to app.json
+pnpm dlx eas-cli@latest device:create  # once per iPhone or iPad: open the link on the device
+pnpm dlx eas-cli@latest build --profile development --platform ios
+```
+
+EAS signs in to the Apple account and makes the certificate and provisioning
+profile. When the build finishes, open its link on the phone to install, turn
+on Settings › Privacy & Security › Developer Mode, then run `pnpm expo start`
+and open the project from the app. The `development` profile talks to the
+live site; `development-local` points at `http://localhost:5173`.
+
 ## TestFlight
 
 Builds go through EAS (`eas.json`). One-time setup by the Apple account owner:

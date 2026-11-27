@@ -1,4 +1,5 @@
-import { useState, type FormEvent } from "react";
+import { useMemo, useState, type FormEvent } from "react";
+import { durationLabel, findTimers, MAX_TIMERS_PER_STEP, splitSteps } from "~/lib/recipe-steps";
 import { groupTags } from "~/lib/tag-groups";
 import type { FormResult } from "~/server/input";
 import type { RecipeInput } from "~/server/recipes/write";
@@ -15,6 +16,8 @@ export interface RecipeFormValues {
   readonly instructions: string;
   readonly categoryIds: ReadonlyArray<string>;
   readonly ingredients: ReadonlyArray<{ readonly name: string; readonly quantity: string | null }>;
+  /** Saved timers, one list of seconds per step; null if never reviewed. */
+  readonly stepTimers?: ReadonlyArray<ReadonlyArray<number>> | null;
 }
 
 interface Row {
@@ -45,6 +48,19 @@ export function RecipeForm({
       ? initial.ingredients.map((i) => makeRow(i.name, i.quantity ?? ""))
       : [makeRow()],
   );
+  const [instructions, setInstructions] = useState(initial?.instructions ?? "");
+  // Timers the author changed, keyed by the step's text, so they stay with
+  // their step while lines are added, removed or reordered above it. Saved
+  // timers start here; every other step shows the timers found in its text.
+  const [timerEdits, setTimerEdits] = useState<ReadonlyMap<string, ReadonlyArray<number>>>(() => {
+    const steps = splitSteps(initial?.instructions ?? "");
+    const saved = initial?.stepTimers;
+    return new Map(saved && saved.length === steps.length ? steps.map((text, i) => [text, saved[i]!] as const) : []);
+  });
+  const steps = useMemo(() => splitSteps(instructions), [instructions]);
+  const timersFor = (text: string) => timerEdits.get(text) ?? findTimers(text).map((t) => t.seconds);
+  const setTimersFor = (text: string, seconds: ReadonlyArray<number>) =>
+    setTimerEdits((current) => new Map(current).set(text, seconds));
   const [fieldErrors, setFieldErrors] = useState<Readonly<Record<string, string>>>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
@@ -68,7 +84,8 @@ export function RecipeForm({
       title: String(form.get("title") ?? ""),
       servings: String(form.get("servings") ?? ""),
       background: String(form.get("background") ?? ""),
-      instructions: String(form.get("instructions") ?? ""),
+      instructions,
+      stepTimers: steps.map((text) => [...timersFor(text)]),
       categoryIds: form.getAll("categoryIds").map(String),
       // Fully blank rows are dropped; a quantity without a name is kept so the server can flag it.
       ingredients: rows
@@ -222,12 +239,35 @@ export function RecipeForm({
             id="instructions"
             name="instructions"
             maxLength={50_000}
-            defaultValue={initial?.instructions ?? ""}
+            value={instructions}
+            onChange={(e) => setInstructions(e.target.value)}
             className="mb-4 h-96 w-full whitespace-pre-line rounded-lg bg-zinc-50 p-4"
             {...errorProps("instructions")}
           />
           {errorText("instructions")}
         </div>
+
+        {steps.length ? (
+          <fieldset>
+            <legend className={labelClass}>Timers</legend>
+            <p className="mb-2 text-sm text-zinc-500">
+              Each line of the instructions is a step. In the app, a step's timers are buttons that start a countdown. We
+              suggest them from the text; remove any that aren't right, or add one.
+            </p>
+            <ol className="flex flex-col gap-2 rounded-lg bg-zinc-50 px-4 py-3">
+              {steps.map((text, index) => (
+                <StepTimersRow
+                  key={`${index}-${text}`}
+                  number={index + 1}
+                  text={text}
+                  seconds={timersFor(text)}
+                  onChange={(next) => setTimersFor(text, next)}
+                />
+              ))}
+            </ol>
+            {errorText("stepTimers")}
+          </fieldset>
+        ) : null}
 
         {formError ? (
           <p className="text-red-600" role="alert">
@@ -275,5 +315,82 @@ function IconButton({
     >
       {children}
     </button>
+  );
+}
+
+function StepTimersRow({
+  number,
+  text,
+  seconds,
+  onChange,
+}: {
+  number: number;
+  text: string;
+  seconds: ReadonlyArray<number>;
+  onChange: (next: ReadonlyArray<number>) => void;
+}) {
+  const [adding, setAdding] = useState("");
+  const minutes = Number(adding);
+  const valid = adding.trim() !== "" && Number.isFinite(minutes) && minutes * 60 >= 10 && minutes <= 24 * 60;
+  const add = () => {
+    if (!valid) return;
+    const value = Math.round(minutes * 60);
+    if (!seconds.includes(value)) onChange([...seconds, value]);
+    setAdding("");
+  };
+  return (
+    <li className="flex flex-col gap-1 border-b border-zinc-200 pb-2 last:border-b-0 last:pb-0">
+      <p className="text-sm text-zinc-700">
+        <span className="font-bold">{number}.</span> {text.length > 140 ? `${text.slice(0, 140)}…` : text}
+      </p>
+      <div className="flex flex-wrap items-center gap-2">
+        {seconds.map((value) => (
+          <span key={value} className="inline-flex items-center gap-1 rounded-full bg-amber-200 py-0.5 pl-3 pr-1 text-sm font-semibold text-zinc-900">
+            ⏱ {durationLabel(value)}
+            <button
+              type="button"
+              aria-label={`Remove the ${durationLabel(value)} timer from step ${number}`}
+              onClick={() => onChange(seconds.filter((s) => s !== value))}
+              className="flex h-6 w-6 items-center justify-center rounded-full hover:bg-amber-300"
+            >
+              ✕
+            </button>
+          </span>
+        ))}
+        {seconds.length < MAX_TIMERS_PER_STEP ? (
+          <span className="inline-flex items-center gap-1">
+            <label htmlFor={`timer-${number}`} className="sr-only">
+              Add a timer to step {number}, in minutes
+            </label>
+            <input
+              id={`timer-${number}`}
+              type="number"
+              inputMode="decimal"
+              min={0.5}
+              max={1440}
+              step="any"
+              placeholder="min"
+              value={adding}
+              onChange={(e) => setAdding(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  add();
+                }
+              }}
+              className="w-20 rounded-lg bg-white p-1 text-sm"
+            />
+            <button
+              type="button"
+              disabled={!valid}
+              onClick={add}
+              className="rounded-lg px-2 py-1 text-sm font-semibold text-emerald-600 hover:bg-white disabled:text-zinc-400"
+            >
+              + Add timer
+            </button>
+          </span>
+        ) : null}
+      </div>
+    </li>
   );
 }

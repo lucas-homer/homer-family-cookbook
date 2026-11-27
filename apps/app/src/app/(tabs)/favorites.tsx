@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { router } from "expo-router";
 import * as React from "react";
-import { FlatList, RefreshControl, ScrollView, View } from "react-native";
+import { FlatList, RefreshControl, View } from "react-native";
 import { SplitView, useRecipeOpener } from "@/components/split";
-import { Empty, LoadError, Loading, useTopInset } from "@/components/screen";
-import { Button, Chip, RecipeRow, Text } from "@/components/ui";
+import { Empty, LoadError, Loading, useTopInset, TabScreen } from "@/components/screen";
+import { Button, Chip, EdgeScroll, RecipeRow, Text } from "@/components/ui";
 import { api, authorName, coverOf, type RecipeSummary } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 
@@ -17,17 +17,17 @@ export default function Favorites() {
   const q = useQuery({ queryKey: ["favorites", user?.id, tag], queryFn: () => api.favorites(token!, tag), enabled: !!token });
 
   const header = (
-    <View style={{ paddingTop: top + 44 }}>
+    <View style={{ paddingTop: top }}>
       <Text variant="largeTitle" className="mb-3.5 mt-3">
         Favorites
       </Text>
       {q.data?.courses.length ? (
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8, paddingBottom: 8 }}>
+        <EdgeScroll contentContainerStyle={{ paddingBottom: 8 }}>
           <Chip label="All" selected={!tag} onPress={() => setTag(null)} />
           {q.data.courses.map((c) => (
             <Chip key={c.id} label={c.name} selected={tag === c.id} onPress={() => setTag(tag === c.id ? null : c.id)} />
           ))}
-        </ScrollView>
+        </EdgeScroll>
       ) : null}
     </View>
   );
@@ -47,6 +47,7 @@ export default function Favorites() {
   );
 
   return (
+    <TabScreen>
     <SplitView split={split} selected={selected}>
     <FlatList<RecipeSummary>
       data={token ? (q.data?.recipes ?? []) : []}
@@ -54,10 +55,11 @@ export default function Favorites() {
       ListHeaderComponent={header}
       ListEmptyComponent={empty}
       contentContainerStyle={{ paddingHorizontal: 18, paddingBottom: 120 }}
-      contentInsetAdjustmentBehavior="automatic"
+     
       refreshControl={token ? <RefreshControl refreshing={q.isRefetching} onRefresh={() => void q.refetch()} /> : undefined}
       renderItem={({ item }) => <RecipeRow title={item.title} photo={coverOf(item)} meta={authorName(item)} onPress={() => open(item.id)} />}
     />
     </SplitView>
+    </TabScreen>
   );
 }

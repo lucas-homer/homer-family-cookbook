@@ -1,9 +1,25 @@
 import * as React from "react";
 import { ActivityIndicator, Platform, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-screens/experimental";
 import { Button, Text } from "@/components/ui";
 import { ApiError } from "@/lib/api";
 import { useTheme } from "@/theme/use-theme";
+
+/**
+ * The root of each tab screen. On iPad the tab bar can become a sidebar that
+ * floats over the left of the screen; iOS reports it as a safe area inset on
+ * the tab, so padding the left and right edges keeps content out from under
+ * it. (The app-wide safe area hook can't see it: it measures the whole window.)
+ */
+export function TabScreen({ children }: { children: React.ReactNode }) {
+  const { colors } = useTheme();
+  return (
+    <SafeAreaView edges={{ left: true, right: true }} style={{ backgroundColor: colors.background }}>
+      {children}
+    </SafeAreaView>
+  );
+}
 
 /** Top padding for a screen with no native header. On web the tab bar sits at the top, so leave room for it. */
 export function useTopInset(extra = 12) {

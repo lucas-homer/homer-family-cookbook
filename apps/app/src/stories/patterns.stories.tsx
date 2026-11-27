@@ -7,6 +7,7 @@ import {
   Button,
   CheckTick,
   Chip,
+  EdgeScroll,
   IconButton,
   IngredientRow,
   ListeningBadge,
@@ -156,11 +157,11 @@ export const Library: Story = {
         <ScrollView contentContainerStyle={{ paddingTop: 56, paddingHorizontal: 18, paddingBottom: 120 }}>
           <Toolbar left={<Avatar name="Lucas Homer" />} right={<IconButton icon="plus" label="New recipe" />} />
           <Text variant="largeTitle" className="mb-3.5 mt-3">Library</Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8, paddingBottom: 16 }}>
+          <EdgeScroll contentContainerStyle={{ paddingBottom: 16 }}>
             {["All", "Mains", "Cookies & Bars", "Sides", "Desserts", "Breads"].map((c) => (
               <Chip key={c} label={c} selected={c === cat} onPress={() => setCat(c)} />
             ))}
-          </ScrollView>
+          </EdgeScroll>
           <View className="flex-row flex-wrap justify-between gap-y-4">
             {[["Grandma's Buttermilk Biscuits", "Breads"], ["Lemon Bars", "Desserts"], ["Sunday Pot Roast", "Mains"], ["Christmas Fudge", "Desserts · Christmas"], ["Corn Pudding", "Sides"], ["Peach Cobbler", "Desserts"]].map(([t, m]) => (
               <View key={t} style={{ width: 171 }}>

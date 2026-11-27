@@ -27,9 +27,25 @@ export function TextAction({ label, onPress, bold, tone = "primary", disabled }:
  * background. Present it with the platform's form sheet (Expo Router
  * presentation "formSheet"); this component only draws it.
  */
-export function SheetSurface({ title, cancel, confirm, children, className }: SheetHeaderProps & { children?: React.ReactNode; className?: string }) {
+export function SheetSurface({
+  title,
+  cancel,
+  confirm,
+  fill,
+  children,
+  className,
+}: SheetHeaderProps & {
+  /**
+   * The sheet is a whole screen (a modal route) and its body should take the
+   * rest of the height, e.g. for a ScrollView. Without it the body is as tall
+   * as its content, and a flex-1 child inside it collapses to nothing.
+   */
+  fill?: boolean;
+  children?: React.ReactNode;
+  className?: string;
+}) {
   return (
-    <View className={cn("overflow-hidden rounded-t-sheet bg-grouped", className)} style={{ boxShadow: shadow.sheet }}>
+    <View className={cn("overflow-hidden rounded-t-sheet bg-grouped", fill && "flex-1", className)} style={{ boxShadow: shadow.sheet }}>
       <View className="mx-auto mt-2 h-[5px] w-[38px] rounded-full bg-border/20" />
       <View className="min-h-[44px] flex-row items-center justify-between px-4 pt-2">
         {cancel ? <TextAction label={cancel.label} onPress={cancel.onPress} tone="foreground" /> : <View className="w-[60px]" />}
@@ -42,7 +58,7 @@ export function SheetSurface({ title, cancel, confirm, children, className }: Sh
           <View className="w-[60px]" />
         )}
       </View>
-      <View className="px-4 pb-6 pt-2">{children}</View>
+      <View className={cn("px-4 pb-6 pt-2", fill && "flex-1")}>{children}</View>
     </View>
   );
 }

@@ -19,6 +19,7 @@ import * as React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { AuthProvider } from "@/lib/auth";
 import { CookingProvider } from "@/lib/cooking";
+import { TimersProvider } from "@/lib/timers";
 import { useTheme } from "@/theme/use-theme";
 
 // Recipes and lists you have opened are saved on the device, so they still
@@ -71,6 +72,7 @@ export default function RootLayout() {
       <PersistQueryClientProvider client={queryClient} persistOptions={persistOptions}>
         <AuthProvider>
           <CookingProvider>
+          <TimersProvider>
           <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }}>
             <Stack.Screen name="(tabs)" />
             <Stack.Screen name="recipe/[id]" />
@@ -79,6 +81,7 @@ export default function RootLayout() {
             <Stack.Screen name="cook/[id]" options={{ presentation: "fullScreenModal", gestureEnabled: false }} />
           </Stack>
           <StatusBar style="auto" />
+          </TimersProvider>
           </CookingProvider>
         </AuthProvider>
       </PersistQueryClientProvider>
