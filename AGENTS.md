@@ -19,6 +19,7 @@ Family recipe site on Cloudflare Workers + D1. Being ported from the old Remix/F
 - Schema changes are new files in `migrations/` (`NNNN_name.sql`). Never edit an applied migration.
 - `pnpm db:migrate:local`. Remote migrations (`pnpm db:migrate:remote`) and `pnpm run deploy` (not `pnpm deploy`, which is a pnpm built-in) use the scoped `HFC_CLOUDFLARE_API_TOKEN`. Agents don't run them unless the task says so.
 - Merging to `main` ships automatically (`.github/workflows/deploy.yml`): check, then `db:migrate:remote` if `migrations/` changed, then `deploy` if site files changed (not for `apps/`, `legacy/`, tests or docs alone). It uses the `CLOUDFLARE_API_TOKEN` repo secret. Pull requests run `check.yml` (typecheck, test, build).
+- App builds spend Lucas's limited free EAS credits, so nothing builds on merge. Publishing a GitHub release tagged `app-v<version>` (matching `apps/app/app.json`) runs `app-release.yml`: EAS iOS build plus TestFlight submit (pre-release uses the `preview` profile). Dev builds are local on his Mac (`pnpm --filter app ios:device`). PRs touching the app run `app-check.yml`. Don't start EAS builds yourself.
 
 ## Rules
 - Reading recipes is public. Every write checks that the signed-in user owns the row (or is an admin). Signup is invite-only.

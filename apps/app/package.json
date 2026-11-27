@@ -56,6 +56,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
+    "ios:device": "expo run:ios --device",
+    "build:ios:local": "eas build --platform ios --profile production --local",
     "web": "expo start --web",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build -o storybook-static",

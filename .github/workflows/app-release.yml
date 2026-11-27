@@ -1,0 +1,102 @@
+# Builds the iOS app on EAS and submits it to App Store Connect (TestFlight).
+#
+# This is the only workflow that spends EAS build credits, and it never runs
+# on a merge. It runs when you publish a GitHub release whose tag is
+# app-v<version> (or app-v<version>-<anything>), where <version> matches
+# "version" in apps/app/app.json:
+#
+#   release (not a pre-release)  -> "production" profile
+#   pre-release                  -> "preview" profile
+#
+# Both go to TestFlight. Sending a build to App Store review stays a manual
+# step in App Store Connect. Build numbers come from EAS (autoIncrement).
+#
+# Day-to-day development builds happen on your Mac with no credits:
+#   pnpm --filter app ios:device
+name: App release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: EAS build profile
+        type: choice
+        options: [production, preview]
+        default: production
+      submit:
+        description: Submit to App Store Connect after the build
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+# Only one release build at a time. A second release queues instead of
+# cancelling a build that may already be using a credit.
+concurrency:
+  group: app-release
+  cancel-in-progress: false
+
+jobs:
+  check:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.event.release.tag_name, 'app-v')
+    uses: ./.github/workflows/app-check.yml
+
+  build:
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: app-store
+    defaults:
+      run:
+        working-directory: apps/app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+
+      - name: Choose profile and check the version
+        id: plan
+        env:
+          EVENT: ${{ github.event_name }}
+          TAG: ${{ github.event.release.tag_name }}
+          PRERELEASE: ${{ github.event.release.prerelease }}
+          INPUT_PROFILE: ${{ inputs.profile }}
+          INPUT_SUBMIT: ${{ inputs.submit }}
+        run: |
+          version=$(node -p "require('./app.json').expo.version")
+          if [ "$EVENT" = "release" ]; then
+            # app-v1.2.0, or app-v1.2.0-beta.2 for another TestFlight build of 1.2.0.
+            case "$TAG" in
+              "app-v$version" | "app-v$version"-*) ;;
+              *)
+                echo "::error::Release tag $TAG doesn't match app.json version $version. Tag it app-v$version (or app-v$version-beta.N), or bump the version first."
+                exit 1
+                ;;
+            esac
+            if [ "$PRERELEASE" = "true" ]; then profile=preview; else profile=production; fi
+            submit=true
+          else
+            profile=$INPUT_PROFILE
+            submit=$INPUT_SUBMIT
+          fi
+          echo "profile=$profile" >> "$GITHUB_OUTPUT"
+          echo "submit=$submit" >> "$GITHUB_OUTPUT"
+          echo "Building $version with profile $profile (submit: $submit)"
+
+      - uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      # --no-wait hands the build to EAS and finishes this job, so the build
+      # doesn't also burn GitHub Actions minutes. Follow it on expo.dev.
+      - name: Start the EAS build
+        env:
+          PROFILE: ${{ steps.plan.outputs.profile }}
+          SUBMIT: ${{ steps.plan.outputs.submit }}
+        run: |
+          args=(--platform ios --profile "$PROFILE" --non-interactive --no-wait)
+          if [ "$SUBMIT" = "true" ]; then args+=(--auto-submit); fi
+          eas build "${args[@]}"
