@@ -3,6 +3,7 @@ import * as React from "react";
 import { FlatList, TextInput, View } from "react-native";
 import { SplitView, useRecipeOpener } from "@/components/split";
 import { Empty, LoadError, Loading, useTopInset, TabScreen } from "@/components/screen";
+import { useTimerRoom } from "@/components/timers-list";
 import { Icon, RecipeRow, Text } from "@/components/ui";
 import { api, authorName, coverOf } from "@/lib/api";
 import { useTheme } from "@/theme/use-theme";
@@ -20,6 +21,7 @@ function useDebounced<T>(value: T, ms: number) {
 export default function Search() {
   const { split, selected, open } = useRecipeOpener();
   const top = useTopInset();
+  const timerRoom = useTimerRoom();
   const { colors } = useTheme();
   const [text, setText] = React.useState("");
   const term = useDebounced(text.trim(), 250);
@@ -32,7 +34,7 @@ export default function Search() {
       data={term ? (q.data?.results ?? []) : []}
       keyExtractor={(r) => r.id}
       keyboardShouldPersistTaps="handled"
-      contentContainerStyle={{ paddingHorizontal: 18, paddingBottom: 120 }}
+      contentContainerStyle={{ paddingHorizontal: 18, paddingBottom: 120 + timerRoom }}
      
       ListHeaderComponent={
         <View style={{ paddingTop: top }}>

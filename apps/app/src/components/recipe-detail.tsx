@@ -7,6 +7,7 @@ import { LoadError, Loading, useTopInset } from "@/components/screen";
 import { Button, Chip, IconButton, IngredientRow, StepRow, Text, Toolbar } from "@/components/ui";
 import { api, authorName, recipeStepsOf, type RecipeResponse } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
+import { useTimerRoom } from "@/components/timers-list";
 import { useCooking } from "@/lib/cooking";
 import { useTimers } from "@/lib/timers";
 import { compareTags } from "@/lib/tags";
@@ -41,6 +42,7 @@ export function RecipeDetail({ id, onBack }: { id: string; onBack?: () => void }
   const { q, key } = useRecipe(id);
   const cooking = useCooking();
   const timers = useTimers();
+  const timerRoom = useTimerRoom();
   const [checked, setChecked] = React.useState<Set<string>>(new Set());
 
   const favorite = useMutation({
@@ -63,7 +65,7 @@ export function RecipeDetail({ id, onBack }: { id: string; onBack?: () => void }
 
   return (
     <View className="flex-1 bg-background">
-      <ScrollView contentContainerStyle={{ paddingTop: top, paddingHorizontal: 18, paddingBottom: 80 }}>
+      <ScrollView contentContainerStyle={{ paddingTop: top, paddingHorizontal: 18, paddingBottom: 80 + timerRoom }}>
         <Toolbar
           left={onBack ? <IconButton icon="back" label="Back" onPress={onBack} /> : null}
           right={

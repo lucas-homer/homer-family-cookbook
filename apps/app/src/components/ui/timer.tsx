@@ -37,6 +37,8 @@ export function TimerChip({ label, onPress }: { label: string; onPress?: () => v
 export type TimerBarProps = {
   label: string;
   seconds: number;
+  /** The recipe's name, in small type above the label, when it isn't the recipe on screen. */
+  recipe?: string;
   /** Shown greyed with "Paused". */
   paused?: boolean;
   onPress?: () => void;
@@ -44,23 +46,33 @@ export type TimerBarProps = {
 };
 
 /** Running timer pinned in cook mode's control panel. Several stack, one bar each. */
-export function TimerBar({ label, seconds, paused, onPress, className }: TimerBarProps) {
+export function TimerBar({ label, seconds, recipe, paused, onPress, className }: TimerBarProps) {
   const done = seconds <= 0;
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel={done ? `${label}, done` : `${label}, ${formatClock(seconds)} left${paused ? ", paused" : ""}`}
+      accessibilityLabel={`${recipe ? `${recipe}, ` : ""}${done ? `${label}, done` : `${label}, ${formatClock(seconds)} left${paused ? ", paused" : ""}`}`}
       accessibilityHint={done ? "Clears the timer" : paused ? "Resumes the timer" : "Pauses the timer"}
       onPress={onPress}
       className={cn("flex-row items-center gap-3 rounded-card px-3.5 py-2.5", paused ? "bg-muted" : done ? "bg-destructive" : "bg-accent", className)}
     >
       <Icon name={paused ? "pause" : "timer"} size={20} color={done ? "primaryForeground" : paused ? "mutedForeground" : "accentForeground"} />
-      <Text
-        className={cn("flex-1 text-callout font-semibold", done ? "text-primary-foreground" : paused ? "text-muted-foreground" : "text-accent-foreground")}
-        numberOfLines={1}
-      >
-        {done ? `${label} · done` : paused ? `${label} · paused` : label}
-      </Text>
+      <View className="flex-1">
+        {recipe ? (
+          <Text
+            className={cn("text-caption font-semibold", done ? "text-primary-foreground" : paused ? "text-muted-foreground" : "text-accent-foreground")}
+            numberOfLines={1}
+          >
+            {recipe}
+          </Text>
+        ) : null}
+        <Text
+          className={cn("text-callout font-semibold", done ? "text-primary-foreground" : paused ? "text-muted-foreground" : "text-accent-foreground")}
+          numberOfLines={1}
+        >
+          {done ? `${label} · done` : paused ? `${label} · paused` : label}
+        </Text>
+      </View>
       <Text
         className={cn("text-title-3 font-bold", done ? "text-primary-foreground" : paused ? "text-muted-foreground" : "text-accent-foreground")}
         style={tabular}

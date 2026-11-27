@@ -56,10 +56,10 @@ export const STACK_MAX = 3;
 /**
  * Cook mode's running timers, one bar each, soonest first. Same gestures as
  * the list: tap to pause or resume (or clear a finished one), swipe left to
- * end, swipe right to add a minute. Timers from other recipes show the
- * recipe's name.
+ * end, swipe right to add a minute. Timers from another recipe (or all of
+ * them, when no recipeId is given) show the recipe's name.
  */
-export function TimerStack({ recipeId, onShowAll }: { recipeId: string; onShowAll: () => void }) {
+export function TimerStack({ recipeId, onShowAll }: { recipeId?: string; onShowAll: () => void }) {
   const { timers, pause, resume, addMinute, end } = useTimers();
   const now = useNow(timers.length > 0);
   if (!timers.length) return null;
@@ -72,7 +72,7 @@ export function TimerStack({ recipeId, onShowAll }: { recipeId: string; onShowAl
       {shown.map((t) => {
         const left = secondsLeft(t, now);
         const done = left === 0;
-        const label = t.recipeId && t.recipeId !== recipeId && t.recipeTitle ? `${t.recipeTitle} · ${t.label}` : t.label;
+        const recipe = t.recipeTitle && t.recipeId !== recipeId ? t.recipeTitle : undefined;
         return (
           <SwipeRow
             key={t.id}
@@ -82,7 +82,8 @@ export function TimerStack({ recipeId, onShowAll }: { recipeId: string; onShowAl
             trailing={[{ label: done ? "Clear" : "End", icon: "x", tone: "destructive", onPress: () => end(t.id) }]}
           >
             <TimerBar
-              label={label}
+              label={t.label}
+              recipe={recipe}
               seconds={left}
               paused={t.endsAt === null}
               onPress={done ? () => end(t.id) : () => (t.endsAt === null ? resume(t.id) : pause(t.id))}
@@ -97,4 +98,10 @@ export function TimerStack({ recipeId, onShowAll }: { recipeId: string; onShowAl
       ) : null}
     </View>
   );
+}
+
+/** Height the floating timers take up, so a screen can pad its bottom to scroll clear of them. */
+export function useTimerRoom() {
+  const count = useTimers().timers.length;
+  return count ? Math.min(count, STACK_MAX) * 72 + (count > STACK_MAX ? 36 : 0) + 32 : 0;
 }

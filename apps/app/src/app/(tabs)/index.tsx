@@ -4,6 +4,7 @@ import * as React from "react";
 import { FlatList, Pressable, RefreshControl, View } from "react-native";
 import { SplitView, useRecipeOpener } from "@/components/split";
 import { Empty, LoadError, Loading, useTopInset, TabScreen } from "@/components/screen";
+import { useTimerRoom } from "@/components/timers-list";
 import { Avatar, Chip, EdgeScroll, IconButton, RecipeCard, RecipeRow, Text, Toolbar } from "@/components/ui";
 import { api, authorName, coverOf, type LibraryRecipe } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
@@ -12,6 +13,7 @@ import { useAuth } from "@/lib/auth";
 export default function Library() {
   const { split, selected, open } = useRecipeOpener();
   const top = useTopInset();
+  const timerRoom = useTimerRoom();
   const { user, token } = useAuth();
   const q = useQuery({ queryKey: ["library"], queryFn: api.library });
   const recent = useQuery({ queryKey: ["recent", user?.id], queryFn: () => api.recentlyViewed(token!), enabled: !!token });
@@ -72,7 +74,7 @@ export default function Library() {
       data={recipes}
       keyExtractor={(r) => r.id}
       ListHeaderComponent={header}
-      contentContainerStyle={{ paddingHorizontal: 18, paddingBottom: 120 }}
+      contentContainerStyle={{ paddingHorizontal: 18, paddingBottom: 120 + timerRoom }}
       refreshControl={<RefreshControl refreshing={q.isRefetching} onRefresh={() => void q.refetch()} />}
       ListEmptyComponent={
         q.isPending ? <Loading /> : q.isError ? <LoadError error={q.error} onRetry={() => q.refetch()} /> : <Empty title="No recipes yet" message="Recipes the family adds show up here." />

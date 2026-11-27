@@ -17,6 +17,7 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { FloatingTimers } from "@/components/floating-timers";
 import { AuthProvider } from "@/lib/auth";
 import { CookingProvider } from "@/lib/cooking";
 import { TimersProvider } from "@/lib/timers";
@@ -80,6 +81,7 @@ export default function RootLayout() {
             <Stack.Screen name="join/[token]" options={{ presentation: "modal", contentStyle: { backgroundColor: colors.grouped } }} />
             <Stack.Screen name="cook/[id]" options={{ presentation: "fullScreenModal", gestureEnabled: false }} />
           </Stack>
+          <FloatingTimers />
           <StatusBar style="auto" />
           </TimersProvider>
           </CookingProvider>
