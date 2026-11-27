@@ -31,5 +31,8 @@
   // homerfamilycookbook.com must be onboarded under Compute & AI > Email
   // Service, and sending needs the Workers Paid plan.
   "send_email": [{ "name": "EMAIL" }],
+  // Recipe photos and videos (src/server/media.ts). Private bucket: files are
+  // served through GET /api/v1/media/:id, never a public bucket URL.
+  "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "homer-family-cookbook-media" }],
   // Secrets (set with `wrangler secret put`, never committed): none yet.
 }

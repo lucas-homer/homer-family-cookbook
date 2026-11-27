@@ -1,9 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { router } from "expo-router";
 import * as React from "react";
-import { Alert, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
+import { RecipeMediaGallery } from "@/components/recipe-media";
 import { LoadError, Loading, useTopInset } from "@/components/screen";
-import { AddPhoto, Button, Chip, IconButton, IngredientRow, StepRow, Text, Toolbar } from "@/components/ui";
+import { Button, Chip, IconButton, IngredientRow, StepRow, Text, Toolbar } from "@/components/ui";
 import { api, authorName, splitSteps, type RecipeResponse } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { useCooking } from "@/lib/cooking";
@@ -57,8 +58,6 @@ export function RecipeDetail({ id, onBack }: { id: string; onBack?: () => void }
     cooking.start(id, title);
     router.push(`/cook/${id}`);
   };
-  const addPhoto = () =>
-    Alert.alert("Photos are coming soon", "Adding photos and videos to your recipes is the next thing we're building.");
 
   return (
     <View className="flex-1 bg-background">
@@ -82,8 +81,7 @@ export function RecipeDetail({ id, onBack }: { id: string; onBack?: () => void }
           <LoadError error={q.error} onRetry={() => q.refetch()} />
         ) : data ? (
           <View className="gap-4 pt-3">
-            {/* Recipes have no photos yet. The author gets a place to add one; everyone else sees the title first. */}
-            {data.viewer.canEditRecipe ? <AddPhoto label="Add a photo or video" onPress={addPhoto} /> : null}
+            <RecipeMediaGallery recipeId={id} title={data.recipe.title} media={data.recipe.media ?? []} canEdit={data.viewer.canEditRecipe} />
             <View className="gap-1">
               <Text variant="title1">{data.recipe.title}</Text>
               <Text variant="subhead" className="text-muted-foreground">

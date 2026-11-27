@@ -5,7 +5,7 @@ import { FlatList, View } from "react-native";
 import { SplitView, useRecipeOpener } from "@/components/split";
 import { Empty, LoadError, Loading, useTopInset } from "@/components/screen";
 import { IconButton, NarrowRow, RecipeRow, SegmentedTabs, TagCloud, Text, Toolbar } from "@/components/ui";
-import { api, authorName, toTag, type RecipeSummary } from "@/lib/api";
+import { api, authorName, coverOf, toTag, type RecipeSummary } from "@/lib/api";
 import { groupTags, MAX_COMBINED_TAGS, type Tag } from "@/lib/tags";
 
 const SORTS = ["A to Z", "Z to A"] as const;
@@ -78,7 +78,7 @@ export default function TagScreen() {
         ListEmptyComponent={
           q.isPending ? <Loading /> : q.isError ? <LoadError error={q.error} onRetry={() => q.refetch()} /> : <Empty title="No recipes" message="No recipe has all of these tags. Take one off." />
         }
-        renderItem={({ item }) => <RecipeRow title={item.title} meta={authorName(item)} onPress={() => open(item.id)} />}
+        renderItem={({ item }) => <RecipeRow title={item.title} photo={coverOf(item)} meta={authorName(item)} onPress={() => open(item.id)} />}
       />
     </View>
     </SplitView>
