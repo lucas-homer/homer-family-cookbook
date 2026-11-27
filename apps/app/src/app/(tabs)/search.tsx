@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import * as React from "react";
 import { FlatList, TextInput, View } from "react-native";
 import { SplitView, useRecipeOpener } from "@/components/split";
-import { Empty, LoadError, Loading, useTopInset } from "@/components/screen";
+import { Empty, LoadError, Loading, useTopInset, TabScreen } from "@/components/screen";
 import { Icon, RecipeRow, Text } from "@/components/ui";
 import { api, authorName, coverOf } from "@/lib/api";
 import { useTheme } from "@/theme/use-theme";
@@ -26,6 +26,7 @@ export default function Search() {
   const q = useQuery({ queryKey: ["search", term], queryFn: ({ signal }) => api.search(term, signal), enabled: term.length > 0 });
 
   return (
+    <TabScreen>
     <SplitView split={split} selected={selected}>
     <FlatList
       data={term ? (q.data?.results ?? []) : []}
@@ -60,5 +61,6 @@ export default function Search() {
       renderItem={({ item }) => <RecipeRow title={item.title} photo={coverOf(item)} meta={authorName(item)} onPress={() => open(item.id)} />}
     />
     </SplitView>
+    </TabScreen>
   );
 }

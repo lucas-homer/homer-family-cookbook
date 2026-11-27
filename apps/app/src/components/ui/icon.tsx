@@ -10,6 +10,7 @@ const paths = {
   back: <Path d="M15 5l-7 7 7 7" />,
   chevron: <Path d="M9 5l7 7-7 7" />,
   x: <Path d="M6 6l12 12M18 6L6 18" />,
+  expand: <Path d="M14 4h6v6M20 4l-7 7M10 20H4v-6M4 20l7-7" />,
   more: <><Circle cx="5" cy="12" r="1.3" /><Circle cx="12" cy="12" r="1.3" /><Circle cx="19" cy="12" r="1.3" /></>,
   heart: <Path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" />,
   timer: <><Circle cx="12" cy="13" r="7" /><Path d="M12 9v4l2.5 2M10 3h4" /></>,

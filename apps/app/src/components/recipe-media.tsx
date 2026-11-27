@@ -1,7 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useVideoPlayer, VideoView } from "expo-video";
 import * as React from "react";
-import { ActionSheetIOS, ActivityIndicator, Alert, Platform, ScrollView, useWindowDimensions, View } from "react-native";
+import { ActionSheetIOS, ActivityIndicator, Alert, Platform, Pressable, ScrollView, useWindowDimensions, View } from "react-native";
+import { MediaViewer } from "@/components/media-viewer";
 import { AddPhoto, Button, IconButton, Photo, Text } from "@/components/ui";
 import { api, ApiError, mediaUrl, type RecipeMedia } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
@@ -32,6 +33,7 @@ export function RecipeMediaGallery({ recipeId, title, media, canEdit }: { recipe
   // The iPad pane is narrower than the window; measure instead of guessing.
   const [width, setWidth] = React.useState(Math.min(screen - 36, 700));
   const [busy, setBusy] = React.useState(false);
+  const [viewing, setViewing] = React.useState<number | null>(null);
 
   const refresh = () => {
     void client.invalidateQueries({ queryKey: ["recipe", recipeId] });
@@ -102,8 +104,13 @@ export function RecipeMediaGallery({ recipeId, title, media, canEdit }: { recipe
             {m.kind === "video" ? (
               <MediaVideo id={m.id} width={width} />
             ) : (
-              <Photo source={{ uri: mediaUrl(m.id) }} alt={`Photo ${i + 1} of ${title}`} height={HEIGHT} width={width} rounded="card" />
+              <Pressable accessibilityRole="button" accessibilityLabel={`View photo ${i + 1} of ${title} full size`} onPress={() => setViewing(i)}>
+                <Photo source={{ uri: mediaUrl(m.id) }} alt={`Photo ${i + 1} of ${title}`} height={HEIGHT} width={width} rounded="card" />
+              </Pressable>
             )}
+            <View className="absolute bottom-2 right-2">
+              <IconButton icon="expand" size={36} label={m.kind === "video" ? "Play video full screen" : "View photo full size"} onPress={() => setViewing(i)} />
+            </View>
             {canEdit ? (
               <View className="absolute right-2 top-2">
                 <IconButton icon="trash" size={36} label={m.kind === "video" ? "Remove video" : "Remove photo"} onPress={() => remove(m)} />
@@ -129,6 +136,7 @@ export function RecipeMediaGallery({ recipeId, title, media, canEdit }: { recipe
           <Button label="Add a photo or video" icon="camera" variant="text" size="sm" onPress={choose} />
         )
       ) : null}
+      <MediaViewer media={media} index={viewing} title={title} onClose={() => setViewing(null)} />
     </View>
   );
 }

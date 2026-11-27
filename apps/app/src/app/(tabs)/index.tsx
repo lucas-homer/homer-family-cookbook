@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { router } from "expo-router";
 import * as React from "react";
-import { FlatList, Pressable, RefreshControl, ScrollView, View } from "react-native";
+import { FlatList, Pressable, RefreshControl, View } from "react-native";
 import { SplitView, useRecipeOpener } from "@/components/split";
-import { Empty, LoadError, Loading, useTopInset } from "@/components/screen";
-import { Avatar, Chip, IconButton, RecipeCard, RecipeRow, Text, Toolbar } from "@/components/ui";
+import { Empty, LoadError, Loading, useTopInset, TabScreen } from "@/components/screen";
+import { Avatar, Chip, EdgeScroll, IconButton, RecipeCard, RecipeRow, Text, Toolbar } from "@/components/ui";
 import { api, authorName, coverOf, type LibraryRecipe } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 
@@ -45,27 +45,28 @@ export default function Library() {
       {recent.data?.recipes.length ? (
         <View className="mb-5 gap-2.5">
           <Text variant="section">Recently viewed</Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 12 }}>
+          <EdgeScroll gap={12}>
             {recent.data.recipes.slice(0, 8).map((r) => (
               <View key={r.id} style={{ width: 150 }}>
                 <RecipeCard title={r.title} photo={coverOf(r)} meta={authorName(r)} photoHeight={110} onPress={() => open(r.id)} />
               </View>
             ))}
-          </ScrollView>
+          </EdgeScroll>
         </View>
       ) : null}
       {courses.length ? (
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8, paddingBottom: 8 }}>
+        <EdgeScroll contentContainerStyle={{ paddingBottom: 8 }}>
           <Chip label="All" selected={!course} onPress={() => setCourse(null)} />
           {courses.map((c) => (
             <Chip key={c} label={c} selected={course === c} onPress={() => setCourse(course === c ? null : c)} />
           ))}
-        </ScrollView>
+        </EdgeScroll>
       ) : null}
     </View>
   );
 
   return (
+    <TabScreen>
     <SplitView split={split} selected={selected}>
     <FlatList<LibraryRecipe>
       data={recipes}
@@ -81,5 +82,6 @@ export default function Library() {
       )}
     />
     </SplitView>
+    </TabScreen>
   );
 }

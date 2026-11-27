@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import * as React from "react";
 import { ScrollView, View } from "react-native";
-import { Empty, useTopInset } from "@/components/screen";
+import { Empty, useTopInset, TabScreen } from "@/components/screen";
 import { Button, Text } from "@/components/ui";
 import { useCooking } from "@/lib/cooking";
 import { useTimers } from "@/lib/timers";
@@ -13,6 +13,7 @@ export default function Cooking() {
   const { session, finish } = useCooking();
   const timers = useTimers();
   return (
+    <TabScreen>
     <ScrollView contentContainerStyle={{ paddingTop: top, paddingHorizontal: 18, paddingBottom: 120 }}>
       <Text variant="largeTitle" className="mb-3.5 mt-3">
         Cooking
@@ -43,5 +44,6 @@ export default function Cooking() {
         <Empty title="Nothing cooking yet" message="Open a recipe and tap Start cooking. Your steps show up here." />
       )}
     </ScrollView>
+    </TabScreen>
   );
 }
