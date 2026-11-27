@@ -75,7 +75,7 @@ export const Picker: Story = {
     return (
       <Phone>
         <View className="flex-1 bg-grouped pt-14">
-          <SheetSurface title="Tags" cancel={{ label: "Cancel" }} confirm={{ label: "Done" }} className="flex-1">
+          <SheetSurface title="Tags" cancel={{ label: "Cancel" }} confirm={{ label: "Done" }} fill>
             <ScrollView className="px-4 pt-2" contentContainerStyle={{ paddingBottom: 40 }}>
               <TagPicker tags={sampleTags} selected={sel} onToggle={toggle} courseLimit={5} />
             </ScrollView>

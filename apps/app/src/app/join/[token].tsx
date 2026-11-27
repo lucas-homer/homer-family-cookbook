@@ -42,7 +42,7 @@ export default function Join() {
   const unavailable = invite.error instanceof ApiError ? invite.error.fieldErrors.form ?? "This invite link is not valid." : null;
 
   return (
-    <SheetSurface title="Join the cookbook" cancel={{ label: "Cancel", onPress: close }} className="flex-1">
+    <SheetSurface title="Join the cookbook" cancel={{ label: "Cancel", onPress: close }} fill>
       <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : undefined} className="flex-1">
         <ScrollView contentContainerClassName="gap-3 px-4 pt-2" keyboardShouldPersistTaps="handled">
           {invite.isPending ? (
