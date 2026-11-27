@@ -22,3 +22,18 @@ Family recipe site on Cloudflare Workers + D1. Being ported from the old Remix/F
 ## Rules
 - Reading recipes is public. Every write checks that the signed-in user owns the row (or is an admin). Signup is invite-only.
 - Never commit secrets, password hashes, or files built from the Postgres backup.
+
+## Testing the app in the iOS Simulator
+Everything runs locally on the Mac. Expo is on the free tier: don't use EAS cloud builds for this.
+
+- Two simulators, iOS 27.0: **HFC iPhone** (iPhone 17 Pro) and **HFC iPad** (iPad Pro 13-inch M5). `apps/app/e2e/sim.sh` finds them by name and recreates them if they're gone. Don't use the ROSTR simulators.
+- Ports: site `pnpm dev` on 5173, Metro on 8091 (ROSTR Metros use 8096-8098).
+- One-time or after a native change (new native package, `app.json` plugins): `apps/app/e2e/sim.sh build`. It runs `expo run:ios` locally (prebuild into the gitignored `apps/app/ios/`) and installs the same build on both simulators.
+- Each session:
+  1. Repo root: `pnpm db:migrate:local && pnpm dev --port 5173 --strictPort` (background).
+  2. `apps/app/e2e/sim.sh metro` (background). `metro live` points the app at homerfamilycookbook.com instead.
+  3. `apps/app/e2e/sim.sh open` loads the app on both simulators (a small Maestro flow that also accepts iOS's "Open in Family Cookbook?" prompt and the dev menu sheet).
+- Look and tap: `e2e/sim.sh shot iphone|ipad [file]` for a screenshot (read the PNG). The iOS Simulator MCP tool (`control`: attach/screenshot/tap/swipe/text) works too, in device points. For anything longer, write a Maestro flow instead of chains of taps.
+- E2E: Maestro flows in `apps/app/e2e/flows` (shared steps in `e2e/subflows`). `e2e/sim.sh test [iphone|ipad|all] [flow.yaml]` signs in as the test user. Maestro matches visible text and accessibility labels (`tapOn: "Sign in"`); add `testID` only where text is ambiguous. Screenshots from `takeScreenshot` land in `~/.maestro/tests/<run>/`. The first run on a fresh simulator can fail while the XCTest driver starts: run it again. Maestro's logs in `~/.maestro/tests/` include typed text, so the test password ends up there: never attach those logs or paste them anywhere.
+- Test account: `claude-e2e@homerfamilycookbook.test`, MEMBER. The password lives only in the macOS Keychain (services `hfc-e2e-local` and `hfc-e2e-live`); `node scripts/e2e/test-user.mjs show local --password` prints it. `node scripts/e2e/test-user.mjs create local --reset` recreates the local one through the invite flow.
+- Default to the local site: it's a copy of the live recipes in the local D1, so flows may write (favorites, notes, timers, photos). Against live (`metro live`, `HFC_TARGET=live`), only read and sign in. Anything that writes to the live database needs Lucas's OK first.
