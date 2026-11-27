@@ -24,7 +24,10 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.homerfamilycookbook.app"
+      "package": "com.homerfamilycookbook.app",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -48,10 +51,19 @@
       "expo-notifications"
     ],
     "extra": {
-      "apiUrl": "https://homerfamilycookbook.com"
+      "apiUrl": "https://homerfamilycookbook.com",
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "b9d9e533-0848-4462-817e-2f456c804dbf"
+      }
     },
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "owner": "lucas.homer"
   }
 }
