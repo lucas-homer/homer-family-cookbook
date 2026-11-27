@@ -1,0 +1,127 @@
+# Ships main to production (homerfamilycookbook.com).
+#
+#   changes  -> works out what this push touched
+#   check    -> typecheck, test, build (check.yml)
+#   migrate  -> D1 migrations, only when migrations/ changed
+#   deploy   -> wrangler deploy, only when site files changed
+#
+# Migrations always finish before the deploy, so new code never runs against
+# an old schema. Pushes that only touch the Expo app (apps/), legacy/, docs or
+# tests don't deploy. Run it by hand from the Actions tab to force either step.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      migrate:
+        description: Apply D1 migrations
+        type: boolean
+        default: true
+      deploy:
+        description: Deploy the Worker
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+# One production rollout at a time, in push order. Never cancel one midway.
+concurrency:
+  group: production
+  cancel-in-progress: false
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      migrations: ${{ steps.filter.outputs.migrations }}
+      site: ${{ steps.filter.outputs.site }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: filter
+        env:
+          EVENT: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+          FORCE_MIGRATE: ${{ inputs.migrate }}
+          FORCE_DEPLOY: ${{ inputs.deploy }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            echo "migrations=$FORCE_MIGRATE" >> "$GITHUB_OUTPUT"
+            echo "site=$FORCE_DEPLOY" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # A new branch or a force push has no usable "before": do everything.
+          if ! git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            echo "No previous commit to diff against; running every step."
+            echo "migrations=true" >> "$GITHUB_OUTPUT"
+            echo "site=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          changed=$(git diff --name-only "$BEFORE" "$AFTER")
+          echo "Changed files:"
+          echo "$changed"
+          if [ -z "$changed" ]; then
+            echo "migrations=false" >> "$GITHUB_OUTPUT"
+            echo "site=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          migrations=false
+          if echo "$changed" | grep -q '^migrations/'; then migrations=true; fi
+
+          # Anything outside these paths can change what the Worker serves.
+          site=false
+          if echo "$changed" | grep -vqE '^(apps/|legacy/|migrations/|test/|scripts/|\.github/|.*\.md$|\.mcp\.json$)'; then
+            site=true
+          fi
+
+          echo "migrations=$migrations" >> "$GITHUB_OUTPUT"
+          echo "site=$site" >> "$GITHUB_OUTPUT"
+          echo "migrations=$migrations site=$site"
+
+  check:
+    needs: changes
+    if: needs.changes.outputs.migrations == 'true' || needs.changes.outputs.site == 'true'
+    uses: ./.github/workflows/check.yml
+
+  migrate:
+    needs: [changes, check]
+    if: needs.changes.outputs.migrations == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      # wrangler skips its confirmation prompt in CI and applies only the
+      # migrations D1 hasn't recorded yet, so re-running is safe.
+      - run: pnpm db:migrate:remote
+        env:
+          HFC_CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+  deploy:
+    needs: [changes, check, migrate]
+    # Runs after migrate succeeds, or when there was nothing to migrate.
+    if: >-
+      !cancelled()
+      && needs.changes.outputs.site == 'true'
+      && needs.check.result == 'success'
+      && (needs.migrate.result == 'success' || needs.migrate.result == 'skipped')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: production
+      url: https://homerfamilycookbook.com
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: pnpm run deploy
+        env:
+          HFC_CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

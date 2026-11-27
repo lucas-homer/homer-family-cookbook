@@ -1,0 +1,25 @@
+# Typecheck, test and build the site. Runs on every pull request, and the
+# deploy workflow calls it before touching production.
+name: Check
+
+on:
+  pull_request:
+    paths-ignore:
+      - "apps/**"
+      - "legacy/**"
+      - "**/*.md"
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
