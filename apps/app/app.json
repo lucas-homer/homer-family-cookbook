@@ -11,6 +11,9 @@
       "bundleIdentifier": "com.homerfamilycookbook.app",
       "config": {
         "usesNonExemptEncryption": false
+      },
+      "entitlements": {
+        "com.apple.developer.usernotifications.time-sensitive": true
       }
     },
     "android": {
@@ -41,7 +44,8 @@
           "cameraPermission": "Take photos and videos for your recipes.",
           "microphonePermission": "Record sound with videos for your recipes."
         }
-      ]
+      ],
+      "expo-notifications"
     ],
     "extra": {
       "apiUrl": "https://homerfamilycookbook.com"
