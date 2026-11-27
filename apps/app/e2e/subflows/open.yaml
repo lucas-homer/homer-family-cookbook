@@ -1,0 +1,15 @@
+# Loads the dev build from Metro without clearing state (e2e/sim.sh open).
+appId: ${APP_ID}
+---
+- launchApp
+- openLink: ${DEV_URL}
+- runFlow:
+    when:
+      visible: "Open"
+    commands:
+      - tapOn: "Open"
+- runFlow:
+    when:
+      visible: "Continue"
+    commands:
+      - tapOn: "Continue"

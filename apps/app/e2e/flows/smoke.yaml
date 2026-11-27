@@ -1,0 +1,17 @@
+# Library loads, a recipe opens, and the test user can sign in.
+appId: ${APP_ID}
+name: Smoke
+---
+- runFlow: ../subflows/launch.yaml
+- takeScreenshot: library
+- tapOn: "Apple Crisp"
+- assertVisible: "Ingredients"
+- takeScreenshot: recipe
+# iPad shows the recipe in a side pane with no Back button.
+- runFlow:
+    when:
+      visible: "Back"
+    commands:
+      - tapOn: "Back"
+- runFlow: ../subflows/sign-in.yaml
+- takeScreenshot: signed-in

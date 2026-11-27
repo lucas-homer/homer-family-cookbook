@@ -1,0 +1,16 @@
+# Signs in as the E2E test user (credentials come from e2e/sim.sh test).
+appId: ${APP_ID}
+---
+- tapOn: "Sign in"
+- tapOn:
+    id: "Email"
+- inputText: ${E2E_EMAIL}
+- tapOn:
+    id: "Password"
+- inputText: ${E2E_PASSWORD}
+- tapOn:
+    text: "Sign in"
+    below: "Password"
+- extendedWaitUntil:
+    visible: "Account"
+    timeout: 15000
