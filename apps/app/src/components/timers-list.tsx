@@ -1,4 +1,5 @@
 import * as React from "react";
+import { router } from "expo-router";
 import { View } from "react-native";
 import { Button, SwipeRow, Text, TimerBar, TimerRow } from "@/components/ui";
 import { secondsLeft, useNow, useTimers, type Timer } from "@/lib/timers";
@@ -86,6 +87,7 @@ export function TimerStack({ recipeId, onShowAll }: { recipeId?: string; onShowA
               recipe={recipe}
               seconds={left}
               paused={t.endsAt === null}
+              onOpenRecipe={recipe && t.recipeId ? () => router.push(`/recipe/${t.recipeId}`) : undefined}
               onPress={done ? () => end(t.id) : () => (t.endsAt === null ? resume(t.id) : pause(t.id))}
             />
           </SwipeRow>

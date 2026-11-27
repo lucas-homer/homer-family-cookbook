@@ -110,7 +110,7 @@ function startActivity(t: Timer) {
   if (!activities || t.endsAt === null) return undefined;
   try {
     // Past its stale date (the end), the activity shows "Done" by itself.
-    const activity = activities.start(activityProps(t), "familycookbook://cooking", new Date(t.endsAt));
+    const activity = activities.start(activityProps(t), t.recipeId ? `familycookbook://recipe/${t.recipeId}` : "familycookbook://cooking", new Date(t.endsAt));
     live.set(t.id, activity);
     return activity.getId();
   } catch {

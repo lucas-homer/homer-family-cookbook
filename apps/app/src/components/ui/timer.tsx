@@ -42,27 +42,44 @@ export type TimerBarProps = {
   /** Shown greyed with "Paused". */
   paused?: boolean;
   onPress?: () => void;
+  /** Opens the recipe. The recipe's name becomes a link, and a long press opens it too. */
+  onOpenRecipe?: () => void;
   className?: string;
 };
 
 /** Running timer pinned in cook mode's control panel. Several stack, one bar each. */
-export function TimerBar({ label, seconds, recipe, paused, onPress, className }: TimerBarProps) {
+export function TimerBar({ label, seconds, recipe, paused, onPress, onOpenRecipe, className }: TimerBarProps) {
   const done = seconds <= 0;
+  const tone = done ? "text-primary-foreground" : paused ? "text-muted-foreground" : "text-accent-foreground";
+  const iconTone = done ? "primaryForeground" : paused ? "mutedForeground" : "accentForeground";
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={`${recipe ? `${recipe}, ` : ""}${done ? `${label}, done` : `${label}, ${formatClock(seconds)} left${paused ? ", paused" : ""}`}`}
       accessibilityHint={done ? "Clears the timer" : paused ? "Resumes the timer" : "Pauses the timer"}
       onPress={onPress}
+      onLongPress={onOpenRecipe}
+      accessibilityActions={onOpenRecipe && recipe ? [{ name: "openRecipe", label: `Open ${recipe}` }] : undefined}
+      onAccessibilityAction={(e) => e.nativeEvent.actionName === "openRecipe" && onOpenRecipe?.()}
       className={cn("flex-row items-center gap-3 rounded-card px-3.5 py-2.5", paused ? "bg-muted" : done ? "bg-destructive" : "bg-accent", className)}
     >
-      <Icon name={paused ? "pause" : "timer"} size={20} color={done ? "primaryForeground" : paused ? "mutedForeground" : "accentForeground"} />
+      <Icon name={paused ? "pause" : "timer"} size={20} color={iconTone} />
       <View className="flex-1">
-        {recipe ? (
-          <Text
-            className={cn("text-caption font-semibold", done ? "text-primary-foreground" : paused ? "text-muted-foreground" : "text-accent-foreground")}
-            numberOfLines={1}
+        {recipe && onOpenRecipe ? (
+          <Pressable
+            accessibilityRole="link"
+            accessibilityLabel={`Open ${recipe}`}
+            hitSlop={{ top: 10, bottom: 6, left: 8, right: 8 }}
+            onPress={onOpenRecipe}
+            className="flex-row items-center gap-0.5 self-start"
           >
+            <Text className={cn("shrink text-caption font-semibold", tone)} numberOfLines={1}>
+              {recipe}
+            </Text>
+            <Icon name="chevron" size={11} strokeWidth={2.6} color={iconTone} />
+          </Pressable>
+        ) : recipe ? (
+          <Text className={cn("text-caption font-semibold", tone)} numberOfLines={1}>
             {recipe}
           </Text>
         ) : null}
