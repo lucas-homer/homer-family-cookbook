@@ -57,6 +57,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "ios:device": "expo run:ios --device",
+    "ios:sim": "e2e/sim.sh build",
+    "e2e": "e2e/sim.sh test all",
     "build:ios:local": "eas build --platform ios --profile production --local",
     "web": "expo start --web",
     "storybook": "storybook dev -p 6006",

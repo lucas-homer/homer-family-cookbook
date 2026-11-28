@@ -30,6 +30,8 @@ export function TextField({ label, tone = "default", hint, error, active, multil
         {label}
       </Text>
       <TextInput
+        // E2E flows find fields by label: `tapOn: { id: "Email" }` (the visible label is also "Email").
+        testID={label}
         accessibilityLabel={label}
         accessibilityHint={error ?? hint}
         placeholderTextColor={colors.placeholder}

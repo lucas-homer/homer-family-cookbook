@@ -1,0 +1,28 @@
+# Fresh launch of the dev build, pointed at Metro. Run by every flow first.
+appId: ${APP_ID}
+---
+- launchApp:
+    clearState: true
+    clearKeychain: true
+- openLink: ${DEV_URL}
+# iOS asks before a custom-scheme link opens the app.
+- runFlow:
+    when:
+      visible: "Open"
+    commands:
+      - tapOn: "Open"
+# The dev client shows its menu sheet on first load; close it.
+- runFlow:
+    when:
+      visible: "Continue"
+    commands:
+      - tapOn: "Continue"
+- runFlow:
+    when:
+      visible: "Runtime version.*"
+    commands:
+      - swipe:
+          direction: DOWN
+- extendedWaitUntil:
+    visible: "Library"
+    timeout: 60000
