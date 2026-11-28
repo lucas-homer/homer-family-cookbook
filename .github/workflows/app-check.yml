@@ -1,0 +1,26 @@
+# Typecheck and lint the Expo app on pull requests that touch it.
+# Runs on GitHub only: it never starts an EAS build or uses build credits.
+name: App check
+
+on:
+  pull_request:
+    paths:
+      - "apps/app/**"
+      - "pnpm-lock.yaml"
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: apps/app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: pnpm typecheck
+      - run: pnpm lint

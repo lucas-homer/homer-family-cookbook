@@ -1,0 +1,158 @@
+# Builds the iOS app on EAS and submits it to App Store Connect (TestFlight).
+#
+# This is the only workflow that spends EAS build credits, and it never runs
+# on a merge. Start it either way:
+#
+# 1. Run it from the Actions tab (or ask Claude to). Pick a profile:
+#      preview     -> TestFlight beta, tagged app-v<version>-beta.<N> (N counts up)
+#      production  -> release build, tagged app-v<version>
+#    After EAS accepts the build, the workflow creates the tag and the GitHub
+#    release itself (a pre-release for preview), with a link to the build.
+#
+# 2. Publish a GitHub release by hand, tagged app-v<version> or
+#    app-v<version>-<anything>. A pre-release uses the preview profile, and a
+#    full release uses production.
+#
+# <version> must match "version" in apps/app/app.json. A production build
+# needs a version that hasn't shipped yet, so bump app.json first.
+#
+# Both profiles go to TestFlight. Sending a build to App Store review stays a
+# manual step in App Store Connect. Build numbers come from EAS (autoIncrement).
+#
+# Day-to-day development builds happen on your Mac with no credits:
+#   pnpm --filter app ios:device
+name: App release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: "preview = TestFlight beta, production = release build"
+        type: choice
+        options: [preview, production]
+        default: preview
+      submit:
+        description: Submit to App Store Connect after the build
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+# Only one release build at a time. A second release queues instead of
+# cancelling a build that may already be using a credit.
+concurrency:
+  group: app-release
+  cancel-in-progress: false
+
+jobs:
+  check:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.event.release.tag_name, 'app-v')
+    uses: ./.github/workflows/app-check.yml
+
+  build:
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: app-store
+    permissions:
+      # To create the tag and release on a manual run.
+      contents: write
+    defaults:
+      run:
+        working-directory: apps/app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+
+      - name: Choose profile, tag and version
+        id: plan
+        env:
+          EVENT: ${{ github.event_name }}
+          TAG: ${{ github.event.release.tag_name }}
+          PRERELEASE: ${{ github.event.release.prerelease }}
+          INPUT_PROFILE: ${{ inputs.profile }}
+          INPUT_SUBMIT: ${{ inputs.submit }}
+        run: |
+          version=$(node -p "require('./app.json').expo.version")
+
+          if [ "$EVENT" = "release" ]; then
+            # app-v1.2.0, or app-v1.2.0-beta.2 for another TestFlight build of 1.2.0.
+            case "$TAG" in
+              "app-v$version" | "app-v$version"-*) ;;
+              *)
+                echo "::error::Release tag $TAG doesn't match app.json version $version. Tag it app-v$version (or app-v$version-beta.N), or bump the version first."
+                exit 1
+                ;;
+            esac
+            if [ "$PRERELEASE" = "true" ]; then profile=preview; else profile=production; fi
+            submit=true
+            create_release=false
+          else
+            profile=$INPUT_PROFILE
+            submit=$INPUT_SUBMIT
+            create_release=true
+            tags=$(git ls-remote --tags --refs origin "refs/tags/app-v$version*" | sed 's|.*refs/tags/||')
+            if [ "$profile" = "production" ]; then
+              TAG="app-v$version"
+              if echo "$tags" | grep -qx "$TAG"; then
+                echo "::error::$TAG already exists. Bump \"version\" in apps/app/app.json before a new production build."
+                exit 1
+              fi
+            else
+              last=$(echo "$tags" | sed -n "s/^app-v$version-beta\.\([0-9]*\)$/\1/p" | sort -n | tail -1)
+              TAG="app-v$version-beta.$(( ${last:-0} + 1 ))"
+            fi
+          fi
+
+          {
+            echo "version=$version"
+            echo "profile=$profile"
+            echo "submit=$submit"
+            echo "tag=$TAG"
+            echo "create_release=$create_release"
+          } >> "$GITHUB_OUTPUT"
+          echo "Building $version ($TAG) with profile $profile (submit: $submit)"
+
+      - uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      # --no-wait hands the build to EAS and finishes this job, so the build
+      # doesn't also burn GitHub Actions minutes. Follow it on expo.dev.
+      - name: Start the EAS build
+        id: eas
+        env:
+          PROFILE: ${{ steps.plan.outputs.profile }}
+          SUBMIT: ${{ steps.plan.outputs.submit }}
+        run: |
+          args=(--platform ios --profile "$PROFILE" --non-interactive --no-wait)
+          if [ "$SUBMIT" = "true" ]; then args+=(--auto-submit); fi
+          eas build "${args[@]}" 2>&1 | tee "$RUNNER_TEMP/eas.log"
+          url=$(grep -o 'https://expo.dev/[^ ]*/builds/[0-9a-f-]*' "$RUNNER_TEMP/eas.log" | head -1 || true)
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+        shell: bash -o pipefail {0}
+
+      # A release created with GITHUB_TOKEN doesn't trigger workflows, so this
+      # doesn't start a second build.
+      - name: Create the GitHub release
+        if: steps.plan.outputs.create_release == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.plan.outputs.tag }}
+          PROFILE: ${{ steps.plan.outputs.profile }}
+          VERSION: ${{ steps.plan.outputs.version }}
+          BUILD_URL: ${{ steps.eas.outputs.url }}
+        run: |
+          args=("$TAG" --target "$GITHUB_SHA" --generate-notes)
+          if [ "$PROFILE" = "preview" ]; then
+            args+=(--prerelease --title "App $VERSION beta ${TAG##*-beta.}")
+          else
+            args+=(--title "App $VERSION")
+          fi
+          notes="iOS build ($PROFILE profile)${BUILD_URL:+: $BUILD_URL}"
+          # --notes goes above the generated list of merged PRs.
+          gh release create "${args[@]}" --notes "$notes"
